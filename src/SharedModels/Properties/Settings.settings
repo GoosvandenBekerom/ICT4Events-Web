@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SharedModels.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="FTPAddress" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">192.168.20.221</Value>
+    </Setting>
+    <Setting Name="FTPUser" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">upload</Value>
+    </Setting>
+    <Setting Name="FTPPassword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">welkom1234!</Value>
+    </Setting>
+    <Setting Name="Email" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ict4events.s21a@gmail.com</Value>
+    </Setting>
+    <Setting Name="EmailPassword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ICT4event!</Value>
+    </Setting>
+    <Setting Name="ConnectionString" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">User Id=ICT4EventsWeb;Password=ICT4Events;Data Source=//192.168.20.221:1521/xe</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
