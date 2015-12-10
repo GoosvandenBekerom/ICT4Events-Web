@@ -27,9 +27,9 @@ namespace SharedModels.Logic
             return _context.GetGuestByEvent(ev, userID);
         }
 
-        public Guest GetByRfid(string rfid, Event ev)
+        public Guest GetByRfid(int barcode, Event ev)
         {
-            return _context.GetByBarcode(rfid, ev);
+            return _context.GetByBarcode(barcode, ev);
         }
 
         public int GetGuestCountByEvent(Event ev)
@@ -62,23 +62,25 @@ namespace SharedModels.Logic
             return _context.Update(guest);
         }
 
-        public Guest RegisterUserForEvent(User user, Event ev, Place place, DateTime start, DateTime end, int leaderID = 0)
+        /*
+        public Guest RegisterUserForEvent(User user, Event ev, Location location, DateTime start, DateTime end, int leaderID = 0)
         {
             var existingGuest = _context.GetGuestByEvent(ev, user.ID); // Checks if user is already registered for an event
             if (existingGuest != null) return existingGuest;
 
             var guest = new Guest(user.ID, user.Username, user.Password, user.Name, "", false, ev.ID, false, start, end,
-                place.ID, user.RegistrationDate, user.Permission, user.Surname, user.Country, user.City, user.Postal,
+                location.ID, user.RegistrationDate, user.Permission, user.Surname, user.Country, user.City, user.Postal,
                 user.Address, user.Telephone, leaderID);
             
-            SendConfirmationEmail(user, ev, place, start, end);
+            SendConfirmationEmail(user, ev, location, start, end);
 
             FtpHelper.CreateDirectory($"{ev.ID}/{guest.ID}");
 
             return _context.Insert(guest);
-        }
+        }*/
 
-        public List<Guest> RegisterUsersForEvent(List<string> usernames, Event ev, Place place, DateTime start, DateTime end, int leaderID)
+            /*
+        public List<Guest> RegisterUsersForEvent(List<string> usernames, Event ev, Location location, DateTime start, DateTime end, int leaderID)
         {
             var res = new List<Guest>();
 
@@ -86,45 +88,46 @@ namespace SharedModels.Logic
             {
                 var user = LogicCollection.UserLogic.GetByUsername(username);
                 var guest = (user != null
-                    ? RegisterUserForEvent(user, ev, place, start, end)
-                    : RegisterNewUserForEvent(username, ev, place, start, end, leaderID));
+                    ? RegisterUserForEvent(user, ev, location, start, end)
+                    : RegisterNewUserForEvent(username, ev, location, start, end, leaderID));
 
                 res.Add(guest);
             }
 
             return res;
         }
+        */
 
-        public Guest RegisterNewUserForEvent(string username, Event ev, Place place, DateTime start, DateTime end, int leaderID)
+        /*
+        public Guest RegisterNewUserForEvent(string username, Event ev, Location location, DateTime start, DateTime end, int leaderID)
         {
             var password = Membership.GeneratePassword(10, 2);
-
             var user = new User(0, username, LogicCollection.UserLogic.GetHashedPassword(password), "new user");
             user = LogicCollection.UserLogic.RegisterUser(user, true, password);
             
-            SendConfirmationEmail(user, ev, place, start, end);
+            SendConfirmationEmail(user, ev, location, start, end);
 
-            return RegisterUserForEvent(user, ev, place, start, end, leaderID);
-        }
+            return RegisterUserForEvent(user, ev, location, start, end, leaderID);
+        }*/
 
         /// <summary>
         /// Sends a confirmation email to given user
         /// </summary>
         /// <param name="user">user to send confirmation email to</param>
         /// <returns>true if mail was successfully send, throws exception if sending mail fails</returns>
-        private static bool SendConfirmationEmail(User user, Event ev, Place place, DateTime start, DateTime end)
+        private static bool SendConfirmationEmail(User user, Event ev, Location location, DateTime start, DateTime end)
         {
             var fromAddress = new MailAddress(Properties.Settings.Default.Email, "ICT4Events");
-            var toAddress = new MailAddress(user.Username, user.Name);
+            var toAddress = new MailAddress(user.Email, user.Username);
             var fromPassword = Properties.Settings.Default.EmailPassword;
 
             var message = new MailMessage(fromAddress, toAddress)
             {
                 Subject = "Confirmation of your new user account for ICT4Events",
                 Body =
-                    "Hello " + user.Name + ",\r\n\r\n" +
+                    "Hello " + user.Username + ",\r\n\r\n" +
                     $"Your have been registered to participate in event {ev.Name}!\r\n" +
-                    $"The location you entered is {place.Name}.\r\n" +
+                    $"The location you entered is {location.Name}.\r\n" +
                     $"We will be expecting to see you on {start.Date} until {end.Date}.\r\n" +
                     $"Your user ID is: {user.ID}. Make sure to remember this for your check-in!" +
                     "\r\n\r\nHave a nice day!"

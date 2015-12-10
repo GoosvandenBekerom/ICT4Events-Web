@@ -36,6 +36,7 @@ namespace SharedModels.Data.OracleContexts
                 "INSERT INTO location (locationid, eventid, name, capacity, price, x, y) VALUES (seq_location.nextval, :eventid, :name, :capacity, :price, :x, :y) RETURNING locationid INTO :lastID";
             var parameters = new List<OracleParameter>
             {
+                /*
                 new OracleParameter("eventid", entity.EventID),
                 new OracleParameter("name", entity.Name),
                 new OracleParameter("capacity", entity.Capacity),
@@ -43,6 +44,7 @@ namespace SharedModels.Data.OracleContexts
                 new OracleParameter("x", entity.Coordinates.X),
                 new OracleParameter("y", entity.Coordinates.Y),
                 new OracleParameter("lastID", OracleDbType.Decimal) {Direction = ParameterDirection.ReturnValue}
+                */
             };
 
             string newID;
@@ -88,8 +90,13 @@ namespace SharedModels.Data.OracleContexts
         {
             if (record == null) return null;
 
-            return new Place(Convert.ToInt32(record[0]), Convert.ToInt32(record[1]), record[2], Convert.ToInt32(record[3]),
-                Convert.ToDecimal(record[4]), new Point(Convert.ToInt32(record[5]), Convert.ToInt32(record[6])));
+            // ID locatie_id nummer capaciteit comfortplek handicap afmeting kraan x y prijs
+            // 0  1          2      3          4           5        6        7     8 9 10
+
+            return new Place(Convert.ToInt32(record[0]), Convert.ToInt32(record[1]), record[2],
+                Convert.ToInt32(record[3]), Convert.ToDecimal(record[10]),
+                new Point(Convert.ToInt32(record[5]), Convert.ToInt32(record[6])), Convert.ToBoolean(record[7]),
+                Convert.ToBoolean(record[8]), Convert.ToBoolean(record[9]), Convert.ToInt32(record[10]));
         }
     }
 }

@@ -152,6 +152,11 @@ namespace SharedModels.Data.OracleContexts
             return res.Select(GetEntityFromRecord).ToList();
         }
 
+        public Guest GetByBarcode(int barcode, Event ev)
+        {
+            throw new NotImplementedException();
+        }
+
         public int GetGuestCountByEvent(Event ev)
         {
             var query = "SELECT COUNT(*) FROM guest WHERE eventid = :eventid";
@@ -180,11 +185,14 @@ namespace SharedModels.Data.OracleContexts
 
             // userid username password firstname surname country address city postal phonenumber regdate permissionlevel eventid locationid passid paid present datestart dateend leaderid
             // 0      1        2        3         4       5       6       7    8      9           10      11              12      13         14     15   16      17        18      19
-            return new Guest(Convert.ToInt32(record[0]), record[1], record[2], record[3], record[14],
+
+            return new Guest(0, "" , "" , "", false, "", false, 0, false, DateTime.MaxValue, DateTime.MaxValue, 1, 0);
+
+            /*return new Guest(Convert.ToInt32(record[0]), record[1], record[2], record[3], record[14],
                 Convert.ToBoolean(Convert.ToInt32(record[15])), Convert.ToInt32(record[12]), Convert.ToBoolean(Convert.ToInt32(record[16])),
                 DateTime.Parse(record[17]), DateTime.Parse(record[18]), Convert.ToInt32(record[13]),
                 DateTime.Parse(record[10]), (PermissionType) Convert.ToInt32(record[11]), record[4],
-                (Country) Enum.Parse(typeof (Country), record[5]), record[7], record[8], record[6], record[9], Convert.ToInt32(string.IsNullOrEmpty(record[19]) ? "0" : record[19]));
+                (Country) Enum.Parse(typeof (Country), record[5]), record[7], record[8], record[6], record[9], Convert.ToInt32(string.IsNullOrEmpty(record[19]) ? "0" : record[19]));*/
         }
     }
 }

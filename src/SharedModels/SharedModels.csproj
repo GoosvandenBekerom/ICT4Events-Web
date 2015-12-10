@@ -92,7 +92,7 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Contribution.cs" />
     <Compile Include="Models\Event.cs" />
-    <Compile Include="Models\File.cs" />
+    <Compile Include="Models\FileContribution.cs" />
     <Compile Include="Models\Guest.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Location.cs" />

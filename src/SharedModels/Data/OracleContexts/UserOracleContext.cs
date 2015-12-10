@@ -39,7 +39,7 @@ namespace SharedModels.Data.OracleContexts
                 "INSERT INTO useraccount (userid, username, password, firstname, surname, country, address, city, postal, phonenumber, permissionlevel) VALUES (seq_user.nextval, :username, :password, :firstname, :surname, :country, :address, :city, :postal, :phonenumber, :permissionlevel) RETURNING userid INTO :lastID";
             var parameters = new List<OracleParameter>
             {
-                new OracleParameter("username", user.Username),
+                /*new OracleParameter("username", user.Username),
                 new OracleParameter("password", user.Password),
                 new OracleParameter("firstname", user.Name),
                 new OracleParameter("surname", user.Surname),
@@ -49,7 +49,7 @@ namespace SharedModels.Data.OracleContexts
                 new OracleParameter("postal", user.Postal),
                 new OracleParameter("phonenumber", user.Telephone),
                 new OracleParameter("permissionlevel", Convert.ToInt32(user.Permission)),
-                new OracleParameter("lastID", OracleDbType.Decimal) {Direction = ParameterDirection.ReturnValue}
+                new OracleParameter("lastID", OracleDbType.Decimal) {Direction = ParameterDirection.ReturnValue}*/
             };
 
             string newID;
@@ -63,7 +63,7 @@ namespace SharedModels.Data.OracleContexts
 
             var parameters = new List<OracleParameter>
             {
-                new OracleParameter("userid", user.ID),
+                /*new OracleParameter("userid", user.ID),
                 new OracleParameter("pass", user.Password),
                 new OracleParameter("firstname", user.Name),
                 new OracleParameter("surname", user.Surname),
@@ -72,7 +72,7 @@ namespace SharedModels.Data.OracleContexts
                 new OracleParameter("city", user.City),
                 new OracleParameter("postal", user.Postal),
                 new OracleParameter("phonenumber", user.Telephone),
-                new OracleParameter("permissionlevel", Convert.ToInt32(user.Permission))
+                new OracleParameter("permissionlevel", Convert.ToInt32(user.Permission))*/
             };
 
             return Database.ExecuteNonQuery(query, parameters);
@@ -114,9 +114,10 @@ namespace SharedModels.Data.OracleContexts
             if (record == null) return null;
 
             // Date format: 19-10-2015 01:57:21
-            return new User(Convert.ToInt32(record[0]), record[1], record[2], record[3], record[4], (Country) Enum.Parse(typeof(Country), record[5]),
+            return new User(0, "", "", "", false);
+            /*return new User(Convert.ToInt32(record[0]), record[1], record[2], record[3], record[4], (Country) Enum.Parse(typeof(Country), record[5]),
                 record[7], record[8], record[6], record[9],
-                DateTime.Parse(record[10]), (PermissionType) Convert.ToInt32(record[11]));
+                DateTime.Parse(record[10]), (PermissionType) Convert.ToInt32(record[11]));*/
         }
     }
 }

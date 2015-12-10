@@ -137,12 +137,12 @@ namespace SharedModels.Logic
         private static bool SendConfirmationEmail(User user, bool generated = false, string password = "")
         {
             var fromAddress = new MailAddress(Properties.Settings.Default.Email, "ICT4Events");
-            var toAddress = new MailAddress(user.Username, user.Name);
+            var toAddress = new MailAddress(user.Email, user.Username);
             var fromPassword = Properties.Settings.Default.EmailPassword;
             const string subject = "Confirmation of your new user account for ICT4Events";
 
             var body = 
-                "Hello " + user.Name + ",\r\n\r\n" +
+                "Hello " + user.Username + ",\r\n\r\n" +
                 "Your new account for ICT4Events was successfully created!" +
                 ((generated && !string.IsNullOrWhiteSpace(password))
                     ? $"\r\nYour generated password is {password}.\r\nYou can change your password after logging in."

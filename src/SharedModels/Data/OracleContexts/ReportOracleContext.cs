@@ -72,6 +72,11 @@ namespace SharedModels.Data.OracleContexts
             return Database.ExecuteNonQuery(query, parameters);
         }
 
+        public int GetCountByPost(Post post)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Report> GetAllByPost(Post post)
         {
             var query = "SELECT * FROM report WHERE postid = :postid ORDER BY postid, userid";

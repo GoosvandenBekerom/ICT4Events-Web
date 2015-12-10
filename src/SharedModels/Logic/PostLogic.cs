@@ -127,7 +127,7 @@ namespace SharedModels.Logic
         
         public List<Report> GetReportsByPost(Post post)
         {
-            return _reportContext.GetAllByPost(post);
+            return new List<Report>();//_reportContext.GetAllByPost(post);
         }
 
         /// <summary>

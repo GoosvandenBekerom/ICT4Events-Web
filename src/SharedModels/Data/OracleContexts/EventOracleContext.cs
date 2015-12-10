@@ -37,11 +37,10 @@ namespace SharedModels.Data.OracleContexts
                 "INSERT INTO event (eventid, name, startdate, enddate, location, mapfilename, capacity) VALUES (seq_event.nextval, :name, :startdate, :enddate, :location, :mapfilename, :capacity) RETURNING eventid INTO :lastID";
             var parameters = new List<OracleParameter>
             {
+                new OracleParameter("locationID", ev.LocationID),
                 new OracleParameter("name", ev.Name),
-                new OracleParameter("startdate", ev.StartDate) {OracleDbType = OracleDbType.Date},
-                new OracleParameter("enddate", ev.EndDate) {OracleDbType = OracleDbType.Date},
-                new OracleParameter("location", ev.Location),
-                new OracleParameter("mapfilename", ev.MapPath),
+                new OracleParameter("startdate", ev.StartDate),
+                new OracleParameter("enddate", ev.EndDate),
                 new OracleParameter("capacity", ev.Capacity),
                 new OracleParameter("lastID", OracleDbType.Decimal) {Direction = ParameterDirection.ReturnValue}
             };
@@ -61,9 +60,7 @@ namespace SharedModels.Data.OracleContexts
                 new OracleParameter("name", ev.Name),
                 new OracleParameter("startdate", ev.StartDate),
                 new OracleParameter("enddate", ev.EndDate),
-                new OracleParameter("location", ev.Location),
-                new OracleParameter("mapfilename", ev.MapPath),
-                new OracleParameter("capacity", ev.Capacity),
+                new OracleParameter("capacity", ev.Capacity)
             };
 
             return Database.ExecuteNonQuery(query, parameters);
@@ -95,8 +92,8 @@ namespace SharedModels.Data.OracleContexts
         {
             if (record == null) return null;
 
-            return new Event(Convert.ToInt32(record[0]), record[1], DateTime.Parse(record[2]), DateTime.Parse(record[3]),
-                record[4], record[5], Convert.ToInt32(record[6]));
+            return new Event(Convert.ToInt32(record[0]), Convert.ToInt32(record[1]), record[2],
+                DateTime.Parse(record[3]), DateTime.Parse(record[4]), Convert.ToInt32(record[5]));
         }
     }
 }
