@@ -9,8 +9,8 @@ namespace SharedModels.Data.ContextInterfaces
         Guest GetGuestByEvent(Event ev, int userID);
         List<Guest> GetGuestsByUser(User user);
         List<Guest> GetGuestsByGroup(Event ev, int leaderID);
-        Guest GetByRfid(string rfid, Event ev);
+        Guest GetByBarcode(int barcode, Event ev);
         int GetGuestCountByEvent(Event ev);
-        int GetGuestCountByLocation(Location location);
+        int GetGuestCountByPlace(Place place);
     }
 }

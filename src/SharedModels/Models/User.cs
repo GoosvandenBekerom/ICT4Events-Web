@@ -12,38 +12,17 @@ namespace SharedModels.Models
     {
         public int ID { get; }
         public string Username { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Password { get; set; }
-        public Country Country { get; set; }
-        public string City { get; set; }
-        public string Postal { get; set; }
-        public string Address { get; set; }
-        public string Telephone { get; set; }
-        public DateTime RegistrationDate { get; }
-        public PermissionType Permission { get; set; }
+        public string Email { get; set; }
+        public string ActivationHash { get; set; }
+        public bool Activated { get; set; }
 
-        public User(int id, string username, string password, string name, string surname = "", Country country = Country.Nederland, string city = "", string postal = "",
-            string address = "", string telephone = "", DateTime regDate = new DateTime(),
-            PermissionType permission = PermissionType.User)
+        public User(int id, string username, string email, string hash, bool activated)
         {
-            if (!IsValidEmail(username))
-            {
-                throw new FormatException("Username doesn't contain a valid email address");
-            }
-
             ID = id;
             Username = username;
-            Password = password;
-            Name = name;
-            Surname = surname;
-            Country = country;
-            City = city;
-            Postal = postal;
-            Address = address;
-            Telephone = telephone;
-            RegistrationDate = regDate;
-            Permission = permission;
+            Email = email;
+            ActivationHash = hash;
+            Activated = activated;
         }
 
         /// <summary>
@@ -61,7 +40,7 @@ namespace SharedModels.Models
 
         public override string ToString()
         {
-            return $"{ID} | {Name} {Surname} | {Username} | {City}, {Country} | {Telephone}";
+            return $"{ID} | {Username}";
         }
     }
 }

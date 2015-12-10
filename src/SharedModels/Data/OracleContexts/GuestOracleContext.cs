@@ -163,12 +163,12 @@ namespace SharedModels.Data.OracleContexts
             return Convert.ToInt32(Database.ExecuteScalar(query, parameters));
         }
 
-        public int GetGuestCountByLocation(Location location)
+        public int GetGuestCountByPlace(Place place)
         {
             var query = "SELECT COUNT(*) FROM guest WHERE locationid = :locationid";
             var parameters = new List<OracleParameter>
             {
-                new OracleParameter("locationid", location.ID)
+                new OracleParameter("locationid", place.ID)
             };
 
             return Convert.ToInt32(Database.ExecuteScalar(query, parameters));

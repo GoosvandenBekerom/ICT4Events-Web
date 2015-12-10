@@ -9,9 +9,9 @@ using SharedModels.Models;
 
 namespace SharedModels.Data.OracleContexts
 {
-    public class LocationOracleContext : EntityOracleContext<Location>, ILocationContext
+    public class LocationOracleContext : EntityOracleContext<Place>, ILocationContext
     {
-        public List<Location> GetAll()
+        public List<Place> GetAll()
         {
             var query = "SELECT * FROM location ORDER BY locationid";
             var res = Database.ExecuteReader(query);
@@ -19,7 +19,7 @@ namespace SharedModels.Data.OracleContexts
             return res.Select(GetEntityFromRecord).ToList();
         }
 
-        public Location GetById(object id)
+        public Place GetById(object id)
         {
             var query = "SELECT * FROM location WHERE locationid = :locationid";
             var parameters = new List<OracleParameter>
@@ -30,7 +30,7 @@ namespace SharedModels.Data.OracleContexts
             return GetEntityFromRecord(Database.ExecuteReader(query, parameters).First());
         }
 
-        public Location Insert(Location entity)
+        public Place Insert(Place entity)
         {
             var query =
                 "INSERT INTO location (locationid, eventid, name, capacity, price, x, y) VALUES (seq_location.nextval, :eventid, :name, :capacity, :price, :x, :y) RETURNING locationid INTO :lastID";
@@ -50,7 +50,7 @@ namespace SharedModels.Data.OracleContexts
             return GetById(Convert.ToInt32(newID));
         }
 
-        public bool Update(Location entity)
+        public bool Update(Place entity)
         {
             const string query = "UPDATE location SET name = :name, capacity = :capacity, price = :price, x = :x, y = :y WHERE locationid = :locationid";
 
@@ -67,7 +67,7 @@ namespace SharedModels.Data.OracleContexts
             return Database.ExecuteNonQuery(query, parameters);
         }
 
-        public bool Delete(Location entity)
+        public bool Delete(Place entity)
         {
             var query = "DELETE FROM location WHERE locationid = :locationid";
             var parameters = new List<OracleParameter> { new OracleParameter("locationid", entity.ID) };
@@ -75,7 +75,7 @@ namespace SharedModels.Data.OracleContexts
             return Database.ExecuteNonQuery(query, parameters);
         }
 
-        public List<Location> GetAllByEvent(Event ev)
+        public List<Place> GetAllByEvent(Event ev)
         {
             var query = "SELECT * FROM location WHERE eventid = :eventid ORDER BY locationid";
             var parameters = new List<OracleParameter> { new OracleParameter("eventid", ev.ID) };
@@ -84,11 +84,11 @@ namespace SharedModels.Data.OracleContexts
             return res.Select(GetEntityFromRecord).ToList();
         }
 
-        protected override Location GetEntityFromRecord(List<string> record)
+        protected override Place GetEntityFromRecord(List<string> record)
         {
             if (record == null) return null;
 
-            return new Location(Convert.ToInt32(record[0]), Convert.ToInt32(record[1]), record[2], Convert.ToInt32(record[3]),
+            return new Place(Convert.ToInt32(record[0]), Convert.ToInt32(record[1]), record[2], Convert.ToInt32(record[3]),
                 Convert.ToDecimal(record[4]), new Point(Convert.ToInt32(record[5]), Convert.ToInt32(record[6])));
         }
     }

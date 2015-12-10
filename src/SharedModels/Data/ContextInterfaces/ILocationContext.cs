@@ -7,8 +7,8 @@ using SharedModels.Models;
 
 namespace SharedModels.Data.ContextInterfaces
 {
-    public interface ILocationContext : IRepositoryContext<Location>
+    public interface ILocationContext : IRepositoryContext<Place>
     {
-        List<Location> GetAllByEvent(Event ev);
+        List<Place> GetAllByEvent(Event ev);
     }
 }

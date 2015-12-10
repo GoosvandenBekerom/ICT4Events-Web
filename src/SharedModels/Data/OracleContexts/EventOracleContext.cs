@@ -42,7 +42,7 @@ namespace SharedModels.Data.OracleContexts
                 new OracleParameter("enddate", ev.EndDate) {OracleDbType = OracleDbType.Date},
                 new OracleParameter("location", ev.Location),
                 new OracleParameter("mapfilename", ev.MapPath),
-                new OracleParameter("capacity", ev.MaxCapacity),
+                new OracleParameter("capacity", ev.Capacity),
                 new OracleParameter("lastID", OracleDbType.Decimal) {Direction = ParameterDirection.ReturnValue}
             };
 
@@ -63,7 +63,7 @@ namespace SharedModels.Data.OracleContexts
                 new OracleParameter("enddate", ev.EndDate),
                 new OracleParameter("location", ev.Location),
                 new OracleParameter("mapfilename", ev.MapPath),
-                new OracleParameter("capacity", ev.MaxCapacity),
+                new OracleParameter("capacity", ev.Capacity),
             };
 
             return Database.ExecuteNonQuery(query, parameters);

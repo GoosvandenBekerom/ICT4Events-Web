@@ -3,32 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SharedModels.Enums;
 
 namespace SharedModels.Models
 {
-    
-    public class Location
+    public class Person
     {
         public int ID { get; }
         public string Name { get; set; }
+        public string Surname { get; set; }
         public string Address { get; set; }
-        public int Number { get; set; }
-        public string PostalCode { get; set; }
         public string City { get; set; }
+        public string IBAN { get; set; }
+        public PermissionType Permission { get; set; }
 
-        public Location(int id, string name, string address, int number, string postalCode, string city)
+        public Person(int id, string name, string surname, string address, string city, string iban, PermissionType permission)
         {
             ID = id;
             Name = name;
+            Surname = surname;
             Address = address;
-            Number = number;
-            PostalCode = postalCode;
             City = city;
-        }
-
-        public override string ToString()
-        {
-            return Name;
+            IBAN = iban;
+            Permission = permission;
         }
     }
 }

@@ -17,29 +17,29 @@ namespace SharedModels.Logic
             _context = context;
         }
 
-        public Location GetLocationByID(int id)
+        public Place GetLocationByID(int id)
         {
             return _context.GetById(id);
         }
 
-        public List<Location> GetLocationsByEvent(Event ev)
+        public List<Place> GetLocationsByEvent(Event ev)
         {
             return _context.GetAllByEvent(ev);
         }
 
-        public Location InsertLocation(Location location)
+        public Place InsertLocation(Place place)
         {
-            return _context.Insert(location);
+            return _context.Insert(place);
         }
 
-        public bool UpdateLocation(Location location)
+        public bool UpdateLocation(Place place)
         {
-            return _context.Update(location);
+            return _context.Update(place);
         }
 
-        public bool DeleteLocation(Location location)
+        public bool DeleteLocation(Place place)
         {
-            return _context.Delete(location);
+            return _context.Delete(place);
         }
     }
 }
