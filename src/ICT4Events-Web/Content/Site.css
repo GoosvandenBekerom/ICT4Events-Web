@@ -18,15 +18,15 @@ body {
     white-space: normal;
 }
 
-/* Set widths on the form inputs since otherwise they're 100% wide */
+/* Set widths on the form inputs since otherwise they're 100% wide 
 input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="tel"],
 input[type="select"] {
-    max-width: 280px;
+   max-width: 280px;
 }
-
+*/
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .jumbotron {
@@ -35,4 +35,59 @@ input[type="select"] {
     .body-content {
         padding: 0;
     }
+}
+
+.postContainer li {
+   border: 1px solid #e3e3e3;
+   border-radius: 3px;
+   list-style: none;
+}
+
+.PostHeader .Username {
+   font-weight: bold;
+}
+
+.post {
+   margin-bottom: 0px;
+   border: none;
+   border-bottom-left-radius: 0px;
+   border-bottom-right-radius: 0px;
+   border-bottom: 1px solid #e1e8ed;
+}
+
+.replyForm .dropup {
+   border-top: 1px solid #f6e9e9;
+   border-width: 0 10px 8px;
+}
+
+.replyForm .dropup .caret {
+   border-bottom: 6px solid #f6e9e9;
+   /*border-width: 0 9px 7px;*/
+   position: absolute;
+   top: -25px;
+   left: 5px;
+}
+
+.replyForm {
+   background-color: #f6e9e9;
+   border-bottom-left-radius: 3px;
+   border-bottom-right-radius: 3px;
+   
+   padding: 10px;
+}
+
+.replyForm .form-control {
+   
+}
+
+.replyForm input[type="text"] {
+   display: inline;
+}
+
+.replyForm .form-group {
+   margin-bottom: 0px;
+}
+
+.red {
+   border: 1px solid red;
 }
