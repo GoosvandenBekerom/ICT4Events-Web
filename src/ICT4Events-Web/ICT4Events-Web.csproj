@@ -180,8 +180,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
-    <Content Include="Views\ReservationSystem\ReservationSystem.aspx" />
-    <Content Include="Views\AccountSystem\Register.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -392,18 +390,16 @@
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Views\ReservationSystem\ReservationSystem.aspx.cs">
-      <DependentUpon>ReservationSystem.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
+    <Compile Include="Views\Reserveringsysteem\reserveringsysteem.aspx.cs">
+      <DependentUpon>reserveringsysteem.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Views\ReservationSystem\ReservationSystem.aspx.designer.cs">
-      <DependentUpon>ReservationSystem.aspx</DependentUpon>
+    <Compile Include="Views\Reserveringsysteem\reserveringsysteem.aspx.designer.cs">
+      <DependentUpon>reserveringsysteem.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Views\AccountSystem\Register.aspx.cs">
+    <Compile Include="Views\Accountsysteem\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\AccountSystem\Register.aspx.designer.cs">
+    <Compile Include="Views\Accountsysteem\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\SocialMediaSystem\Controls\PostControl.ascx.cs">
@@ -423,12 +419,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SharedModels\SharedModels.csproj">
-      <Project>{315d421a-3904-4926-8492-1b0316c435d3}</Project>
-      <Name>SharedModels</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharedModels\SharedModels.csproj">

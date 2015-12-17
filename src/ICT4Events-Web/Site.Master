@@ -51,14 +51,13 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/views/ReservationSystem/reserveringsysteem.aspx">Reserveringsysteem</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Views/AccountSystem/Register">Registreren</a></li>
-                                <li><a runat="server" href="~/AccountSystem/Login">Inloggen</a></li>
+                                <li><a runat="server" href="~/Views/Reserveringsysteem/Register.aspx">Register</a></li>
+                                <li><a runat="server" href="~/Account/Login">Log in</a></li>
                             </ul>
                         </AnonymousTemplate>
                         <LoggedInTemplate>
