@@ -180,8 +180,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
-    <Content Include="Views\Reserveringsysteem\reserveringsysteem.aspx" />
-    <Content Include="Views\Accountsysteem\Register.aspx" />
+    <Content Include="Views\Reserveringsysteem\Register.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -390,23 +389,17 @@
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Views\Reserveringsysteem\reserveringsysteem.aspx.cs">
-      <DependentUpon>reserveringsysteem.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\Reserveringsysteem\reserveringsysteem.aspx.designer.cs">
-      <DependentUpon>reserveringsysteem.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Accountsysteem\Register.aspx.cs">
+    <Compile Include="Views\Reserveringsysteem\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\Accountsysteem\Register.aspx.designer.cs">
+    <Compile Include="Views\Reserveringsysteem\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Accountsysteem\" />
     <Folder Include="Views\SocialMediaSystem\" />
   </ItemGroup>
   <ItemGroup>
