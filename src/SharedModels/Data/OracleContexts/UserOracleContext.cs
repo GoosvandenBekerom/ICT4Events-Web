@@ -25,65 +25,59 @@ namespace SharedModels.Data.OracleContexts
 
         public User GetById(object id)
         {
-            var query = "SELECT * FROM useraccount WHERE userid = :userid";
+            var query = "p_account.getById";
+
             var parameters = new List<OracleParameter>
-            {
-                new OracleParameter("userid", Convert.ToInt32(id))
-            };
+                {
+                    new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue),
+                    new OracleParameter("accountId", id)
+                };
 
             return GetEntityFromRecord(Database.ExecuteReader(query, parameters).First());
         }
 
-        public User Insert(User user)
+        public bool Insert(User user)
         {
             var query =
-                "INSERT INTO useraccount (userid, username, password, firstname, surname, country, address, city, postal, phonenumber, permissionlevel) VALUES (seq_user.nextval, :username, :password, :firstname, :surname, :country, :address, :city, :postal, :phonenumber, :permissionlevel) RETURNING userid INTO :lastID";
-            var parameters = new List<OracleParameter>
-            {
-                /*new OracleParameter("username", user.Username),
-                new OracleParameter("password", user.Password),
-                new OracleParameter("firstname", user.Name),
-                new OracleParameter("surname", user.Surname),
-                new OracleParameter("country", user.Country.ToString()),
-                new OracleParameter("address", user.Address),
-                new OracleParameter("city", user.City),
-                new OracleParameter("postal", user.Postal),
-                new OracleParameter("phonenumber", user.Telephone),
-                new OracleParameter("permissionlevel", Convert.ToInt32(user.Permission)),
-                new OracleParameter("lastID", OracleDbType.Decimal) {Direction = ParameterDirection.ReturnValue}*/
-            };
+                "p_account.insertAccount";
 
-            string newID;
-            if (!Database.ExecuteNonQuery(query, out newID, parameters)) return null;
-            return GetById(Convert.ToInt32(newID));
+            var parameters = new List<OracleParameter>
+                {
+                    new OracleParameter("Return_Value", OracleDbType.Int32, ParameterDirection.ReturnValue),
+                    new OracleParameter("p_gebruikersnaam", user.Username),
+                    new OracleParameter("p_email", user.Email),
+                    new OracleParameter("p_activatiehash", user.ActivationHash),
+                    new OracleParameter("p_geactiveerd", Convert.ToInt32(user.Activated)) };
+
+            return Database.ExecuteNonQuery(query, parameters);
         }
 
         public bool Update(User user)
         {
-            const string query = "UPDATE useraccount SET password = :pass, firstname = :firstname, surname = :surname, country = :country, address = :address, city = :city, postal = :postal, phonenumber = :phonenumber, permissionlevel = :permissionlevel WHERE userid = :userid";
+            var query = "p_account.updateAccount";
 
             var parameters = new List<OracleParameter>
-            {
-                /*new OracleParameter("userid", user.ID),
-                new OracleParameter("pass", user.Password),
-                new OracleParameter("firstname", user.Name),
-                new OracleParameter("surname", user.Surname),
-                new OracleParameter("country", user.Country.ToString()),
-                new OracleParameter("address", user.Address),
-                new OracleParameter("city", user.City),
-                new OracleParameter("postal", user.Postal),
-                new OracleParameter("phonenumber", user.Telephone),
-                new OracleParameter("permissionlevel", Convert.ToInt32(user.Permission))*/
-            };
+                {
+                    new OracleParameter("Return_Value", OracleDbType.Int32, ParameterDirection.ReturnValue),
+                    new OracleParameter("p_accId", user.ID),
+                    new OracleParameter("p_gebruikersnaam", user.Username),
+                    new OracleParameter("p_email", user.Email),
+                    new OracleParameter("p_activatiehash", user.ActivationHash),
+                    new OracleParameter("p_geactiveerd", Convert.ToInt32(user.Activated))
+                };
 
             return Database.ExecuteNonQuery(query, parameters);
         }
 
         public bool Delete(User user)
         {
-            var query = "DELETE FROM useraccount WHERE userid = :userid";
-            var parameters = new List<OracleParameter> { new OracleParameter("userid", user.ID) };
+            var query = "p_account.deleteAccount";
 
+            var parameters = new List<OracleParameter>
+                {
+                    new OracleParameter("Return_Value", OracleDbType.Int32, ParameterDirection.ReturnValue),
+                    new OracleParameter("p_accId", user.ID)
+                };
             return Database.ExecuteNonQuery(query, parameters);
         }
 
@@ -115,7 +109,7 @@ namespace SharedModels.Data.OracleContexts
             if (record == null) return null;
 
             // Date format: 19-10-2015 01:57:21
-            return new User(0, "", "", "", false);
+            return new User(Convert.ToInt32(record[0]), record[1], record[2], record[3], true);
             /*return new User(Convert.ToInt32(record[0]), record[1], record[2], record[3], record[4], (Country) Enum.Parse(typeof(Country), record[5]),
                 record[7], record[8], record[6], record[9],
                 DateTime.Parse(record[10]), (PermissionType) Convert.ToInt32(record[11]));*/

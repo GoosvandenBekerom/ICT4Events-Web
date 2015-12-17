@@ -23,7 +23,7 @@ namespace SharedModels.Logic
             return _context.GetAllByEvent(ev);
         }
 
-        public Place InsertLocation(Place place)
+        public bool InsertLocation(Place place)
         {
             return _context.Insert(place);
         }

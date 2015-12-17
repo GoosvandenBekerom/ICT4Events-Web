@@ -29,7 +29,7 @@ namespace SharedModels.Data.OracleContexts
             return GetEntityFromRecord(Database.ExecuteReader(query, parameters).First());
         }
 
-        public Event Insert(Event ev)
+        public bool Insert(Event ev)
         {
             var query =
                 "INSERT INTO event (eventid, name, startdate, enddate, location, mapfilename, capacity) VALUES (seq_event.nextval, :name, :startdate, :enddate, :location, :mapfilename, :capacity) RETURNING eventid INTO :lastID";
@@ -43,9 +43,7 @@ namespace SharedModels.Data.OracleContexts
                 new OracleParameter("lastID", OracleDbType.Decimal) {Direction = ParameterDirection.ReturnValue}
             };
 
-            string newID;
-            if (!Database.ExecuteNonQuery(query, out newID, parameters)) return null;
-            return GetById(Convert.ToInt32(newID));
+            return Database.ExecuteNonQuery(query, parameters);
         }
 
         public bool Update(Event ev)
