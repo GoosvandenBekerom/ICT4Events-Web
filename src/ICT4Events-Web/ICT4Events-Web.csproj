@@ -181,7 +181,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
     <Content Include="Views\Reserveringsysteem\reserveringsysteem.aspx" />
-    <Content Include="Webform.aspx" />
+    <Content Include="Views\Accountsysteem\Register.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -397,12 +397,12 @@
     <Compile Include="Views\Reserveringsysteem\reserveringsysteem.aspx.designer.cs">
       <DependentUpon>reserveringsysteem.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Webform.aspx.cs">
-      <DependentUpon>Webform.aspx</DependentUpon>
+    <Compile Include="Views\Accountsysteem\Register.aspx.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Webform.aspx.designer.cs">
-      <DependentUpon>Webform.aspx</DependentUpon>
+    <Compile Include="Views\Accountsysteem\Register.aspx.designer.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

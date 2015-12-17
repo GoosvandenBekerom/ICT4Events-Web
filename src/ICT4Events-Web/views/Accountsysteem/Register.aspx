@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Registreren klant" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Webform.aspx.cs" EnableEventValidation="true" Inherits="ICT4Events_Web.Webform" %>
+﻿<%@ Page Title="Registreren klant" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" EnableEventValidation="true" Inherits="ICT4Events_Web.Webform" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: Title %></h2>
