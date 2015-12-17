@@ -216,6 +216,7 @@
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
+    <Content Include="Views\ReservationSystem\Register.aspx" />
     <Content Include="Views\SocialMediaSystem\Controls\PostControl.ascx" />
     <Content Include="Views\SocialMediaSystem\Timeline.aspx" />
     <Content Include="Web.config" />
@@ -390,16 +391,11 @@
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Views\Reserveringsysteem\reserveringsysteem.aspx.cs">
-      <DependentUpon>reserveringsysteem.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Reserveringsysteem\reserveringsysteem.aspx.designer.cs">
-      <DependentUpon>reserveringsysteem.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Accountsysteem\Register.aspx.cs">
+    <Compile Include="Views\ReservationSystem\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\Accountsysteem\Register.aspx.designer.cs">
+    <Compile Include="Views\ReservationSystem\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\SocialMediaSystem\Controls\PostControl.ascx.cs">
@@ -419,6 +415,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\AccountSystem\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharedModels\SharedModels.csproj">
