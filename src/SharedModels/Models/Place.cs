@@ -5,7 +5,7 @@ namespace SharedModels.Models
     public class Place
     {
         public int ID { get; }
-        public int locationID { get; }
+        public int LocationID { get; }
         public string Name { get; set; }
         public int Capacity { get; set; }
         public decimal Price { get; set; }
@@ -18,7 +18,7 @@ namespace SharedModels.Models
         public Place(int id, int locationId, string name, int capacity, decimal price, Point coordinates, bool tapWater, bool comfortable, bool handicap, int size)
         {
             ID = id;
-            locationID = locationId;
+            LocationID = locationId;
             Name = name;
             Capacity = capacity;
             Price = price;
