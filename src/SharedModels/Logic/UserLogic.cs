@@ -177,13 +177,6 @@ namespace SharedModels.Logic
             }
         }
 
-        /// <summary>
-        /// Changes the user accounts permission level
-        /// </summary>
-        /// <param name="user">user to change permission level of</param>
-        /// <param name="newPermissionType">PermissionType to change permission level to</param>
-        public void ChangePermissionType(User user, PermissionType newPermissionType) => user.Permission = newPermissionType;
-
 
         /// <summary>
         /// Update an existing user

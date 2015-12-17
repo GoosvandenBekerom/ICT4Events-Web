@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Oracle.DataAccess.Client;
 using SharedModels.Data.ContextInterfaces;
-using SharedModels.Enums;
 using SharedModels.Models;
 
 namespace SharedModels.Data.OracleContexts
@@ -16,9 +12,14 @@ namespace SharedModels.Data.OracleContexts
     {
         public List<User> GetAll()
         {
-            var query = "SELECT * FROM useraccount ORDER BY userid";
-            var res = Database.ExecuteReader(query);
+            var query = "p_account.getAll";
 
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue)
+            };
+
+            var res = Database.ExecuteReader(query, parameters);
             return res.Select(GetEntityFromRecord).ToList();
         }
 

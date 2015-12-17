@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Net.Sockets;
-using System.Runtime.InteropServices;
 using Oracle.DataAccess.Client;
 using SharedModels.Data.ContextInterfaces;
 using SharedModels.Models;

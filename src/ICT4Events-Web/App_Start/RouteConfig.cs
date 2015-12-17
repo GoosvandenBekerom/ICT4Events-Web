@@ -13,6 +13,7 @@ namespace ICT4Events_Web
             var settings = new FriendlyUrlSettings();
             settings.AutoRedirectMode = RedirectMode.Permanent;
             routes.EnableFriendlyUrls(settings);
+            //routes.MapPageRoute()
         }
     }
 }
