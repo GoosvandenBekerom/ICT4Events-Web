@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using SharedModels.Enums;
+﻿using System.Text.RegularExpressions;
 
 namespace SharedModels.Models
 {
@@ -16,15 +14,16 @@ namespace SharedModels.Models
         public string Password { get; set; }
         public string ActivationHash { get; set; }
         public bool Activated { get; set; }
-        public PermissionType Permission { get; set; }
+        public bool Permission { get; set; }
 
-        public User(int id, string username, string email, string hash, bool activated)
+        public User(int id, string username, string email, string hash, bool activated, bool permission = false)
         {
             ID = id;
             Username = username;
             Email = email;
             ActivationHash = hash;
             Activated = activated;
+            Permission = permission;
         }
 
         /// <summary>

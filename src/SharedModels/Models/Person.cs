@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SharedModels.Enums;
+﻿using SharedModels.Enums;
 
 namespace SharedModels.Models
 {
@@ -15,9 +10,8 @@ namespace SharedModels.Models
         public string Address { get; set; }
         public string City { get; set; }
         public string IBAN { get; set; }
-        public PermissionType Permission { get; set; }
 
-        public Person(int id, string name, string surname, string address, string city, string iban, PermissionType permission)
+        public Person(int id, string name, string surname, string address, string city, string iban)
         {
             ID = id;
             Name = name;
@@ -25,7 +19,6 @@ namespace SharedModels.Models
             Address = address;
             City = city;
             IBAN = iban;
-            Permission = permission;
         }
     }
 }
