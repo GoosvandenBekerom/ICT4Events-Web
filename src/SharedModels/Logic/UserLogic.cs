@@ -74,13 +74,13 @@ namespace SharedModels.Logic
         /// </summary>
         /// <param name="user">User created in user interface</param>
         /// <returns>a new user object with correct user id</returns>
-        public User RegisterUser(User user, bool generated = false, string password = "")
+        public bool RegisterUser(User user, bool generated = false, string password = "")
         {
             var registeredUser = _context.Insert(user);
 
             try
             {
-                SendConfirmationEmail(registeredUser, generated, password);
+                SendConfirmationEmail(user.Email, user.Username, generated, password);
             }
             catch (MailWasNotSentException e)
             {
@@ -134,15 +134,15 @@ namespace SharedModels.Logic
         /// </summary>
         /// <param name="user">user to send confirmation email to</param>
         /// <returns>true if mail was successfully send, throws exception if sending mail fails</returns>
-        private static bool SendConfirmationEmail(User user, bool generated = false, string password = "")
+        private static bool SendConfirmationEmail(string userEmail, string name, bool generated = false, string password = "")
         {
             var fromAddress = new MailAddress(Properties.Settings.Default.Email, "ICT4Events");
-            var toAddress = new MailAddress(user.Email, user.Username);
+            var toAddress = new MailAddress(userEmail, name);
             var fromPassword = Properties.Settings.Default.EmailPassword;
             const string subject = "Confirmation of your new user account for ICT4Events";
 
             var body = 
-                "Hello " + user.Username + ",\r\n\r\n" +
+                "Hello " + name + ",\r\n\r\n" +
                 "Your new account for ICT4Events was successfully created!" +
                 ((generated && !string.IsNullOrWhiteSpace(password))
                     ? $"\r\nYour generated password is {password}.\r\nYou can change your password after logging in."

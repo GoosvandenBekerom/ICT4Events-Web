@@ -168,8 +168,9 @@ namespace SharedModels.Data
             var result = -1;
             try
             {
-                using (var command = new OracleCommand(query, Connection) {BindByName = true})
+                using (var command = new OracleCommand(query, Connection) { BindByName = true })
                 {
+                    command.CommandType = CommandType.StoredProcedure;
                     if (args != null)
                     {
                         foreach (var arg in args)
@@ -178,12 +179,12 @@ namespace SharedModels.Data
                         }
                     }
 
-                    result = command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
+                    result = int.Parse((command.Parameters[0].Value.ToString()));
                 }
             }
             catch (OracleException e)
             {
-                Logger.Write(e.Message);
                 return false;
             }
             finally

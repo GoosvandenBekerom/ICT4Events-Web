@@ -10,7 +10,7 @@ namespace SharedModels.Data.ContextInterfaces
     {
         List<TEntity> GetAll();
         TEntity GetById(object id);
-        TEntity Insert(TEntity entity);
+        bool Insert(TEntity entity);
         bool Update(TEntity entity);
         bool Delete(TEntity entity);
     }

@@ -55,12 +55,14 @@
   <ItemGroup>
     <Compile Include="Data\ContextInterfaces\IEventContext.cs" />
     <Compile Include="Data\ContextInterfaces\ILocationContext.cs" />
+    <Compile Include="Data\ContextInterfaces\IPersonContext.cs" />
     <Compile Include="Data\ContextInterfaces\IRepositoryContext.cs" />
     <Compile Include="Data\Database.cs" />
     <Compile Include="Data\ContextInterfaces\IUserContext.cs" />
     <Compile Include="Data\OracleContexts\EntityOracleContext.cs" />
     <Compile Include="Data\OracleContexts\EventOracleContext.cs" />
     <Compile Include="Data\OracleContexts\LocationOracleContext.cs" />
+    <Compile Include="Data\OracleContexts\PersonOracleContext.cs" />
     <Compile Include="Data\OracleContexts\UserOracleContext.cs" />
     <Compile Include="Debug\Logger.cs" />
     <Compile Include="Enums\ContributionType.cs" />

@@ -28,7 +28,7 @@ namespace SharedModels.Logic
             return _context.Update(ev);
         }
 
-        public Event AddEvent(Event ev)
+        public bool AddEvent(Event ev)
         {
             return _context.Insert(ev);
         }

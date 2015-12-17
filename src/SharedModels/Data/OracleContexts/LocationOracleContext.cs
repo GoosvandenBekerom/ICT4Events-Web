@@ -29,7 +29,7 @@ namespace SharedModels.Data.OracleContexts
             return GetEntityFromRecord(Database.ExecuteReader(query, parameters).First());
         }
 
-        public Place Insert(Place entity)
+        public bool Insert(Place entity)
         {
             var query =
                 "INSERT INTO location (locationid, eventid, name, capacity, price, x, y) VALUES (seq_location.nextval, :eventid, :name, :capacity, :price, :x, :y) RETURNING locationid INTO :lastID";
@@ -46,9 +46,7 @@ namespace SharedModels.Data.OracleContexts
                 */
             };
 
-            string newID;
-            if (!Database.ExecuteNonQuery(query, out newID, parameters)) return null;
-            return GetById(Convert.ToInt32(newID));
+            return Database.ExecuteNonQuery(query, parameters);
         }
 
         public bool Update(Place entity)
