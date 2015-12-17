@@ -53,9 +53,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\ContextInterfaces\IProductCategoryContext.cs" />
+    <Compile Include="Data\ContextInterfaces\IProductContext.cs" />
+    <Compile Include="Data\ContextInterfaces\IFileContributionContext.cs" />
+    <Compile Include="Data\ContextInterfaces\IMessageContext.cs" />
+    <Compile Include="Data\ContextInterfaces\ICategoryContext.cs" />
+    <Compile Include="Data\ContextInterfaces\IItemContext.cs" />
+    <Compile Include="Data\ContextInterfaces\IPlaceContext.cs" />
     <Compile Include="Data\ContextInterfaces\IEventContext.cs" />
     <Compile Include="Data\ContextInterfaces\ILocationContext.cs" />
     <Compile Include="Data\ContextInterfaces\IPersonContext.cs" />
+    <Compile Include="Data\ContextInterfaces\IRentContext.cs" />
     <Compile Include="Data\ContextInterfaces\IRepositoryContext.cs" />
     <Compile Include="Data\Database.cs" />
     <Compile Include="Data\ContextInterfaces\IUserContext.cs" />
