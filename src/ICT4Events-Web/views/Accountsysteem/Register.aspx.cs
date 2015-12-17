@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+using SharedModels.Data.OracleContexts;
+using SharedModels.Models;
 
 namespace ICT4Events_Web
 {
     public partial class Webform : Page
     {
+        PersonOracleContext personContext = new PersonOracleContext();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -34,11 +34,22 @@ namespace ICT4Events_Web
 
             var firstname = first_name.Text;
             var surname = last_name.Text;
-            var telephone = phone_number.Text;
+            var pAddress = address.Text;
+            var pCity = city.Text;
             var ib = iban.Text;
 
+            var person = new Person(0, firstname, surname, pAddress, pCity, ib);
+
+            if (!personContext.Insert(person)) return;
+
             Label1.Visible = true;
-            Label1.Text = "Voornaam: "+ firstname + "<br />Achternaam: " + surname + "<br />Telefoonnummer: " + telephone +"<br />IBAN: "+ib;
+            Label1.Text = 
+                (IsValid ? "Succesvol!" : "Onsuccesvol") +
+                "<br />Voornaam: " + firstname + 
+                "<br />Achternaam: " + surname + 
+                "<br />Adres: " + pAddress + 
+                "<br />Woonplaats: " + pCity + 
+                "<br />IBAN: " +ib;
         }
     }
 }

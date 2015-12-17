@@ -70,7 +70,7 @@ namespace SharedModels.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("User Id=ICT4EventsWeb;Password=ICT4Events;Data Source=//192.168.20.221:1521/xe")]
+        [global::System.Configuration.DefaultSettingValueAttribute("User Id=ICT4EventsWeb;Password=ICT4EventsWeb;Data Source=//192.168.20.221:1521/xe")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));
