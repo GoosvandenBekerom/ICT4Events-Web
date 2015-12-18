@@ -36,7 +36,6 @@
                         </div>
                     </div>
                     <asp:Label ID="errorLabel" Runat="server" ForeColor="#ff3300"></asp:Label><br/>
-                    <asp:Label ID="Label5" runat="server"></asp:Label><br />
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
