@@ -22,7 +22,7 @@
             <!-- adres leader-->
             <div class="form-group">              
               <asp:Label runat="server" CssClass="control-label" AssociatedControlID="leader_address">Adres:</asp:Label>
-              <asp:TextBox runat="server" ID="leader_address" CssClass="form-control input-md" placeholder="ex: Kennedylaan" />
+              <asp:TextBox runat="server" ID="leader_address" CssClass="form-control input-md" placeholder="ex: Kennedylaan 14" />
               <asp:RequiredFieldValidator runat="server" CssClass="text-danger" ControlToValidate="leader_address" Display="Dynamic" ErrorMessage="Adres is verplicht" ValidationGroup="RegistrationGroup"/>
             </div>
 
