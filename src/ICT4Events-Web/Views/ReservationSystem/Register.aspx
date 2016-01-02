@@ -41,7 +41,7 @@
               <asp:Label runat="server" CssClass="control-label" AssociatedControlID="leader_iban">Rekeningnummer:</asp:Label>  
               <asp:TextBox runat="server" ID="leader_iban" CssClass="form-control input-md" placeholder="ex: NL99 BANK 2183 2384 12" />
               <asp:RequiredFieldValidator runat="server" CssClass="text-danger" ControlToValidate="leader_iban" Display="Dynamic" ErrorMessage="IBAN is verplicht" ValidationGroup="RegistrationGroup" />
-              <asp:CustomValidator ID="test" runat="server" ControlToValidate="leader_iban" ClientValidationFunction="validateIban" CssClass="text-danger" Display="Dynamic" ErrorMessage="IBAN is niet geldig" ValidateEmptyText="False" ValidationGroup="RegistrationGroup"/>  
+             <!-- <asp:CustomValidator ID="test" runat="server" ControlToValidate="leader_iban" ClientValidationFunction="validateIban" CssClass="text-danger" Display="Dynamic" ErrorMessage="IBAN is niet geldig" ValidateEmptyText="False" ValidationGroup="RegistrationGroup"/>  -->
             </div>
                 
              <!-- Emailadres leader -->
@@ -54,7 +54,7 @@
            <div class="form-group">
                 <asp:Label runat="server" CssClass="control-label"  AssociatedControlID="leader_Password" >Wachtwoord</asp:Label>
                 <asp:TextBox runat="server" ID="leader_Password" TextMode="Password" CssClass="form-control" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="leader_Password" CssClass="text-danger" ErrorMessage="Password is required." Display="Dynamic" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="leader_Password" CssClass="text-danger" ErrorMessage="Password is required." Display="Dynamic" ValidationGroup="RegistrationGroup" />
             </div>
             
             </div>
@@ -66,35 +66,30 @@
             <div class="form-group">
                 <asp:Label runat="server" CssClass="control-label" AssociatedControlID="Email1">Emailadres reserveerder 1:</asp:Label>  
                 <asp:TextBox runat="server" ID="Email1" CssClass="form-control input-md" placeholder="ex: johndoe@gmail.com" />
-                <asp:RequiredFieldValidator runat="server" CssClass="text-danger" ControlToValidate="Email1" Display="Dynamic" ErrorMessage="Emailadres is verplicht" ValidationGroup="RegistrationGroup" />
-            </div>
+              </div>
     
                 <!-- Emailadres 2 -->
             <div class="form-group">
                 <asp:Label runat="server" CssClass="control-label" AssociatedControlID="Email2">Emailadres reserveerder 2:</asp:Label>  
                 <asp:TextBox runat="server" ID="Email2" CssClass="form-control input-md" placeholder="ex: johndoe@gmail.com" />
-                <asp:RequiredFieldValidator runat="server" CssClass="text-danger" ControlToValidate="Email2" Display="Dynamic" ErrorMessage="Emailadres is verplicht" ValidationGroup="RegistrationGroup" />
             </div>
     
                 <!-- Emailadres 3 -->
             <div class="form-group">
                 <asp:Label runat="server" CssClass="control-label" AssociatedControlID="Email3">Emailadres reserveerder 3:</asp:Label>  
                 <asp:TextBox runat="server" ID="Email3" CssClass="form-control input-md" placeholder="ex: johndoe@gmail.com" />
-                <asp:RequiredFieldValidator runat="server" CssClass="text-danger" ControlToValidate="Email3" Display="Dynamic" ErrorMessage="Emailadres is verplicht" ValidationGroup="RegistrationGroup" />
             </div>
     
                 <!-- Emailadres 4 -->
             <div class="form-group">
                 <asp:Label runat="server" CssClass="control-label" AssociatedControlID="Email4">Emailadres reserveerder 4:</asp:Label>  
                 <asp:TextBox runat="server" ID="Email4" CssClass="form-control input-md" placeholder="ex: johndoe@gmail.com" />
-                <asp:RequiredFieldValidator runat="server" CssClass="text-danger" ControlToValidate="Email4" Display="Dynamic" ErrorMessage="Emailadres is verplicht" ValidationGroup="RegistrationGroup" />
             </div>
     
                 <!-- Emailadres 5 -->
             <div class="form-group">
                 <asp:Label runat="server" CssClass="control-label" AssociatedControlID="Email5">Emailadres reserveerder 5:</asp:Label>  
                 <asp:TextBox runat="server" ID="Email5" CssClass="form-control input-md" placeholder="ex: johndoe@gmail.com" />
-                <asp:RequiredFieldValidator runat="server" CssClass="text-danger" ControlToValidate="Email5" Display="Dynamic" ErrorMessage="Emailadres is verplicht" ValidationGroup="RegistrationGroup" />
             </div>
         </div>
     <div class="col-md-6">
@@ -113,7 +108,7 @@
         </button>
         <strong>Status registratie:</strong>
         <br/>
-        <asp:Label ID="Label1" runat="server" Visible="False" Text="Label"></asp:Label>
+        <asp:Label ID="lblError" runat="server" Text="Label"></asp:Label>
     </div>
 
 <script src="../../Scripts/iban.js"></script>
