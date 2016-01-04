@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace SharedModels.Models
 {
@@ -16,27 +17,15 @@ namespace SharedModels.Models
         public bool Activated { get; set; }
         public bool Permission { get; set; }
 
-        public User(int id, string username, string email, string hash, bool activated, bool permission = false)
+        public User(int id, string username, string email, string hash, bool activated, string password, bool permission = false)
         {
             ID = id;
             Username = username;
             Email = email;
+            Password = password;
             ActivationHash = hash;
             Activated = activated;
             Permission = permission;
-        }
-
-        /// <summary>
-        /// Checks if given string is a correctly formatted Email address.
-        /// Assumes the RFC 2822 Format
-        /// </summary>
-        /// <param name="email">Email string to check</param>
-        /// <returns>Returns true if specified string is a correctly formatted email address, returns false if not</returns>
-        public static bool IsValidEmail(string email)
-        {
-            return Regex.IsMatch(email,
-                @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z",
-                RegexOptions.IgnoreCase);
         }
 
         public override string ToString()

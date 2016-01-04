@@ -6,6 +6,7 @@ using System.Security.Authentication;
 using System.Text;
 using SharedModels.Models;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 using SharedModels.Data.ContextInterfaces;
 using SharedModels.Data.OracleContexts;
 using SharedModels.Debug;
@@ -222,6 +223,19 @@ namespace SharedModels.Logic
                 sb.Append(b.ToString("X2"));
 
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Checks if given string is a correctly formatted Email address.
+        /// Assumes the RFC 2822 Format
+        /// </summary>
+        /// <param name="email">Email string to check</param>
+        /// <returns>Returns true if specified string is a correctly formatted email address, returns false if not</returns>
+        public bool IsValidEmail(string email)
+        {
+            return Regex.IsMatch(email,
+                @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z",
+                RegexOptions.IgnoreCase);
         }
     }
 }
