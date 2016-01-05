@@ -23,7 +23,7 @@ namespace SharedModels.Data.OracleContexts
             return res.Select(GetEntityFromRecord).ToList();
         }
 
-        public User GetById(object id)
+        public User GetById(int id)
         {
             var query = "p_account.getById";
 
@@ -109,7 +109,7 @@ namespace SharedModels.Data.OracleContexts
             if (record == null) return null;
 
             // Date format: 19-10-2015 01:57:21
-            return new User(Convert.ToInt32(record[0]), record[1], record[2], record[4], Convert.ToBoolean(record[5]), record[3], Convert.ToBoolean(record[6]));
+            return new User(Convert.ToInt32(record[0]), record[1], record[2], record[4], Convert.ToBoolean(Convert.ToInt32(record[5])), record[3], Convert.ToBoolean(Convert.ToInt32(record[6])));
             /*return new User(Convert.ToInt32(record[0]), record[1], record[2], record[3], record[4], (Country) Enum.Parse(typeof(Country), record[5]),
                 record[7], record[8], record[6], record[9],
                 DateTime.Parse(record[10]), (PermissionType) Convert.ToInt32(record[11]));*/

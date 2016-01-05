@@ -10,14 +10,28 @@ using SharedModels.Models;
 
 namespace ICT4Events_Web.Views.SocialMediaSystem
 {
+    using SharedModels.Data.OracleContexts;
+
     public partial class Timeline : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            for (int i = 0; i < 10; i++)
+            // This is temporary
+            var postCon = new PostOracleContext();
+
+            var messages = postCon.GetAll();
+
+            // adding some extra dummy posts
+            for (var i = 0; i < 10; i++)
             {
-                var message = new Message(i, i, DateTime.Now, "TestTitle", "TestContent aaaaaaaa");
-                var control = (PostControl) LoadControl("Controls/PostControl.ascx");
+                var message = new Message(i, 1, DateTime.Now, "TestTitle", "TestContent aaaaaaaa");
+                messages.Add(message);
+            }
+
+            
+            foreach (var message in messages.OrderByDescending(x => x.Date))
+            {
+                var control = (PostControl)LoadControl("Controls/PostControl.ascx");
                 control.Post = message;
 
                 Posts.Controls.Add(control);
