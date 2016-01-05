@@ -9,7 +9,7 @@ namespace SharedModels.Data.ContextInterfaces
     public interface IRepositoryContext<TEntity> where TEntity : class
     {
         List<TEntity> GetAll();
-        TEntity GetById(object id);
+        TEntity GetById(int id);
         bool Insert(TEntity entity);
         bool Update(TEntity entity);
         bool Delete(TEntity entity);

@@ -10,11 +10,6 @@ namespace SharedModels.Data.OracleContexts
 {
     public class PersonOracleContext : EntityOracleContext<Person>, IPersonContext
     {
-        protected override Person GetEntityFromRecord(List<string> record)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public List<Person> GetAll()
         {
             var query = "p_person.getAll";
@@ -28,14 +23,14 @@ namespace SharedModels.Data.OracleContexts
             return res.Select(GetEntityFromRecord).ToList();
         }
 
-        public Person GetById(object id)
+        public Person GetById(int id)
         {
             var query = "p_person.getById";
 
             var parameters = new List<OracleParameter>
                 {
                     new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue),
-                    new OracleParameter("personId", Convert.ToInt32(id))
+                    new OracleParameter("personId", id)
                 };
 
             return GetEntityFromRecord(Database.ExecuteReader(query, parameters).First());
@@ -88,6 +83,14 @@ namespace SharedModels.Data.OracleContexts
                     new OracleParameter("p_accId", entity.ID)
                 };
             return Database.ExecuteNonQuery(query, parameters);
+        }
+
+        protected override Person GetEntityFromRecord(List<string> record)
+        {
+            // BUG: Foutief ingevulde veld bij postcode?
+            // Raar dat er een postcode staat bij woonplaats
+            // 1	Jan		Pietersen	Rachelsmolen	1	5611MA	NL91ABNA0417164300
+            return new Person(Convert.ToInt32(record[0]), $"{record[1]} {record[3]}", "temp?", $"{record[4]} {record[5]}", record[6], record[7]);
         }
     }
 }

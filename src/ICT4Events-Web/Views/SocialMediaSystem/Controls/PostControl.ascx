@@ -4,9 +4,11 @@
         <div ID="post" class="post well well-sm">
             <div class="PostHeader">
                 <span ID="Username" class="Username" runat="server"></span>
+                <span class="PostDate"><%:Post.Date.ToShortDateString()%></span>
+                <p><strong><%:Post.Title%></strong></p>
             </div>
             <div class="PostContent">
-                <p ID="Content" runat="server"></p>
+                <p><%:Post.Content%></p>
             </div>
             <div class="PostFooter">
                 <button type="button" id="reply" class="btn btn-sm btn-default" runat="server">
