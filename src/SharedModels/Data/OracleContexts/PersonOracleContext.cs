@@ -23,6 +23,18 @@ namespace SharedModels.Data.OracleContexts
             return res.Select(GetEntityFromRecord).ToList();
         }
 
+        public Person GetLastAdded()
+        {
+            var query = "p_person.lastAdded";
+
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue)
+            };
+
+            return GetEntityFromRecord(Database.ExecuteReader(query, parameters).First());
+        }
+
         public Person GetById(int id)
         {
             var query = "p_person.getById";

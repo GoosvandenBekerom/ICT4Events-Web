@@ -47,7 +47,18 @@ namespace ICT4Events_Web.Views.ReservationSystem
             var lEmail = leader_Email.Text;
             var lPass = leader_Password.Text;
 
-#region     checking reservations emailadresses
+            // Making person of leader
+            var person = new Person(0, lFirstname, lSurname, lAddress, lCity, lIban); // local person
+            if (!LogicCollection.PersonLogic.Insert(person)) {return;} // insert person
+            person = LogicCollection.PersonLogic.GetLastAdded(); // get person out of database
+
+            var reservation = new Reservation(0, person.ID, DateTime.Now, DateTime.Now, false); // local reservation TODO: FIX DATES
+
+            var leaderUser = new User(0, null, lEmail, lPass, false, lPass);
+
+            //Reservation res = new Reservation(0, );
+
+            #region     checking reservations emailadresses
             // Checking fields of reservation 1
             if (CheckEmptyEmailStatus(Email1))
             {
@@ -116,8 +127,11 @@ namespace ICT4Events_Web.Views.ReservationSystem
             if (user1 != null)
             {
                 // send email and insert into database and make reservationAccount 
-                
-
+                var register = LogicCollection.UserLogic.RegisterUser(user1);
+                if (register)
+                {
+                    var res = new ReservationAccount(0, 0, 0, false);
+                }
             }else if (user2 != null)
             {
                 // send email and insert into database and make reservationAccount 
@@ -141,10 +155,6 @@ namespace ICT4Events_Web.Views.ReservationSystem
             count = CheckEmptyEmailCount(Email3, count);
             count = CheckEmptyEmailCount(Email4, count);
             count = CheckEmptyEmailCount(Email5, count);
-
-            // Making person of leader
-            //var person = new Person(0, firstname, surname, pAddress, pCity, ib);
-            //if (!personContext.Insert(person)) {return;}
 
             lblError.Visible = true;
             lblError.Text =

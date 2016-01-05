@@ -81,7 +81,7 @@ namespace SharedModels.Logic
 
             try
             {
-                SendConfirmationEmail(user.Email, user.Username, generated, password);
+                SendConfirmationEmail(user.Email, user.Email, generated, password);
             }
             catch (MailWasNotSentException e)
             {
@@ -223,6 +223,11 @@ namespace SharedModels.Logic
                 sb.Append(b.ToString("X2"));
 
             return sb.ToString();
+        }
+
+        public User GetLastAdded()
+        {
+            return _context.GetLastAdded();
         }
 
         /// <summary>

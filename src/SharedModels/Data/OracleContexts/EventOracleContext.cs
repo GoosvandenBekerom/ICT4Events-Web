@@ -23,7 +23,7 @@ namespace SharedModels.Data.OracleContexts
             return res.Select(GetEntityFromRecord).ToList();
         }
 
-        public Event GetById(object id)
+        public Event GetById(int id)
         {
             var query = "p_event.getById";
 

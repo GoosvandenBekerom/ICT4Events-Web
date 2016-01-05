@@ -25,7 +25,7 @@ namespace SharedModels.Data.OracleContexts
             return res.Select(GetEntityFromRecord).ToList();
         }
 
-        public Place GetById(object id)
+        public Place GetById(int id)
         {
             var query = "SELECT * FROM location WHERE locationid = :locationid";
             var parameters = new List<OracleParameter>

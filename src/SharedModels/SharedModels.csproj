@@ -84,6 +84,7 @@
     <Compile Include="Logic\EventLogic.cs" />
     <Compile Include="Logic\LocationLogic.cs" />
     <Compile Include="Logic\LogicCollection.cs" />
+    <Compile Include="Logic\PersonLogic.cs" />
     <Compile Include="Logic\PlaceLogic.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Contribution.cs" />

@@ -19,5 +19,8 @@ namespace SharedModels.Logic
 
         private static PlaceLogic _placeLogic;
         public static PlaceLogic PlaceLogic => _placeLogic ?? (_placeLogic = new PlaceLogic(new PlaceOracleContext()));
+
+        private static PersonLogic _personLogic;
+        public static PersonLogic PersonLogic => _personLogic ?? (_personLogic = new PersonLogic(new PersonOracleContext()));
     }
 }

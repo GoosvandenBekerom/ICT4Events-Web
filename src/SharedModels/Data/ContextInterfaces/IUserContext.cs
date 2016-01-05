@@ -6,5 +6,6 @@ namespace SharedModels.Data.ContextInterfaces
     {
         User AuthenticateUser(string username, string password);
         User GetByUsername(string username);
+        User GetLastAdded();
     }
 }
