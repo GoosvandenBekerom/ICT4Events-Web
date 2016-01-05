@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ICT4Events_Web {
+namespace ICT4Events_Web.Views.ReservationSystem {
     
     
     public partial class Webform {
@@ -128,6 +128,15 @@ namespace ICT4Events_Web {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox Email5;
+        
+        /// <summary>
+        /// drpListOfPlaces control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList drpListOfPlaces;
         
         /// <summary>
         /// btnSubmit control.

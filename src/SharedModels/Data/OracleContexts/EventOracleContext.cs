@@ -12,19 +12,26 @@ namespace SharedModels.Data.OracleContexts
     {
         public List<Event> GetAll()
         {
-            var query = "SELECT * FROM event ORDER BY eventid";
-            var res = Database.ExecuteReader(query);
+            var query = "p_event.getAll";
 
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue)
+            };
+
+            var res = Database.ExecuteReader(query, parameters);
             return res.Select(GetEntityFromRecord).ToList();
         }
 
         public Event GetById(object id)
         {
-            var query = "SELECT * FROM event WHERE eventid = :eventid";
+            var query = "p_event.getById";
+
             var parameters = new List<OracleParameter>
-            {
-                new OracleParameter("eventid", Convert.ToInt32(id))
-            };
+                {
+                    new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue),
+                    new OracleParameter("eventId", Convert.ToInt32(id))
+                };
 
             return GetEntityFromRecord(Database.ExecuteReader(query, parameters).First());
         }

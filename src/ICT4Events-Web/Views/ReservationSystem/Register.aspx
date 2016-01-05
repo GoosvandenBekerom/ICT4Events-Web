@@ -1,7 +1,9 @@
-﻿<%@ Page Title="Registreren" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" EnableEventValidation="true" Inherits="ICT4Events_Web.Webform" %>
+﻿<%@ Page Title="Registreren" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" EnableEventValidation="true" Inherits="ICT4Events_Web.Views.ReservationSystem.Webform" %>
+<%@ Import Namespace="SharedModels.Logic" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: Title %></h2>
+    <% var ev = LogicCollection.EventLogic.GetByID(2); %>
         <fieldset>
             <div class="col-md-6">
             
@@ -41,7 +43,7 @@
               <asp:Label runat="server" CssClass="control-label" AssociatedControlID="leader_iban">Rekeningnummer:</asp:Label>  
               <asp:TextBox runat="server" ID="leader_iban" CssClass="form-control input-md" placeholder="ex: NL99 BANK 2183 2384 12" />
               <asp:RequiredFieldValidator runat="server" CssClass="text-danger" ControlToValidate="leader_iban" Display="Dynamic" ErrorMessage="IBAN is verplicht" ValidationGroup="RegistrationGroup" />
-             <!-- <asp:CustomValidator ID="test" runat="server" ControlToValidate="leader_iban" ClientValidationFunction="validateIban" CssClass="text-danger" Display="Dynamic" ErrorMessage="IBAN is niet geldig" ValidateEmptyText="False" ValidationGroup="RegistrationGroup"/>  -->
+              <asp:CustomValidator ID="test" runat="server" ControlToValidate="leader_iban" ClientValidationFunction="validateIban" CssClass="text-danger" Display="Dynamic" ErrorMessage="IBAN is niet geldig" ValidateEmptyText="False" ValidationGroup="RegistrationGroup"/>
             </div>
                 
              <!-- Emailadres leader -->
@@ -94,6 +96,22 @@
         </div>
     <div class="col-md-6">
         <h3>Locatie kiezen:</h3>
+
+        <div class="col-md-6">
+        <h5>Evenementnaam: <strong><% Response.Write(ev.Name); %></strong></h5>
+        <h5>Startdatum: <% Response.Write(ev.StartDate.ToString("dd-M-yyyy")); %></h5>
+        <h5>Einddatum: <% Response.Write(ev.EndDate.ToString("dd-M-yyyy")); %></h5>
+        <h5>Capaciteit: <% Response.Write(ev.Capacity); %></h5>
+        </div>
+
+        <div class="col-md-6">
+        <h5>Locatie naam: <% Response.Write(LogicCollection.LocationLogic.GetById(ev.LocationID).Name); %></h5>
+        <h5>Locatie adres: <% Response.Write(LogicCollection.LocationLogic.GetById(ev.LocationID).Address + " " + LogicCollection.LocationLogic.GetById(ev.LocationID).Number); %></h5>
+        <h5>Locatie stad: <% Response.Write(LogicCollection.LocationLogic.GetById(ev.LocationID).City); %></h5>
+        <h5>Locatie adres: <% Response.Write(LogicCollection.LocationLogic.GetById(ev.LocationID).PostalCode); %></h5>
+        </div>
+        
+        <asp:DropDownList ID="drpListOfPlaces" runat="server"></asp:DropDownList>
     </div>
     
     <div class="clearfix"></div>

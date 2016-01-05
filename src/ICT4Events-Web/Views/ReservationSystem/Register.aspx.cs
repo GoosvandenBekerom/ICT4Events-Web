@@ -6,23 +6,17 @@ using SharedModels.Data.OracleContexts;
 using SharedModels.Logic;
 using SharedModels.Models;
 
-namespace ICT4Events_Web
+namespace ICT4Events_Web.Views.ReservationSystem
 {
     public partial class Webform : Page
     {
-        PersonOracleContext personContext = new PersonOracleContext();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
+            foreach (var item in LogicCollection.PlaceLogic.GetAllPlaces().Select(place => new ListItem("Pleknummer: " + place.ID, place.ID.ToString())))
             {
-                // stuff
+                drpListOfPlaces.Items.Add(item);
             }
-            else
-            {
-                // stuff
-            }
-
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -38,7 +32,12 @@ namespace ICT4Events_Web
             }
             // variables
             var count = 0;
-
+            User user1 = null;
+            User user2 = null;
+            User user3 = null;
+            User user4 = null;
+            User user5 = null;
+            
             // Leader information
             var lFirstname = leader_first_name.Text;
             var lSurname = leader_last_name.Text;
@@ -48,13 +47,8 @@ namespace ICT4Events_Web
             var lEmail = leader_Email.Text;
             var lPass = leader_Password.Text;
 
-            // checking field of reservations
-            count = CheckEmptyEmailCount(Email1, count);
-            count = CheckEmptyEmailCount(Email2, count);
-            count = CheckEmptyEmailCount(Email3, count);
-            count = CheckEmptyEmailCount(Email4, count);
-            count = CheckEmptyEmailCount(Email5, count);
-
+#region     checking reservations emailadresses
+            // Checking fields of reservation 1
             if (CheckEmptyEmailStatus(Email1))
             {
                 if (!LogicCollection.UserLogic.IsValidEmail(Email1.Text))
@@ -64,8 +58,89 @@ namespace ICT4Events_Web
                     return;
                 }
 
-                var user1 = new User(0, null, Email1.Text, null, false, null);
+                user1 = new User(0, null, Email1.Text, null, false, null);
             }
+            // Checking fields of reservation 2
+            if (CheckEmptyEmailStatus(Email2))
+            {
+                if (!LogicCollection.UserLogic.IsValidEmail(Email2.Text))
+                {
+                    lblError.Visible = true;
+                    lblError.Text = "Invalide emailadressen.";
+                    return;
+                }
+
+                user2 = new User(0, null, Email2.Text, null, false, null);
+            }
+            // Checking fields of reservation 3
+            if (CheckEmptyEmailStatus(Email3))
+            {
+                if (!LogicCollection.UserLogic.IsValidEmail(Email3.Text))
+                {
+                    lblError.Visible = true;
+                    lblError.Text = "Invalide emailadressen.";
+                    return;
+                }
+
+                user3 = new User(0, null, Email3.Text, null, false, null);
+            }
+
+            // Checking fields of reservation 4
+            if (CheckEmptyEmailStatus(Email4))
+            {
+                if (!LogicCollection.UserLogic.IsValidEmail(Email4.Text))
+                {
+                    lblError.Visible = true;
+                    lblError.Text = "Invalide emailadressen.";
+                    return;
+                }
+
+                user4 = new User(0, null, Email4.Text, null, false, null);
+            }
+
+            // Checking fields of reservation 5
+            if (CheckEmptyEmailStatus(Email5))
+            {
+                if (!LogicCollection.UserLogic.IsValidEmail(Email5.Text))
+                {
+                    lblError.Visible = true;
+                    lblError.Text = "Invalide emailadressen.";
+                    return;
+                }
+
+                user5 = new User(0, null, Email5.Text, null, false, null);
+            }
+#endregion
+
+            // checking if users is not null send email and insert into database
+            if (user1 != null)
+            {
+                // send email and insert into database and make reservationAccount 
+                
+
+            }else if (user2 != null)
+            {
+                // send email and insert into database and make reservationAccount 
+            }
+            else if(user3 !=null)
+            {
+                // send email and insert into database and make reservationAccount 
+            }
+            else if (user4 != null)
+            {
+                // send email and insert into database and make reservationAccount 
+            }
+            else if(user5 != null)
+            {
+                // send email and insert into database and make reservationAccount 
+            }
+
+            // Counting field of reservations
+            count = CheckEmptyEmailCount(Email1, count);
+            count = CheckEmptyEmailCount(Email2, count);
+            count = CheckEmptyEmailCount(Email3, count);
+            count = CheckEmptyEmailCount(Email4, count);
+            count = CheckEmptyEmailCount(Email5, count);
 
             // Making person of leader
             //var person = new Person(0, firstname, surname, pAddress, pCity, ib);
