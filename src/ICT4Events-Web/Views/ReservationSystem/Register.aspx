@@ -110,7 +110,17 @@
         <h5>Locatie stad: <% Response.Write(LogicCollection.LocationLogic.GetById(ev.LocationID).City); %></h5>
         <h5>Locatie adres: <% Response.Write(LogicCollection.LocationLogic.GetById(ev.LocationID).PostalCode); %></h5>
         </div>
-        
+        <hr />
+        <div class="col-md-6">
+        Startdatum: <br />
+        <asp:Calendar ID="StartDate" runat="server" OnDayRender="StartDate_DayRender" OnSelectionChanged="StartDate_SelectionChanged"></asp:Calendar>
+        </div>
+    
+        <div class="col-md-6">
+        Einddatum: <br/>
+        <asp:Calendar ID="EndDate" runat="server" OnDayRender="EndDate_DayRender" OnSelectionChanged="EndDate_SelectionChanged"></asp:Calendar>
+        </div>
+
         <asp:DropDownList ID="drpListOfPlaces" runat="server"></asp:DropDownList>
     </div>
     

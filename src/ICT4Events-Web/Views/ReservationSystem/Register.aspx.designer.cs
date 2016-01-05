@@ -130,6 +130,24 @@ namespace ICT4Events_Web.Views.ReservationSystem {
         protected global::System.Web.UI.WebControls.TextBox Email5;
         
         /// <summary>
+        /// StartDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar StartDate;
+        
+        /// <summary>
+        /// EndDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar EndDate;
+        
+        /// <summary>
         /// drpListOfPlaces control.
         /// </summary>
         /// <remarks>

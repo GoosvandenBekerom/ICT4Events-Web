@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using SharedModels.Data.OracleContexts;
 using SharedModels.Logic;
 using SharedModels.Models;
 
@@ -10,9 +10,15 @@ namespace ICT4Events_Web.Views.ReservationSystem
 {
     public partial class Webform : Page
     {
+        private Event _event;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            _event = LogicCollection.EventLogic.GetByID(2);
+
+            StartDate.TodaysDate = _event.StartDate;
+            EndDate.TodaysDate = _event.StartDate;
+
             foreach (var item in LogicCollection.PlaceLogic.GetAllPlaces().Select(place => new ListItem("Pleknummer: " + place.ID, place.ID.ToString())))
             {
                 drpListOfPlaces.Items.Add(item);
@@ -49,10 +55,18 @@ namespace ICT4Events_Web.Views.ReservationSystem
 
             // Making person of leader
             var person = new Person(0, lFirstname, lSurname, lAddress, lCity, lIban); // local person
-            if (!LogicCollection.PersonLogic.Insert(person)) {return;} // insert person
-            person = LogicCollection.PersonLogic.GetLastAdded(); // get person out of database
+            //if (!LogicCollection.PersonLogic.Insert(person)) {return;} // insert person
+            //person = LogicCollection.PersonLogic.GetLastAdded(); // get person out of database
 
-            var reservation = new Reservation(0, person.ID, DateTime.Now, DateTime.Now, false); // local reservation TODO: FIX DATES
+            if (StartDate.SelectedDate == DateTime.Parse("1-1-0001") ||
+                EndDate.SelectedDate == DateTime.Parse("1-1-0001"))
+            {
+                lblError.Visible = true;
+                lblError.Text = "Invalide datas.";
+                return;
+            }
+
+            var reservation = new Reservation(0, person.ID, StartDate.SelectedDate, EndDate.SelectedDate, false); // local reservation
 
             var leaderUser = new User(0, null, lEmail, lPass, false, lPass);
 
@@ -158,7 +172,7 @@ namespace ICT4Events_Web.Views.ReservationSystem
 
             lblError.Visible = true;
             lblError.Text =
-                (IsValid ? "Succesvol!" : "Onsuccesvol") +
+                (IsValid ? "Valide gegevens!" : "Invalide gegevens") +
                 "<br />Voornaam: " + lFirstname +
                 "<br />Achternaam: " + lSurname +
                 "<br />Adres: " + lAddress +
@@ -166,7 +180,9 @@ namespace ICT4Events_Web.Views.ReservationSystem
                 "<br />IBAN: " + lIban +
                 "<br />Email: " + lEmail +
                 "<br />Pass: " + lPass +
-                "<br />Count: " + count;
+                "<br />Count: " + count +
+                "<br />Startdatum: " + StartDate.SelectedDate.ToShortDateString() +
+                "<br />Einddatum: " + EndDate.SelectedDate.ToShortDateString();
         }
 
         private static int CheckEmptyEmailCount(ITextControl txtbox, int count)
@@ -179,5 +195,49 @@ namespace ICT4Events_Web.Views.ReservationSystem
         {
             return txtbox.Text != string.Empty || (txtbox.Text.Trim()) != string.Empty;
         }
+
+        #region Calenders events
+        protected void StartDate_DayRender(object sender, DayRenderEventArgs e)
+        {
+            if (e.Day.Date >= _event.StartDate && e.Day.Date <= _event.EndDate)
+            {
+                e.Day.IsSelectable = true;
+            }
+            else
+            {
+                e.Day.IsSelectable = false;
+                e.Cell.ForeColor = Color.White;
+            }
+        }
+
+        protected void EndDate_DayRender(object sender, DayRenderEventArgs e)
+        {
+            if (e.Day.Date >= _event.StartDate && e.Day.Date <= _event.EndDate)
+            {
+                e.Day.IsSelectable = true;
+            }
+            else
+            {
+                e.Day.IsSelectable = false;
+                e.Cell.ForeColor = Color.White;
+            }
+        }
+
+        protected void EndDate_SelectionChanged(object sender, EventArgs e)
+        {
+            if (EndDate.SelectedDate.Date <= StartDate.SelectedDate.Date)
+            {
+                EndDate.SelectedDate = StartDate.SelectedDate.AddDays(1);
+            }
+        }
+
+        protected void StartDate_SelectionChanged(object sender, EventArgs e)
+        {
+            if (EndDate.SelectedDate.Date <= StartDate.SelectedDate.Date)
+            {
+                EndDate.SelectedDate = StartDate.SelectedDate.AddDays(1);
+            }
+        }
+        #endregion
     }
 }
