@@ -71,6 +71,7 @@
     <Compile Include="Data\OracleContexts\EventOracleContext.cs" />
     <Compile Include="Data\OracleContexts\LocationOracleContext.cs" />
     <Compile Include="Data\OracleContexts\PersonOracleContext.cs" />
+    <Compile Include="Data\OracleContexts\PostOracleContext.cs" />
     <Compile Include="Data\OracleContexts\UserOracleContext.cs" />
     <Compile Include="Debug\Logger.cs" />
     <Compile Include="Enums\ContributionType.cs" />

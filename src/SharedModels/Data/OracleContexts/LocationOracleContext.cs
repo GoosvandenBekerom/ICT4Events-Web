@@ -18,12 +18,12 @@ namespace SharedModels.Data.OracleContexts
             return res.Select(GetEntityFromRecord).ToList();
         }
 
-        public Place GetById(object id)
+        public Place GetById(int id)
         {
             var query = "SELECT * FROM location WHERE locationid = :locationid";
             var parameters = new List<OracleParameter>
             {
-                new OracleParameter("locationid", Convert.ToInt32(id))
+                new OracleParameter("locationid", id)
             };
 
             return GetEntityFromRecord(Database.ExecuteReader(query, parameters).First());
