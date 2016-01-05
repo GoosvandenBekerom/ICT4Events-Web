@@ -16,5 +16,8 @@ namespace SharedModels.Logic
 
         private static LocationLogic _locationLogic;
         public static LocationLogic LocationLogic => _locationLogic ?? (_locationLogic = new LocationLogic(new LocationOracleContext()));
+
+        private static PlaceLogic _placeLogic;
+        public static PlaceLogic PlaceLogic => _placeLogic ?? (_placeLogic = new PlaceLogic(new PlaceOracleContext()));
     }
 }
