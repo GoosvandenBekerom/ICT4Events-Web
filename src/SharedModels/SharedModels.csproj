@@ -65,13 +65,16 @@
     <Compile Include="Data\ContextInterfaces\IPersonContext.cs" />
     <Compile Include="Data\ContextInterfaces\IRentContext.cs" />
     <Compile Include="Data\ContextInterfaces\IRepositoryContext.cs" />
+    <Compile Include="Data\ContextInterfaces\IReservationContext.cs" />
     <Compile Include="Data\Database.cs" />
     <Compile Include="Data\ContextInterfaces\IUserContext.cs" />
     <Compile Include="Data\OracleContexts\EntityOracleContext.cs" />
     <Compile Include="Data\OracleContexts\EventOracleContext.cs" />
     <Compile Include="Data\OracleContexts\LocationOracleContext.cs" />
     <Compile Include="Data\OracleContexts\PersonOracleContext.cs" />
+    <Compile Include="Data\OracleContexts\PlaceOracleContext.cs" />
     <Compile Include="Data\OracleContexts\PostOracleContext.cs" />
+    <Compile Include="Data\OracleContexts\ReservationOracleContext.cs" />
     <Compile Include="Data\OracleContexts\UserOracleContext.cs" />
     <Compile Include="Debug\Logger.cs" />
     <Compile Include="Enums\ContributionType.cs" />
@@ -83,6 +86,9 @@
     <Compile Include="Logic\EventLogic.cs" />
     <Compile Include="Logic\LocationLogic.cs" />
     <Compile Include="Logic\LogicCollection.cs" />
+    <Compile Include="Logic\PersonLogic.cs" />
+    <Compile Include="Logic\PlaceLogic.cs" />
+    <Compile Include="Logic\ReservationLogic.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Contribution.cs" />
     <Compile Include="Models\Event.cs" />
@@ -95,6 +101,8 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductCategory.cs" />
     <Compile Include="Models\Rent.cs" />
+    <Compile Include="Models\Reservation.cs" />
+    <Compile Include="Models\ReservationAccount.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Wristband.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

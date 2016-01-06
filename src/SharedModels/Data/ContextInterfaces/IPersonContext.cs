@@ -4,5 +4,6 @@ namespace SharedModels.Data.ContextInterfaces
 {
     public interface IPersonContext : IRepositoryContext<Person>
     {
+        Person GetLastAdded();
     }
 }

@@ -7,24 +7,20 @@
         <div class="col-md-8">
             <section id="loginForm">
                 <div class="form-horizontal">
-                    <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
-                        <p class="text-danger">
-                            <asp:Literal runat="server" ID="FailureText" />
-                        </p>
-                    </asp:PlaceHolder>
+                    <asp:Label ID="errorLabel" Runat="server" CssClass="alert alert-danger form-control" role="alert" Visible="false"></asp:Label><br/>
                     <div class="form-group">
-                        <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Gebruikersnaam</asp:Label>
+                        <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Emailadres</asp:Label>
                         <div class="col-md-10">
-                            <asp:TextBox runat="server" ID="Email" CssClass="form-control" placeholder="Ex: John" />
+                            <asp:TextBox runat="server" ID="Email" CssClass="form-control" placeholder="Ex: johndoe@gmail.com" />
                             <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
-                                CssClass="text-danger" ErrorMessage="Username is required." Display="Dynamic" />
+                                CssClass="text-danger" ErrorMessage="Emailadres is verplicht." Display="Dynamic" />
                         </div>
                     </div>
                     <div class="form-group">
                         <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Wachtwoord</asp:Label>
                         <div class="col-md-10">
                             <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="Password is required." Display="Dynamic" />
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="Wachtwoord is verplicht." Display="Dynamic" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -35,8 +31,6 @@
                             </div>
                         </div>
                     </div>
-                    <asp:Label ID="errorLabel" Runat="server" ForeColor="#ff3300"></asp:Label><br/>
-
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <asp:Button runat="server" OnClick="LogIn" Text="Inloggen" CssClass="btn btn-primary"/><br/>
@@ -44,10 +38,10 @@
                     </div>
                 </div>
                 <p>
-                    <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Registreren</asp:HyperLink><br/>
+                    <a href="../ReservationSystem/Register.aspx">Registreren</a>
                 </p>
                 <p>
-                    <%-- Enable this once you have account confirmation enabled for password reset functionality
+                    <%-- Enable this once you have account confirmation enabled for<a href="../ReservationSystem/Register.aspx">../ReservationSystem/Register.aspx</a> password reset functionality
                     <asp:HyperLink runat="server" ID="ForgotPasswordHyperLink" ViewStateMode="Disabled">Forgot your password?</asp:HyperLink>
                     --%>
                 </p>

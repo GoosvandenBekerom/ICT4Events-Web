@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
+using System.Runtime.Remoting.Contexts;
 using System.Security.Authentication;
 using System.Text;
 using SharedModels.Models;
@@ -81,7 +82,7 @@ namespace SharedModels.Logic
 
             try
             {
-                SendConfirmationEmail(user.Email, user.Username, generated, password);
+                SendConfirmationEmail(user.Email, user.Email, generated, password);
             }
             catch (MailWasNotSentException e)
             {
@@ -101,13 +102,8 @@ namespace SharedModels.Logic
         public User AuthenticateUser(string username, string password)
         {
             var user = _context.AuthenticateUser(username, password);
-            
-            if (user != null)
-            {
-                return user;
-            }
-
-            throw new InvalidCredentialException("Uw inloggegevens komen niet overeen met een bestaand account.");
+            return user;
+            //throw new InvalidCredentialException("Uw inloggegevens komen niet overeen met een bestaand account.");
         }
 
         /// <summary>
@@ -223,6 +219,11 @@ namespace SharedModels.Logic
                 sb.Append(b.ToString("X2"));
 
             return sb.ToString();
+        }
+
+        public User GetLastAdded()
+        {
+            return _context.GetLastAdded();
         }
 
         /// <summary>

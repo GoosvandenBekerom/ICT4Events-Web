@@ -15,7 +15,7 @@ namespace SharedModels.Models
         public string Password { get; set; }
         public string ActivationHash { get; set; }
         public bool Activated { get; set; }
-        public bool Permission { get; set; }
+        public bool Admin { get; set; }
 
         public User(int id, string username, string email, string hash, bool activated, string password, bool permission = false)
         {
@@ -25,7 +25,7 @@ namespace SharedModels.Models
             Password = password;
             ActivationHash = hash;
             Activated = activated;
-            Permission = permission;
+            Admin = permission;
         }
 
         public override string ToString()

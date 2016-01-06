@@ -23,6 +23,18 @@ namespace SharedModels.Data.OracleContexts
             return res.Select(GetEntityFromRecord).ToList();
         }
 
+        public User GetLastAdded()
+        {
+            var query = "p_account.lastAdded";
+
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue)
+            };
+
+            return GetEntityFromRecord(Database.ExecuteReader(query, parameters).First());
+        }
+
         public User GetById(int id)
         {
             var query = "p_account.getById";
@@ -46,6 +58,7 @@ namespace SharedModels.Data.OracleContexts
                     new OracleParameter("Return_Value", OracleDbType.Int32, ParameterDirection.ReturnValue),
                     new OracleParameter("p_gebruikersnaam", user.Username),
                     new OracleParameter("p_email", user.Email),
+                    new OracleParameter("p_pass", user.Password),
                     new OracleParameter("p_activatiehash", user.ActivationHash),
                     new OracleParameter("p_geactiveerd", Convert.ToInt32(user.Activated)) };
 
@@ -83,12 +96,14 @@ namespace SharedModels.Data.OracleContexts
 
         public User AuthenticateUser(string username, string password)
         {
-            var query = "SELECT * FROM useraccount WHERE username = :username AND password = :password AND ROWNUM <= 1";
+            var query = "p_account.authenticateUser";
+
             var parameters = new List<OracleParameter>
-            {
-                new OracleParameter("username", username),
-                new OracleParameter("password", password),
-            };
+                {
+                    new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue),
+                    new OracleParameter("p_email", username),
+                    new OracleParameter("p_pass", password)
+                };
 
             return GetEntityFromRecord(Database.ExecuteReader(query, parameters).FirstOrDefault());
         }

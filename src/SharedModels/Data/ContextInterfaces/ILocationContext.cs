@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using SharedModels.Models;
+﻿using SharedModels.Models;
 
 namespace SharedModels.Data.ContextInterfaces
 {
-    public interface ILocationContext : IRepositoryContext<Place>
+    public interface ILocationContext : IRepositoryContext<Location>
     {
-        List<Place> GetAllByEvent(Event ev);
     }
 }
