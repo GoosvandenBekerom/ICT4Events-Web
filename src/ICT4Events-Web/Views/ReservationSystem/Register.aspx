@@ -37,16 +37,22 @@
               <asp:TextBox runat="server" ID="leader_address" CssClass="form-control input-md" placeholder="ex: Kennedylaan" />
               <asp:RequiredFieldValidator runat="server" CssClass="text-danger" ControlToValidate="leader_address" Display="Dynamic" ErrorMessage="Adres is verplicht" ValidationGroup="RegistrationGroup"/>
             </div>
+                
+            <!-- gebruikersnaam leader -->
+            <div class="form-group">
+              <asp:Label runat="server" CssClass="control-label" AssociatedControlID="leader_Username">Voornaam:</asp:Label>  
+              <asp:TextBox runat="server" ID="leader_Username" CssClass="form-control input-md" placeholder="ex: Stefano"/>
+              <asp:RequiredFieldValidator runat="server" CssClass="text-danger" ControlToValidate="leader_Username" Display="Dynamic" ErrorMessage="Gebruikersnaam is verplicht" ValidationGroup="RegistrationGroup" />
+            </div>
 
-            <!-- woonplaats leader -->
+            </div>
+            <div class="col-md-6">
+             <!-- woonplaats leader -->
             <div class="form-group">           
               <asp:Label runat="server" CssClass="control-label" AssociatedControlID="leader_city">Woonplaats:</asp:Label>
               <asp:TextBox runat="server" ID="leader_city" CssClass="form-control input-md" placeholder="ex: Eindhoven" />
               <asp:RequiredFieldValidator runat="server" CssClass="text-danger" ControlToValidate="leader_city" Display="Dynamic" ErrorMessage="Woonplaats is verplicht" ValidationGroup="RegistrationGroup"/>
             </div>
-
-            </div>
-            <div class="col-md-6">
 
             <!-- iban leader -->
             <div class="form-group">

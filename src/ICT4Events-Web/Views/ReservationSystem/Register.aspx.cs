@@ -62,6 +62,7 @@ namespace ICT4Events_Web.Views.ReservationSystem
             var lSurname = leader_last_name.Text;
             var lAddress = leader_address.Text;
             var lCity = leader_city.Text;
+            var lUsername = leader_Username.Text;
             var lIban = leader_iban.Text;
             var lEmail = leader_Email.Text;
             var lPass = LogicCollection.UserLogic.GetHashedPassword(leader_Password.Text);
@@ -73,7 +74,7 @@ namespace ICT4Events_Web.Views.ReservationSystem
 
             // Register leader
             var lhash = Membership.GeneratePassword(8, 2);
-            var leaderUser = new User(0, null, lEmail, lhash, false, lPass);
+            var leaderUser = new User(0, lUsername, lEmail, lhash, false, lPass);
             //if (!LogicCollection.UserLogic.RegisterUser(leaderUser)) {return;}
             leaderUser = LogicCollection.UserLogic.GetLastAdded();
 
