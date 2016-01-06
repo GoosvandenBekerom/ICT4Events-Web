@@ -96,12 +96,14 @@ namespace SharedModels.Data.OracleContexts
 
         public User AuthenticateUser(string username, string password)
         {
-            var query = "SELECT * FROM useraccount WHERE username = :username AND password = :password AND ROWNUM <= 1";
+            var query = "p_account.authenticateUser";
+
             var parameters = new List<OracleParameter>
-            {
-                new OracleParameter("username", username),
-                new OracleParameter("password", password),
-            };
+                {
+                    new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue),
+                    new OracleParameter("p_email", username),
+                    new OracleParameter("p_pass", password)
+                };
 
             return GetEntityFromRecord(Database.ExecuteReader(query, parameters).FirstOrDefault());
         }

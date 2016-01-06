@@ -101,13 +101,8 @@ namespace SharedModels.Logic
         public User AuthenticateUser(string username, string password)
         {
             var user = _context.AuthenticateUser(username, password);
-            
-            if (user != null)
-            {
-                return user;
-            }
-
-            throw new InvalidCredentialException("Uw inloggegevens komen niet overeen met een bestaand account.");
+            return user;
+            //throw new InvalidCredentialException("Uw inloggegevens komen niet overeen met een bestaand account.");
         }
 
         /// <summary>
