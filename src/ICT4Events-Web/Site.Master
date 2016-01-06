@@ -64,13 +64,10 @@
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
                                 <li class="dropdown">
-                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Systeem <span class="caret"></span></a>
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Opties <span class="caret"></span></a>
                                   <ul class="dropdown-menu">
-                                    <li><a href="#">Accountbeheer</a></li>
-                                    <li><a href="#">Toegangscontrole</a></li>
-                                    <li><a href="#">Materiaalverhuur</a></li>
-                                    <li><a href="#">Evenementbeheer</a></li>
-                                    <li><a href="#">Applicatiebeheer</a></li>
+                                    <li><a href="/Timeline">Tijdlijn</a></li>
+                                    <li><a href="/Account/Manage.aspx">Accountbeheer</a></li>
                                   </ul>
                                 </li>
                                 <li><a runat="server" href="#">Hallo, <%: Context.User.Identity.GetUserName() %> !</a></li>

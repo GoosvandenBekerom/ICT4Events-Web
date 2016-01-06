@@ -2,10 +2,11 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <h2><%: Title %></h2>
-
+    <br />
+    <asp:Label ID="lblNotLoggedIn" CssClass="alert alert-success" runat="server" Text="" Visible="False"></asp:Label>
     <div class="row">
         <div class="col-md-8">
-            <section id="loginForm">
+            <section id="loginForm" runat="server">
                 <div class="form-horizontal">
                     <asp:Label ID="errorLabel" Runat="server" CssClass="alert alert-danger form-control" role="alert" Visible="false"></asp:Label><br/>
                     <div class="form-group">

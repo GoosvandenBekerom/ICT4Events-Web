@@ -12,14 +12,19 @@ namespace ICT4Events_Web.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            var user = ((SiteMaster) Master)?.CurrentUser();
+            if (user != null)
+            {
+                lblNotLoggedIn.Visible = true;
+                lblNotLoggedIn.Text = "Je bent al ingelogd.";
+                loginForm.Visible = false;
+            }
         }
 
         protected void LogIn(object sender, EventArgs e)
         {
             if (!IsValid) return;
-
             var email = Email.Text;
-
 
             var password = LogicCollection.UserLogic.GetHashedPassword(Password.Text);
 
@@ -48,10 +53,8 @@ namespace ICT4Events_Web.Account
             };
 
             Response.Cookies.Add(cookie);
-
-            //FormsAuthentication.SetAuthCookie(currentUser.Email, true);
-            //FormsAuthentication.RedirectFromLoginPage(currentUser.Email, RememberMe.Checked);
-            Response.Redirect("/Default.aspx?login=1", true);
+            var str = Request["ReturnUrl"] ?? "/Timeline";
+            Response.Redirect(str, true);
         }
     }
 }
