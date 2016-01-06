@@ -27,5 +27,6 @@ namespace SharedModels.Logic
         public List<Message> GetRepliesByPost(Message message) => _context.GetRepliesByPost(message);
 
         public List<Message> SearchPostsByHashtag(string hashtag) => _context.SearchMessages(hashtag);
+        public bool AddPost(Message message) => _context.Insert(message);
     }
 }

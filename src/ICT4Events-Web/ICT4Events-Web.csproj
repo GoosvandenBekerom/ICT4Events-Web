@@ -217,6 +217,7 @@
     <Content Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Views\ReservationSystem\Register.aspx" />
+    <Content Include="Views\SocialMediaSystem\Controls\CreatePost.ascx" />
     <Content Include="Views\SocialMediaSystem\Controls\PostControl.ascx" />
     <Content Include="Views\SocialMediaSystem\Timeline.aspx" />
     <Content Include="Web.config" />
@@ -398,6 +399,13 @@
     </Compile>
     <Compile Include="Views\ReservationSystem\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SocialMediaSystem\Controls\CreatePost.ascx.cs">
+      <DependentUpon>CreatePost.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SocialMediaSystem\Controls\CreatePost.ascx.designer.cs">
+      <DependentUpon>CreatePost.ascx</DependentUpon>
     </Compile>
     <Compile Include="Views\SocialMediaSystem\Controls\PostControl.ascx.cs">
       <DependentUpon>PostControl.ascx</DependentUpon>

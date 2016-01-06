@@ -91,3 +91,14 @@ input[type="select"] {
 .red {
    border: 1px solid red;
 }
+
+/*
+    CreatePost user control
+*/
+.createPostContainer {
+    overflow: hidden;
+}
+
+.createPostContainer .createPostFormControl {
+    margin-bottom: 5px;
+}

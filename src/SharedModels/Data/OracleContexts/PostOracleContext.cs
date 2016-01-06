@@ -42,13 +42,14 @@ namespace SharedModels.Data.OracleContexts
 
         public bool Insert(Message entity)
         {
-            var query = "p_post.Post";
+            var query = "p_post.AddPost";
             var parameters = new List<OracleParameter>
-                                 {
-                                     new OracleParameter("p_accountID", entity.UserID),
-                                     new OracleParameter("p_title", entity.Title),
-                                     new OracleParameter("p_content", entity.Content)
-                                 };
+            {
+                new OracleParameter("Return_Value", OracleDbType.Int32, ParameterDirection.ReturnValue),
+                new OracleParameter("p_accountID", entity.UserID),
+                new OracleParameter("p_title", entity.Title),
+                new OracleParameter("p_content", entity.Content)
+            };
 
             return Database.ExecuteNonQuery(query, parameters);
         }
