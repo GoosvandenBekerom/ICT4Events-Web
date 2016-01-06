@@ -19,6 +19,8 @@ namespace ICT4Events_Web.Account
             if (!IsValid) return;
 
             var email = Email.Text;
+
+
             var password = LogicCollection.UserLogic.GetHashedPassword(Password.Text);
 
             if (!LogicCollection.UserLogic.IsValidEmail(email))
@@ -34,23 +36,22 @@ namespace ICT4Events_Web.Account
                 return;
             }
 
-            if (currentUser != null)
+            //contains user object in JSON format
+             var ticket = new FormsAuthenticationTicket(1, currentUser.Email, DateTime.Now,
+             DateTime.Now.AddMinutes(30), RememberMe.Checked, JsonConvert.SerializeObject(currentUser));
+
+            // cookie containing copy of ticket
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket))
             {
-                // contains user object in JSON format
-                var ticket = new FormsAuthenticationTicket(1, currentUser.Email, DateTime.Now,
-                    DateTime.Now.AddMinutes(30), RememberMe.Checked, JsonConvert.SerializeObject(currentUser));
+                Expires = ticket.Expiration,
+                Path = FormsAuthentication.FormsCookiePath
+            };
 
-                // cookie containing copy of ticket
-                var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket))
-                {
-                    Expires = ticket.Expiration,
-                    Path = FormsAuthentication.FormsCookiePath
-                };
+            Response.Cookies.Add(cookie);
 
-                Response.Cookies.Add(cookie);
-
-                Response.Redirect("/Default.aspx", true);
-            }
+            //FormsAuthentication.SetAuthCookie(currentUser.Email, true);
+            //FormsAuthentication.RedirectFromLoginPage(currentUser.Email, RememberMe.Checked);
+            Response.Redirect("/Default.aspx?login=1", true);
         }
     }
 }

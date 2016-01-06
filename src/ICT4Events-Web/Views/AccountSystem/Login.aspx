@@ -7,11 +7,7 @@
         <div class="col-md-8">
             <section id="loginForm">
                 <div class="form-horizontal">
-                    <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
-                        <p class="text-danger">
-                            <asp:Literal runat="server" ID="FailureText" />
-                        </p>
-                    </asp:PlaceHolder>
+                    <asp:Label ID="errorLabel" Runat="server" CssClass="alert alert-danger form-control" role="alert" Visible="false"></asp:Label><br/>
                     <div class="form-group">
                         <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Emailadres</asp:Label>
                         <div class="col-md-10">
@@ -35,8 +31,6 @@
                             </div>
                         </div>
                     </div>
-                    <asp:Label ID="errorLabel" Runat="server" ForeColor="#ff3300"></asp:Label><br/>
-
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <asp:Button runat="server" OnClick="LogIn" Text="Inloggen" CssClass="btn btn-primary"/><br/>
