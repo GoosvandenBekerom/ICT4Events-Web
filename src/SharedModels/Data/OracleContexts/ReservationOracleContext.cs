@@ -96,7 +96,7 @@ namespace SharedModels.Data.OracleContexts
 
         protected override Reservation GetEntityFromRecord(List<string> record)
         {
-            return new Reservation(Convert.ToInt32(record[0]), Convert.ToInt32(record[1]), DateTime.Parse(record[2]), DateTime.Parse(record[3]), Convert.ToBoolean(record[4]));
+            return new Reservation(Convert.ToInt32(record[0]), Convert.ToInt32(record[1]), DateTime.Parse(record[2]), DateTime.Parse(record[3]), Convert.ToBoolean(Convert.ToInt32(record[4])));
         }
     }
 }

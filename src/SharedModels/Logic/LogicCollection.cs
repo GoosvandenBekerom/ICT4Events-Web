@@ -22,5 +22,8 @@ namespace SharedModels.Logic
 
         private static PersonLogic _personLogic;
         public static PersonLogic PersonLogic => _personLogic ?? (_personLogic = new PersonLogic(new PersonOracleContext()));
+
+        private static ReservationLogic _reservationLogic;
+        public static ReservationLogic ReservationLogic => _reservationLogic ?? (_reservationLogic = new ReservationLogic(new ReservationOracleContext()));
     }
 }

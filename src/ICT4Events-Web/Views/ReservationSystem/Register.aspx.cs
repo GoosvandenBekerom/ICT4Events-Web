@@ -19,7 +19,7 @@ namespace ICT4Events_Web.Views.ReservationSystem
             StartDate.TodaysDate = _event.StartDate;
             EndDate.TodaysDate = _event.StartDate;
 
-            foreach (var item in LogicCollection.PlaceLogic.GetAllPlaces().Select(place => new ListItem("Pleknummer: " + place.ID, place.ID.ToString())))
+            foreach (var item in LogicCollection.PlaceLogic.GetAllPlaces().Select(place => new ListItem("Pleknummer: " + place.ID + "Cap: " + place.Capacity, place.ID.ToString())))
             {
                 drpListOfPlaces.Items.Add(item);
             }
@@ -36,6 +36,15 @@ namespace ICT4Events_Web.Views.ReservationSystem
                 lblError.CssClass = "text-danger";
                 return;
             }
+
+            if (StartDate.SelectedDate == DateTime.Parse("1-1-0001") ||
+                EndDate.SelectedDate == DateTime.Parse("1-1-0001"))
+            {
+                lblError.Visible = true;
+                lblError.Text = "Invalide datas.";
+                return;
+            }
+
             // variables
             var count = 0;
             User user1 = null;
@@ -51,26 +60,26 @@ namespace ICT4Events_Web.Views.ReservationSystem
             var lCity = leader_city.Text;
             var lIban = leader_iban.Text;
             var lEmail = leader_Email.Text;
-            var lPass = leader_Password.Text;
+            var lPass = LogicCollection.UserLogic.GetHashedPassword(leader_Password.Text);
 
             // Making person of leader
             var person = new Person(0, lFirstname, lSurname, lAddress, lCity, lIban); // local person
             //if (!LogicCollection.PersonLogic.Insert(person)) {return;} // insert person
-            //person = LogicCollection.PersonLogic.GetLastAdded(); // get person out of database
+            person = LogicCollection.PersonLogic.GetLastAdded(); // get person out of database
 
-            if (StartDate.SelectedDate == DateTime.Parse("1-1-0001") ||
-                EndDate.SelectedDate == DateTime.Parse("1-1-0001"))
-            {
-                lblError.Visible = true;
-                lblError.Text = "Invalide datas.";
-                return;
-            }
-
-            var reservation = new Reservation(0, person.ID, StartDate.SelectedDate, EndDate.SelectedDate, false); // local reservation
-
+            // Register leader
             var leaderUser = new User(0, null, lEmail, lPass, false, lPass);
+            //if (!LogicCollection.UserLogic.RegisterUser(leaderUser)) {return;}
+            leaderUser = LogicCollection.UserLogic.GetLastAdded();
 
-            //Reservation res = new Reservation(0, );
+            // Making reservation
+            var reservation = new Reservation(0, person.ID, StartDate.SelectedDate, EndDate.SelectedDate, false); // local reservation
+            //if (!LogicCollection.ReservationLogic.Insert(reservation)){return;} // insert reservation
+            reservation = LogicCollection.ReservationLogic.GetLastAdded(); // get reservation out of database
+
+            // Making reservation_account
+            var reservationAccount = new ReservationAccount(0, reservation.ID, leaderUser.ID, Convert.ToInt32(drpListOfPlaces.SelectedValue));
+
 
             #region     checking reservations emailadresses
             // Checking fields of reservation 1
@@ -135,33 +144,64 @@ namespace ICT4Events_Web.Views.ReservationSystem
 
                 user5 = new User(0, null, Email5.Text, null, false, null);
             }
-#endregion
+            #endregion
+
+            #region Reservations of users
 
             // checking if users is not null send email and insert into database
             if (user1 != null)
             {
-                // send email and insert into database and make reservationAccount 
-                var register = LogicCollection.UserLogic.RegisterUser(user1);
+                //send email and insert into database and make reservationAccount
+               var register = LogicCollection.UserLogic.RegisterUser(user1, true);
+                user1 = LogicCollection.UserLogic.GetLastAdded();
                 if (register)
                 {
-                    var res = new ReservationAccount(0, 0, 0, false);
+                    var res = new ReservationAccount(0, reservation.ID, user1.ID, Convert.ToInt32(drpListOfPlaces.SelectedValue));
                 }
-            }else if (user2 != null)
+            }
+            else if (user2 != null)
             {
-                // send email and insert into database and make reservationAccount 
+                // send email and insert into database and make reservationAccount
+                var register = LogicCollection.UserLogic.RegisterUser(user2, true);
+                user2 = LogicCollection.UserLogic.GetLastAdded();
+                if (register)
+                {
+                    var res = new ReservationAccount(0, reservation.ID, user2.ID, Convert.ToInt32(drpListOfPlaces.SelectedValue));
+                }
             }
             else if(user3 !=null)
             {
                 // send email and insert into database and make reservationAccount 
+                var register = LogicCollection.UserLogic.RegisterUser(user3, true);
+                user3 = LogicCollection.UserLogic.GetLastAdded();
+                if (register)
+                {
+                    var res = new ReservationAccount(0, reservation.ID, user3.ID, Convert.ToInt32(drpListOfPlaces.SelectedValue));
+                }
             }
             else if (user4 != null)
             {
                 // send email and insert into database and make reservationAccount 
+                var register = LogicCollection.UserLogic.RegisterUser(user4, true);
+                user4 = LogicCollection.UserLogic.GetLastAdded();
+                if (register)
+                {
+                    var res = new ReservationAccount(0, reservation.ID, user4.ID, Convert.ToInt32(drpListOfPlaces.SelectedValue));
+                }
             }
             else if(user5 != null)
             {
                 // send email and insert into database and make reservationAccount 
+                var register = LogicCollection.UserLogic.RegisterUser(user5, true);
+                user5 = LogicCollection.UserLogic.GetLastAdded();
+                if (register)
+                {
+                    var res = new ReservationAccount(0, reservation.ID, user5.ID, Convert.ToInt32(drpListOfPlaces.SelectedValue));
+                }
             }
+
+            #endregion
+
 
             // Counting field of reservations
             count = CheckEmptyEmailCount(Email1, count);
@@ -239,5 +279,6 @@ namespace ICT4Events_Web.Views.ReservationSystem
             }
         }
         #endregion
+
     }
 }

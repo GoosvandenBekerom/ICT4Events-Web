@@ -4,6 +4,16 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: Title %></h2>
     <% var ev = LogicCollection.EventLogic.GetByID(2); %>
+     
+    <div id="feedbackPanel" class="alert alert-info alert-dismissible" role="alert" runat="server" Visible="False">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Status registratie:</strong>
+        <br/>
+        <asp:Label ID="lblError" runat="server" Text="Label"></asp:Label>
+    </div>
+
         <fieldset>
             <div class="col-md-6">
             
@@ -120,23 +130,25 @@
         Einddatum: <br/>
         <asp:Calendar ID="EndDate" runat="server" OnDayRender="EndDate_DayRender" OnSelectionChanged="EndDate_SelectionChanged"></asp:Calendar>
         </div>
-
+        
+        <div class="col-md-6">
         <asp:DropDownList ID="drpListOfPlaces" runat="server"></asp:DropDownList>
+         <br />
+         <div id="informationPlace" class="alert alert-info alert-dismissible" role="alert" runat="server">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Informatie over plek <% Response.Write(drpListOfPlaces.SelectedValue); %>:</strong>
+            <p>Capaciteit: <% LogicCollection.PlaceLogic.GetPlaceByID(Convert.ToInt32(drpListOfPlaces.SelectedValue)); %></p>
+
+        </div>
+        </div>
     </div>
     
     <div class="clearfix"></div>
     <hr />
     <div class="form-group">
         <asp:Button ID="btnSubmit" runat="server" Text="Registereren" CssClass="btn btn-primary" OnClick="btnSubmit_Click" CausesValidation="true" ValidationGroup="RegistrationGroup" />
-    </div>
-
-    <div id="feedbackPanel" class="alert alert-info alert-dismissible" role="alert" runat="server" Visible="False">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <strong>Status registratie:</strong>
-        <br/>
-        <asp:Label ID="lblError" runat="server" Text="Label"></asp:Label>
     </div>
 
 <script src="../../Scripts/iban.js"></script>

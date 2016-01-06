@@ -58,6 +58,7 @@ namespace SharedModels.Data.OracleContexts
                     new OracleParameter("Return_Value", OracleDbType.Int32, ParameterDirection.ReturnValue),
                     new OracleParameter("p_gebruikersnaam", user.Username),
                     new OracleParameter("p_email", user.Email),
+                    new OracleParameter("p_pass", user.Password),
                     new OracleParameter("p_activatiehash", user.ActivationHash),
                     new OracleParameter("p_geactiveerd", Convert.ToInt32(user.Activated)) };
 
