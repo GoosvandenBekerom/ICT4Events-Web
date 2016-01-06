@@ -18,6 +18,19 @@ namespace ICT4Events_Web.Views.SocialMediaSystem.Controls
         private void OnPreRender(object sender, EventArgs eventArgs)
         {
             Username.InnerText = LogicCollection.UserLogic.GetById(Post.UserID).Username;
+
+            var likes = LogicCollection.PostLogic.GetLikesByPost(Post);
+            likes.Add(45);
+
+            if (likes.Any())
+            {
+                like.InnerHtml += " " + likes.Count;
+            }
+
+            if(likes.Any(x => x == ((SiteMaster)Page.Master).CurrentUser().ID))
+            {
+                like.Attributes.Add("class", like.Attributes["class"] + " liked");
+            }
         }
     }
 }

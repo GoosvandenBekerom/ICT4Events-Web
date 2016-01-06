@@ -17,10 +17,10 @@
         
     </asp:PlaceHolder>
     <script>
-        $(".LikeButton").click(function () {
+        $(".likeButton").click(function () {
             $.ajax({
                 type: "POST",
-                url: "TimeLine.aspx/LikePost",
+                url: "Timeline.aspx/LikePost",
                 data: "{'postId':" + $(this).attr('value') + "}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",

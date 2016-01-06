@@ -102,3 +102,7 @@ input[type="select"] {
 .createPostContainer .createPostFormControl {
     margin-bottom: 5px;
 }
+
+.liked {
+    color: blue;
+}

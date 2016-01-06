@@ -28,5 +28,14 @@ namespace SharedModels.Logic
 
         public List<Message> SearchPostsByHashtag(string hashtag) => _context.SearchMessages(hashtag);
         public bool AddPost(Message message) => _context.Insert(message);
+
+        public List<int> GetLikesByPost(Message message) => _context.GetLikesByMessage(message);
+        public List<int> GetReportsByPost(Message message) => _context.GetReportsByMessage(message);
+
+        public bool LikePost(User user, int postId)
+        {
+            var post = _context.GetById(postId);
+            return post != null && _context.LikeMessage(user, post);
+        }
     }
 }
