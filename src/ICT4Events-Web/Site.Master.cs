@@ -7,6 +7,8 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
+using SharedModels.Models;
 
 namespace ICT4Events_Web
 {
@@ -69,12 +71,19 @@ namespace ICT4Events_Web
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+        }
+
+        public User CurrentUser()
+        {
+            var identity = Context.User.Identity.IsAuthenticated;
+            return identity
+                ? JsonConvert.DeserializeObject<User>(((FormsIdentity) Context.User.Identity).Ticket.UserData)
+                : null;
         }
     }
 

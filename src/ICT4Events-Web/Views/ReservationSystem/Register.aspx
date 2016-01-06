@@ -132,14 +132,14 @@
         </div>
         
         <div class="col-md-6">
-        <asp:DropDownList ID="drpListOfPlaces" runat="server"></asp:DropDownList>
+        <asp:DropDownList ID="drpListOfPlaces" runat="server" CssClass="form-control"></asp:DropDownList>
          <br />
          <div id="informationPlace" class="alert alert-info alert-dismissible" role="alert" runat="server">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             <strong>Informatie over plek <% Response.Write(drpListOfPlaces.SelectedValue); %>:</strong>
-            <p>Capaciteit: <% LogicCollection.PlaceLogic.GetPlaceByID(Convert.ToInt32(drpListOfPlaces.SelectedValue)); %></p>
+            <!-- <p>Capaciteit: <% //LogicCollection.PlaceLogic.GetPlaceByID(Convert.ToInt32(drpListOfPlaces.SelectedValue)); %></p> -->
 
         </div>
         </div>
