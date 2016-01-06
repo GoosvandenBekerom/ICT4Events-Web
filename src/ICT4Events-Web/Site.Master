@@ -67,7 +67,7 @@
                                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Opties <span class="caret"></span></a>
                                   <ul class="dropdown-menu">
                                     <li><a href="/Timeline">Tijdlijn</a></li>
-                                    <li><a href="/Account/Manage.aspx">Accountbeheer</a></li>
+                                    <li><a href="/Views/AccountSystem/Edit.aspx">Accountbeheer</a></li>
                                   </ul>
                                 </li>
                                 <li><a runat="server" href="#">Hallo, <%: Context.User.Identity.GetUserName() %> !</a></li>
