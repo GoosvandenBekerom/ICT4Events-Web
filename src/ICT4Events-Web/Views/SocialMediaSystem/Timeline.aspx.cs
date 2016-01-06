@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ICT4Events_Web.Views.SocialMediaSystem.Controls;
+using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
+using SharedModels.Logic;
 using SharedModels.Models;
 
 namespace ICT4Events_Web.Views.SocialMediaSystem
@@ -14,27 +18,51 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
 
     public partial class Timeline : System.Web.UI.Page
     {
+        private List<Message> _messages = new List<Message>();
+
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            var searchQuery = Request.QueryString["q"];
+
+            if (searchQuery == null)
+            {
+                _messages = LogicCollection.PostLogic.GetAllMainPosts();
+            }
+            else
+            {
+                _messages = LogicCollection.PostLogic.SearchPostsByHashtag(searchQuery);
+                SearchBox.Text = searchQuery;
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
-            // This is temporary
-            var postCon = new PostOracleContext();
-
-            var messages = postCon.GetAll();
-
-            // adding some extra dummy posts
-            for (var i = 0; i < 10; i++)
+            //if (!Context.User.Identity.IsAuthenticated)
             {
-                var message = new Message(i, 1, DateTime.Now, "TestTitle", "TestContent aaaaaaaa");
-                messages.Add(message);
+                //Response.Redirect("~");
             }
-
-            
-            foreach (var message in messages.OrderByDescending(x => x.Date))
+            foreach (var message in _messages.OrderByDescending(x => x.Date))
             {
-                var control = (PostControl)LoadControl("Controls/PostControl.ascx");
+                var control = (PostControl) LoadControl("Controls/PostControl.ascx");
                 control.Post = message;
 
                 Posts.Controls.Add(control);
+            }
+        }
+
+        [WebMethod(enableSession: true)]
+        public static string LikePost(int postId)
+        {
+            return HttpContext.Current != null
+                ? $"Params: {postId} | Current user auth: {HttpContext.Current.User.Identity.IsAuthenticated}"
+                : "Not authorized";
+        }
+
+        protected void SearchButton_OnServerClick(object sender, EventArgs e)
+        {
+            var query = SearchBox.Text;
+            if (!string.IsNullOrWhiteSpace(query))
+            {
+                Response.Redirect($"/Timeline?q={query}");
             }
         }
     }

@@ -8,7 +8,11 @@ namespace SharedModels.Data.ContextInterfaces
         bool LikeMessage(User user, Message message);
         bool ReportMessage(User user, Message message);
 
+        List<Message> GetRepliesByPost(Message message);
+
         List<int> GetLikesByMessage(Message message);
         List<int> GetReportsByMessage(Message message);
+
+        List<Message> SearchMessages(string hashtag);
     }
 }

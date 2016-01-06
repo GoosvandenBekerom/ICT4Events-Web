@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Web.Hosting;
 
 namespace SharedModels.Debug
 {
@@ -8,7 +9,7 @@ namespace SharedModels.Debug
         static readonly TextWriter tw;
         static Logger()
         {
-            tw = TextWriter.Synchronized(File.AppendText("Log.txt"));
+            tw = TextWriter.Synchronized(File.AppendText(HostingEnvironment.MapPath("Log.txt") ?? "Log.txt"));
         }
 
         private static readonly object _logObject = new object();

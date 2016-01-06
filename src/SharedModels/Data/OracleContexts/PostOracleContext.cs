@@ -73,6 +73,19 @@ namespace SharedModels.Data.OracleContexts
             throw new NotImplementedException();
         }
 
+        public List<Message> GetRepliesByPost(Message message)
+        {
+            var query = "p_post.GetRepliesByPost";
+            var parameters = new List<OracleParameter>
+                {
+                    new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue),
+                    new OracleParameter("p_postId", message.ID)
+                };
+
+            var res = Database.ExecuteReader(query, parameters);
+            return res.Select(GetEntityFromRecord).ToList();
+        }
+
         public List<int> GetLikesByMessage(Message message)
         {
             throw new NotImplementedException();
@@ -81,6 +94,19 @@ namespace SharedModels.Data.OracleContexts
         public List<int> GetReportsByMessage(Message message)
         {
             throw new NotImplementedException();
+        }
+
+        public List<Message> SearchMessages(string hashtag)
+        {
+            var query = "p_post.GetPostsByHashtag";
+            var parameters = new List<OracleParameter>
+                {
+                    new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue),
+                    new OracleParameter("p_hashtag", hashtag)
+                };
+
+            var res = Database.ExecuteReader(query, parameters);
+            return res.Select(GetEntityFromRecord).ToList();
         }
 
         protected override Message GetEntityFromRecord(List<string> record)

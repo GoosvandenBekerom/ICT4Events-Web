@@ -31,24 +31,6 @@ namespace ICT4Events_Web.Views.SocialMediaSystem.Controls {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Username;
         
         /// <summary>
-        /// reply control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton reply;
-        
-        /// <summary>
-        /// report control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton report;
-        
-        /// <summary>
         /// like control.
         /// </summary>
         /// <remarks>
@@ -65,14 +47,5 @@ namespace ICT4Events_Web.Views.SocialMediaSystem.Controls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox postReply;
-        
-        /// <summary>
-        /// postReplyButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton postReplyButton;
     }
 }

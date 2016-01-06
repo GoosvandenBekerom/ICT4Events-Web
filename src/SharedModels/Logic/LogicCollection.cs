@@ -25,5 +25,8 @@ namespace SharedModels.Logic
 
         private static ReservationLogic _reservationLogic;
         public static ReservationLogic ReservationLogic => _reservationLogic ?? (_reservationLogic = new ReservationLogic(new ReservationOracleContext()));
+
+        private static PostLogic _postLogic;
+        public static PostLogic PostLogic => _postLogic ?? (_postLogic = new PostLogic());
     }
 }
