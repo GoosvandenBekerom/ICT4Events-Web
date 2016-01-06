@@ -27,5 +27,14 @@ namespace SharedModels.Logic
         public List<Message> GetRepliesByPost(Message message) => _context.GetRepliesByPost(message);
 
         public List<Message> SearchPostsByHashtag(string hashtag) => _context.SearchMessages(hashtag);
+
+        public List<int> GetLikesByPost(Message message) => _context.GetLikesByMessage(message);
+        public List<int> GetReportsByPost(Message message) => _context.GetReportsByMessage(message);
+
+        public bool LikePost(User user, int postId)
+        {
+            var post = _context.GetById(postId);
+            return post != null && _context.LikeMessage(user, post);
+        }
     }
 }

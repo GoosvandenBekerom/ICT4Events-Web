@@ -69,7 +69,7 @@ namespace ICT4Events_Web.Views.ReservationSystem
 
             // Register leader
             var leaderUser = new User(0, null, lEmail, lPass, false, lPass);
-            //if (!LogicCollection.UserLogic.RegisterUser(leaderUser)) {return;}
+            if (!LogicCollection.UserLogic.RegisterUser(leaderUser)) {return;}
             leaderUser = LogicCollection.UserLogic.GetLastAdded();
 
             // Making reservation

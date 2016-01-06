@@ -88,12 +88,28 @@ namespace SharedModels.Data.OracleContexts
 
         public List<int> GetLikesByMessage(Message message)
         {
-            throw new NotImplementedException();
+            var query = "p_post.GetReportsByPost";
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter("p_postId", message.ID),
+                new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue)
+            };
+
+            var res = Database.ExecuteReader(query, parameters);
+            return res.Select(x => Convert.ToInt32(x[0])).ToList();
         }
 
         public List<int> GetReportsByMessage(Message message)
         {
-            throw new NotImplementedException();
+            var query = "p_post.GetReportsByPost";
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter("p_postId", message.ID),
+                new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue)
+            };
+
+            var res = Database.ExecuteReader(query, parameters);
+            return res.Select(x => Convert.ToInt32(x[0])).ToList();
         }
 
         public List<Message> SearchMessages(string hashtag)

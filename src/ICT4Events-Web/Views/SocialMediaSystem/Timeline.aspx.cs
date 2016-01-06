@@ -52,8 +52,16 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
         [WebMethod(enableSession: true)]
         public static string LikePost(int postId)
         {
+            var context = HttpContext.Current;
+            if (context == null || !context.User.Identity.IsAuthenticated)
+            {
+                return "Not authorized";
+            }
+            var user = ((SiteMaster) ((Page) context.CurrentHandler).Master)?.CurrentUser();
+            var result = LogicCollection.PostLogic.LikePost(user, postId);
+
             return HttpContext.Current != null
-                ? $"Params: {postId} | Current user auth: {HttpContext.Current.User.Identity.IsAuthenticated}"
+                ? result.ToString()
                 : "Not authorized";
         }
 
