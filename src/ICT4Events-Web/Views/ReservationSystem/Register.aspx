@@ -66,7 +66,7 @@
            <div class="form-group">
                 <asp:Label runat="server" CssClass="control-label"  AssociatedControlID="leader_Password" >Wachtwoord</asp:Label>
                 <asp:TextBox runat="server" ID="leader_Password" TextMode="Password" CssClass="form-control" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="leader_Password" CssClass="text-danger" ErrorMessage="Password is required." Display="Dynamic" ValidationGroup="RegistrationGroup" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="leader_Password" CssClass="text-danger" ErrorMessage="Wachtwoord is verplicht." Display="Dynamic" ValidationGroup="RegistrationGroup" />
             </div>
             
             </div>
