@@ -18,7 +18,7 @@ namespace ICT4Events_Web.Views.SocialMediaSystem.Controls
 
         protected void btnPost_Click(object sender, EventArgs e)
         {
-            var user = ((SiteMaster)Page.Master)?.CurrentUser();
+            var user = SiteMaster.CurrentUser();
             if (user == null) return;
 
             LogicCollection.PostLogic.AddPost(

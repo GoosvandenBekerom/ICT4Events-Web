@@ -70,7 +70,7 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
             var query = SearchBox.Text;
             if (!string.IsNullOrWhiteSpace(query))
             {
-                Response.Redirect($"/Timeline?q={query}");
+                Response.Redirect($"/Timeline?q={Server.UrlEncode(query)}");
             }
         }
     }
