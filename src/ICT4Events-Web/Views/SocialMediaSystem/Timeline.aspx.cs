@@ -57,7 +57,7 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
             {
                 return "Not authorized";
             }
-            var user = ((SiteMaster) ((Page) context.CurrentHandler).Master)?.CurrentUser();
+            var user = SiteMaster.CurrentUser();
             var result = LogicCollection.PostLogic.LikePost(user, postId);
 
             return HttpContext.Current != null

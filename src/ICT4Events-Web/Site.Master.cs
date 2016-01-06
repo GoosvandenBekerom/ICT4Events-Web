@@ -78,11 +78,11 @@ namespace ICT4Events_Web
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
         }
 
-        public User CurrentUser()
+        public static User CurrentUser()
         {
-            var identity = Context.User.Identity.IsAuthenticated;
+            var identity = HttpContext.Current.User.Identity.IsAuthenticated;
             return identity
-                ? JsonConvert.DeserializeObject<User>(((FormsIdentity) Context.User.Identity).Ticket.UserData)
+                ? JsonConvert.DeserializeObject<User>(((FormsIdentity)HttpContext.Current.User.Identity).Ticket.UserData)
                 : null;
         }
     }
