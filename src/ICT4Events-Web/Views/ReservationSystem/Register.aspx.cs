@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using SharedModels.Logic;
@@ -19,6 +22,7 @@ namespace ICT4Events_Web.Views.ReservationSystem
             StartDate.TodaysDate = _event.StartDate;
             EndDate.TodaysDate = _event.StartDate;
 
+            drpListOfPlaces.Items.Clear();
             foreach (var item in LogicCollection.PlaceLogic.GetAllPlaces().Select(place => new ListItem("Pleknummer: " + place.ID + "Cap: " + place.Capacity, place.ID.ToString())))
             {
                 drpListOfPlaces.Items.Add(item);
@@ -68,8 +72,9 @@ namespace ICT4Events_Web.Views.ReservationSystem
             person = LogicCollection.PersonLogic.GetLastAdded(); // get person out of database
 
             // Register leader
-            var leaderUser = new User(0, null, lEmail, lPass, false, lPass);
-            if (!LogicCollection.UserLogic.RegisterUser(leaderUser)) {return;}
+            var lhash = Membership.GeneratePassword(8, 2);
+            var leaderUser = new User(0, null, lEmail, lhash, false, lPass);
+            //if (!LogicCollection.UserLogic.RegisterUser(leaderUser)) {return;}
             leaderUser = LogicCollection.UserLogic.GetLastAdded();
 
             // Making reservation
@@ -81,127 +86,48 @@ namespace ICT4Events_Web.Views.ReservationSystem
             var reservationAccount = new ReservationAccount(0, reservation.ID, leaderUser.ID, Convert.ToInt32(drpListOfPlaces.SelectedValue));
 
 
-            #region     checking reservations emailadresses
-            // Checking fields of reservation 1
-            if (CheckEmptyEmailStatus(Email1))
+            #region checking reservations emailadresses & Reservations of users
+            
+            // Listof Textboxes 
+            var listOfEmailReservation = new List<TextBox>()
             {
-                if (!LogicCollection.UserLogic.IsValidEmail(Email1.Text))
+                Email1, Email2, Email3, Email4, Email5
+            };
+
+            var reservationsOfNewUser = new List<User>();
+            // Checking Emailadres if not empty 
+            foreach (var email in listOfEmailReservation.Where(email => CheckEmptyEmailStatus(email)))
+            {
+                if (!LogicCollection.UserLogic.IsValidEmail(email.Text))
                 {
                     lblError.Visible = true;
                     lblError.Text = "Invalide emailadressen.";
                     return;
                 }
 
-                user1 = new User(0, null, Email1.Text, null, false, null);
-            }
-            // Checking fields of reservation 2
-            if (CheckEmptyEmailStatus(Email2))
-            {
-                if (!LogicCollection.UserLogic.IsValidEmail(Email2.Text))
-                {
-                    lblError.Visible = true;
-                    lblError.Text = "Invalide emailadressen.";
-                    return;
-                }
+                var result = Regex.Match(email.Text, @"^.*?(?=@)").Value;
 
-                user2 = new User(0, null, Email2.Text, null, false, null);
-            }
-            // Checking fields of reservation 3
-            if (CheckEmptyEmailStatus(Email3))
-            {
-                if (!LogicCollection.UserLogic.IsValidEmail(Email3.Text))
-                {
-                    lblError.Visible = true;
-                    lblError.Text = "Invalide emailadressen.";
-                    return;
-                }
-
-                user3 = new User(0, null, Email3.Text, null, false, null);
+                var hash = Membership.GeneratePassword(8 , 0);
+                reservationsOfNewUser.Add(new User(0, result, email.Text, hash, false, null));
             }
 
-            // Checking fields of reservation 4
-            if (CheckEmptyEmailStatus(Email4))
+            // Adding user to database and make reservation 
+            foreach (var user in reservationsOfNewUser)
             {
-                if (!LogicCollection.UserLogic.IsValidEmail(Email4.Text))
+                // checking if users is not null send email and insert into database
+                if (user != null)
                 {
-                    lblError.Visible = true;
-                    lblError.Text = "Invalide emailadressen.";
-                    return;
-                }
-
-                user4 = new User(0, null, Email4.Text, null, false, null);
-            }
-
-            // Checking fields of reservation 5
-            if (CheckEmptyEmailStatus(Email5))
-            {
-                if (!LogicCollection.UserLogic.IsValidEmail(Email5.Text))
-                {
-                    lblError.Visible = true;
-                    lblError.Text = "Invalide emailadressen.";
-                    return;
-                }
-
-                user5 = new User(0, null, Email5.Text, null, false, null);
-            }
-            #endregion
-
-            #region Reservations of users
-
-            // checking if users is not null send email and insert into database
-            if (user1 != null)
-            {
-                //send email and insert into database and make reservationAccount
-               var register = LogicCollection.UserLogic.RegisterUser(user1, true);
-                user1 = LogicCollection.UserLogic.GetLastAdded();
-                if (register)
-                {
-                    var res = new ReservationAccount(0, reservation.ID, user1.ID, Convert.ToInt32(drpListOfPlaces.SelectedValue));
+                    //send email and insert into database and make reservationAccount
+                    var password = Membership.GeneratePassword(10, 2);
+                    var register = LogicCollection.UserLogic.RegisterUser(user, true, password);
+                    var userLast = LogicCollection.UserLogic.GetLastAdded();
+                    if (register)
+                    {
+                        var res = new ReservationAccount(0, reservation.ID, userLast.ID,
+                            Convert.ToInt32(drpListOfPlaces.SelectedValue));
+                    }
                 }
             }
-            else if (user2 != null)
-            {
-                // send email and insert into database and make reservationAccount
-                var register = LogicCollection.UserLogic.RegisterUser(user2, true);
-                user2 = LogicCollection.UserLogic.GetLastAdded();
-                if (register)
-                {
-                    var res = new ReservationAccount(0, reservation.ID, user2.ID, Convert.ToInt32(drpListOfPlaces.SelectedValue));
-                }
-            }
-            else if(user3 !=null)
-            {
-                // send email and insert into database and make reservationAccount 
-                var register = LogicCollection.UserLogic.RegisterUser(user3, true);
-                user3 = LogicCollection.UserLogic.GetLastAdded();
-                if (register)
-                {
-                    var res = new ReservationAccount(0, reservation.ID, user3.ID, Convert.ToInt32(drpListOfPlaces.SelectedValue));
-                }
-            }
-            else if (user4 != null)
-            {
-                // send email and insert into database and make reservationAccount 
-                var register = LogicCollection.UserLogic.RegisterUser(user4, true);
-                user4 = LogicCollection.UserLogic.GetLastAdded();
-                if (register)
-                {
-                    var res = new ReservationAccount(0, reservation.ID, user4.ID, Convert.ToInt32(drpListOfPlaces.SelectedValue));
-                }
-            }
-            else if(user5 != null)
-            {
-                // send email and insert into database and make reservationAccount 
-                var register = LogicCollection.UserLogic.RegisterUser(user5, true);
-                user5 = LogicCollection.UserLogic.GetLastAdded();
-                if (register)
-                {
-                    var res = new ReservationAccount(0, reservation.ID, user5.ID, Convert.ToInt32(drpListOfPlaces.SelectedValue));
-                }
-            }
-
-            #endregion
-
 
             // Counting field of reservations
             count = CheckEmptyEmailCount(Email1, count);
@@ -209,6 +135,7 @@ namespace ICT4Events_Web.Views.ReservationSystem
             count = CheckEmptyEmailCount(Email3, count);
             count = CheckEmptyEmailCount(Email4, count);
             count = CheckEmptyEmailCount(Email5, count);
+            #endregion
 
             lblError.Visible = true;
             lblError.Text =

@@ -7,45 +7,36 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ICT4Events_Web.Views.SocialMediaSystem {
+namespace ICT4Events_Web.Views.SocialMediaSystem.Controls {
     
     
-    public partial class Timeline {
+    public partial class CreatePost {
         
         /// <summary>
-        /// SearchBox control.
+        /// txtTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox SearchBox;
+        protected global::System.Web.UI.WebControls.TextBox txtTitle;
         
         /// <summary>
-        /// SearchButton control.
+        /// txtMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton SearchButton;
+        protected global::System.Web.UI.WebControls.TextBox txtMessage;
         
         /// <summary>
-        /// CreatePost control.
+        /// btnPost control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::ICT4Events_Web.Views.SocialMediaSystem.Controls.CreatePost CreatePost;
-        
-        /// <summary>
-        /// Posts control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder Posts;
+        protected global::System.Web.UI.WebControls.Button btnPost;
     }
 }

@@ -58,7 +58,7 @@ namespace SharedModels.Logic
         {
             if (string.Equals(password, passwordAgain))
                 return GetHashString(password + Salt);
-
+            
             throw new PasswordsDontMatchException();
         }
 
@@ -78,11 +78,12 @@ namespace SharedModels.Logic
         /// <returns>a new user object with correct user id</returns>
         public bool RegisterUser(User user, bool generated = false, string password = "")
         {
+            user.Password = LogicCollection.UserLogic.GetHashedPassword(password);
             var registeredUser = _context.Insert(user);
 
             try
             {
-                SendConfirmationEmail(user.Email, user.Email, generated, password);
+                SendConfirmationEmail(user.Email, user.Username, generated, password);
             }
             catch (MailWasNotSentException e)
             {
