@@ -18,5 +18,6 @@ namespace SharedModels.Data.ContextInterfaces
 
         Message InsertReturnMessage(Message entity);
         bool AddFileContribution(FileContribution fileContribution, int postID);
+        FileContribution GetFile(int postId);
     }
 }

@@ -30,19 +30,19 @@ namespace ICT4Events_Web.Views.SocialMediaSystem.Controls
             
             try
             {
-                if (FileUpload.HasFiles) {
-                    foreach (var file in FileUpload.PostedFiles)
-                    {
-                        var trailingPath = Path.GetFileName(file.FileName);
-                        var fullPath = Path.Combine(HostingEnvironment.MapPath("/Files/"), trailingPath);
+                if (FileUpload.HasFile) {
+                    var trailingPath = Path.GetFileName(FileUpload.PostedFile.FileName);
+                    var fullPath = Path.Combine(HostingEnvironment.MapPath("/Files/"), trailingPath);
 
-                        file.SaveAs(fullPath);
-
-                        LogicCollection.PostLogic.AddFileContribution(
-                            new FileContribution(0, user.ID, DateTime.Now, 1, fullPath, file.ContentLength),
-                            newMessage.ID
-                        );
-                    }
+                    FileUpload.SaveAs(fullPath);
+                    
+                    LogicCollection.PostLogic.AddFileContribution(
+                        new FileContribution(
+                            0, user.ID, DateTime.Now, 1, 
+                            "/Files/" + FileUpload.PostedFile.FileName, 
+                            FileUpload.PostedFile.ContentLength),
+                        newMessage.ID
+                    );
                 }
             }
             catch (Exception ex)

@@ -123,3 +123,17 @@ ol.postContainer {
 .reply:nth-child(even) {
     background-color: white;
 }
+
+.thumbnail img {
+    max-height: 100px;
+}
+
+.thumbnail.col-md-offset-9 {
+    position: absolute;
+    top: 10px;
+    left: 50px;
+}
+
+.post {
+    position: relative;
+}

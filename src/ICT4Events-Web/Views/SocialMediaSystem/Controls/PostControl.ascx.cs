@@ -10,6 +10,7 @@ namespace ICT4Events_Web.Views.SocialMediaSystem.Controls
     public partial class PostControl : UserControl
     {
         public Message Post { get; set; }
+        public FileContribution File { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -46,6 +47,11 @@ namespace ICT4Events_Web.Views.SocialMediaSystem.Controls
             {
                 report.InnerHtml += "<span>Rapporteren</span>";
             }
+            
+            if (Post.File == null) return;
+
+            File = Post.File;
+            postThumbnail.ImageUrl = File.Filepath;
         }
     }
 }

@@ -54,5 +54,10 @@ namespace SharedModels.Logic
         {
             return _context.AddFileContribution(fileContribution, postID);
         }
+
+        public FileContribution GetFile(int postId)
+        {
+            return _context.GetFile(postId);
+        }
     }
 }

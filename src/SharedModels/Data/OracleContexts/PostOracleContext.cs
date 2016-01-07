@@ -178,10 +178,30 @@ namespace SharedModels.Data.OracleContexts
             return Database.ExecuteNonQuery(query, parameters);
         }
 
+        public FileContribution GetFile(int postId)
+        {
+            var query = "p_post.GetFile";
+            var parameters = new List<OracleParameter>
+                {
+                    new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue),
+                    new OracleParameter("p_postId", postId)
+                };
+
+            var res = Database.ExecuteReader(query, parameters);
+            return res.Select(GetFileContributionFromRecord).FirstOrDefault();
+        }
+
         protected override Message GetEntityFromRecord(List<string> record)
         {
             return new Message(Convert.ToInt32(record[0]), Convert.ToInt32(record[1]), DateTime.Parse(record[2]), record[5], record[6]);
         }
 
+        private FileContribution GetFileContributionFromRecord(List<string> record)
+        {
+            //0     1           2       3         4             5             6                 7
+            //id    account_id  datum   soort     bijdrage_id   categorie_id  bestandslocatie   grootte
+            return new FileContribution(Convert.ToInt32(record[0]), Convert.ToInt32(record[1]),
+                DateTime.Parse(record[2]), Convert.ToInt32(record[5]), record[6], Convert.ToInt64(record[7]));
+        }
     }
 }
