@@ -15,8 +15,17 @@
                {
             %>
             <div class="postMedia right">
-                <a href="<%:File.Filepath%>" class="thumbnail col-md-offset-9 col-md-2" data-toggle="lightbox">
+                <a href="<%:File.Filepath%>" class="thumbnail col-md-offset-9 col-md-2" 
+                    data-toggle="modal" data-target=".bs-example-modal-sm">
                     <asp:Image ID="postThumbnail" runat="server" CssClass="img img-thumbnail" />
+
+                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <img src="<%:File.Filepath%>" alt="" />
+                            </div>
+                        </div>
+                    </div>
                 </a>
             </div>
             <% } %>
