@@ -27,11 +27,16 @@ namespace SharedModels.Models
             Comfortable = comfortable;
             Handicap = handicap;
             Size = size;
+
+            if (string.IsNullOrEmpty(name))
+            {
+                Name = this.ToString();
+            }
         }
 
         public override string ToString()
         {
-            return $"{Name} - {Price.ToString("C")}";
+            return $"Plek #{ID} - {Price.ToString("C")}";
         }
     }
 }
