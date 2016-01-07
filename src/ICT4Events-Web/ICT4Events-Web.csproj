@@ -173,6 +173,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
     <Content Include="Views\AccountSystem\Edit.aspx" />
+    <Content Include="Views\AccountSystem\Rights.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -347,6 +348,13 @@
     </Compile>
     <Compile Include="Views\AccountSystem\Edit.aspx.designer.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AccountSystem\Rights.aspx.cs">
+      <DependentUpon>Rights.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\AccountSystem\Rights.aspx.designer.cs">
+      <DependentUpon>Rights.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
