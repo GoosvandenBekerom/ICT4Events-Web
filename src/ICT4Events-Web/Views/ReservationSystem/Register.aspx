@@ -3,7 +3,8 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: Title %></h2>
-    <% var ev = LogicCollection.EventLogic.GetByID(2); %>
+    <% var ev = LogicCollection.EventLogic.GetByID(2); 
+    %>
      
     <div id="feedbackPanel" class="alert alert-info alert-dismissible" role="alert" runat="server" Visible="False">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -138,15 +139,18 @@
         </div>
         
         <div class="col-md-6">
-        <asp:DropDownList ID="drpListOfPlaces" runat="server" CssClass="form-control"></asp:DropDownList>
+        <asp:DropDownList ID="drpListOfPlaces" runat="server" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>
          <br />
          <div id="informationPlace" class="alert alert-info alert-dismissible" role="alert" runat="server">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <strong>Informatie over plek <% Response.Write(drpListOfPlaces.SelectedValue); %>:</strong>
-            <!-- <p>Capaciteit: <% //LogicCollection.PlaceLogic.GetPlaceByID(Convert.ToInt32(drpListOfPlaces.SelectedValue)); %></p> -->
-
+            <strong>Informatie over plek <asp:Label ID="lblPlaceId" runat="server" Text="Label"></asp:Label>:</strong>
+            <p>Capaciteit: <asp:Label ID="lblCap" runat="server" Text="Label"></asp:Label></p>
+            <p>Prijs: <asp:Label ID="lblPrice" runat="server" Text="Label"></asp:Label></p>
+            <p>Grootte: <asp:Label ID="lblSize" runat="server" Text="Label"></asp:Label></p>
+            <p>Handicap: <asp:Label ID="lblHandicap" runat="server" Text="Label"></asp:Label></p>
+            <p>Water: <asp:Label ID="lblWater" runat="server" Text="Label"></asp:Label></p>
         </div>
         </div>
     </div>

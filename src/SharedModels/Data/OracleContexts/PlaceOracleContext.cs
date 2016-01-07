@@ -27,11 +27,13 @@ namespace SharedModels.Data.OracleContexts
 
         public Place GetById(int id)
         {
-            var query = "SELECT * FROM location WHERE locationid = :locationid";
+            var query = "P_PLEK.plek_selectId";
+
             var parameters = new List<OracleParameter>
-            {
-                new OracleParameter("locationid", Convert.ToInt32(id))
-            };
+                {
+                    new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue),
+                    new OracleParameter("plekid", id)
+                };
 
             return GetEntityFromRecord(Database.ExecuteReader(query, parameters).First());
         }
@@ -108,7 +110,7 @@ namespace SharedModels.Data.OracleContexts
                 return new Place(Convert.ToInt32(record[0]), Convert.ToInt32(record[1]),record[2],
                 Convert.ToInt32(record[3]), 0,
                 new Point(Convert.ToInt32(record[5]), Convert.ToInt32(record[6])), Convert.ToBoolean(record[7]),
-                Convert.ToBoolean(record[8]), Convert.ToBoolean(record[9]), 0);
+                Convert.ToBoolean(record[8]), Convert.ToBoolean(record[9]), 100);
         }
     }
 }

@@ -65,6 +65,34 @@ namespace SharedModels.Data.OracleContexts
             return Database.ExecuteNonQuery(query, parameters);
         }
 
+        public bool InsertReservationAccount(ReservationAccount reservation)
+        {
+            var query =
+                "P_PLEK_RESERVERING.insertPlekReser";
+
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter("Return_Value", OracleDbType.Int32, ParameterDirection.ReturnValue),
+                new OracleParameter("p_plekid", reservation.PlaceId),
+                new OracleParameter("p_reserveringid", reservation.ReservationId)
+            };
+
+            return Database.ExecuteNonQuery(query, parameters);
+        }
+
+        public int GetCountReservationOfPlace(int id)
+        {
+            var query = "P_PLEK_RESERVERING.getCountByPlaceID";
+
+            var parameters = new List<OracleParameter>
+                {
+                    new OracleParameter("Return_Value", OracleDbType.Int32, ParameterDirection.ReturnValue),
+                    new OracleParameter("plek_id", id)
+                };
+
+            return Convert.ToInt32(Database.ExecuteReader(query, parameters).FirstOrDefault());
+        }
+
         public bool Update(Reservation user)
         {
             var query = "p_account.updateAccount";
