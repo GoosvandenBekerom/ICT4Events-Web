@@ -103,6 +103,11 @@ input[type="select"] {
     margin-bottom: 5px;
 }
 
+.createPostContainer .col-md-10, .createPostContainer .col-md-2 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .liked, .liked:hover {
     color: blue;
 }
@@ -111,6 +116,24 @@ input[type="select"] {
     color: red;
 }
 
+ol.postContainer {
+    padding-left: 0;
+}
+
 .reply:nth-child(even) {
     background-color: white;
+}
+
+.thumbnail img {
+    max-height: 100px;
+}
+
+.thumbnail.col-md-offset-9 {
+    position: absolute;
+    top: 10px;
+    left: 50px;
+}
+
+.post {
+    position: relative;
 }

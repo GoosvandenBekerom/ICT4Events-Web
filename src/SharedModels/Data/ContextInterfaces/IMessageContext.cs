@@ -15,5 +15,9 @@ namespace SharedModels.Data.ContextInterfaces
         List<int> GetReportsByMessage(Message message);
 
         List<Message> SearchMessages(string hashtag);
+
+        Message InsertReturnMessage(Message entity);
+        bool AddFileContribution(FileContribution fileContribution, int postID);
+        FileContribution GetFile(int postId);
     }
 }

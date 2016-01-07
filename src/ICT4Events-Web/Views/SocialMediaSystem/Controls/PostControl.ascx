@@ -10,6 +10,17 @@
             <div class="PostContent">
                 <p><%:Post.Content%></p>
             </div>
+
+            <% if (File != null)
+               {
+            %>
+            <div class="postMedia right">
+                <a href="<%:File.Filepath%>" class="thumbnail col-md-offset-9 col-md-2" data-toggle="lightbox">
+                    <asp:Image ID="postThumbnail" runat="server" CssClass="img img-thumbnail" />
+                </a>
+            </div>
+            <% } %>
+
             <div class="PostFooter">
                 <button type="button" id="reply" class="btn btn-sm btn-default" onclick="$(this).parent().parent().parent().find('.hidden').toggleClass('hidden');" value="<%:Post.ID%>">
                     <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Reageren

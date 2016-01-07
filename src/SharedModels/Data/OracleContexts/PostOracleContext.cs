@@ -42,6 +42,11 @@ namespace SharedModels.Data.OracleContexts
 
         public bool Insert(Message entity)
         {
+            throw new NotImplementedException();
+        }
+
+        public Message InsertReturnMessage(Message entity)
+        {
             var query = "p_post.AddPost";
             var parameters = new List<OracleParameter>
                                  {
@@ -51,7 +56,9 @@ namespace SharedModels.Data.OracleContexts
                                      new OracleParameter("p_content", entity.Content)
                                  };
 
-            return Database.ExecuteNonQuery(query, parameters);
+            string newID;
+            Database.ExecuteNonQuery(query, out newID, parameters);
+            return GetById(Convert.ToInt32(newID));
         }
 
         public bool Update(Message entity)
@@ -156,10 +163,45 @@ namespace SharedModels.Data.OracleContexts
             return res.Select(GetEntityFromRecord).ToList();
         }
 
+        public bool AddFileContribution(FileContribution fileContribution, int postID)
+        {
+            var query = "p_post.AddFile";
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter("Return_Value", OracleDbType.Int32, ParameterDirection.ReturnValue),
+                new OracleParameter("p_accountId", fileContribution.UserID),
+                new OracleParameter("p_bijdrageId", postID),
+                new OracleParameter("p_path", fileContribution.Filepath),
+                new OracleParameter("p_size", fileContribution.Filesize)
+            };
+
+            return Database.ExecuteNonQuery(query, parameters);
+        }
+
+        public FileContribution GetFile(int postId)
+        {
+            var query = "p_post.GetFile";
+            var parameters = new List<OracleParameter>
+                {
+                    new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue),
+                    new OracleParameter("p_postId", postId)
+                };
+
+            var res = Database.ExecuteReader(query, parameters);
+            return res.Select(GetFileContributionFromRecord).FirstOrDefault();
+        }
+
         protected override Message GetEntityFromRecord(List<string> record)
         {
             return new Message(Convert.ToInt32(record[0]), Convert.ToInt32(record[1]), DateTime.Parse(record[2]), record[5], record[6]);
         }
 
+        private FileContribution GetFileContributionFromRecord(List<string> record)
+        {
+            //0     1           2       3         4             5             6                 7
+            //id    account_id  datum   soort     bijdrage_id   categorie_id  bestandslocatie   grootte
+            return new FileContribution(Convert.ToInt32(record[0]), Convert.ToInt32(record[1]),
+                DateTime.Parse(record[2]), Convert.ToInt32(record[5]), record[6], Convert.ToInt64(record[7]));
+        }
     }
 }
