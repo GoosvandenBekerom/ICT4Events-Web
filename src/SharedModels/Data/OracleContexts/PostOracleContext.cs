@@ -64,9 +64,25 @@ namespace SharedModels.Data.OracleContexts
             throw new NotImplementedException();
         }
 
+        public int AddReply(User user, Message message, string content)
+        {
+            var query = "p_post.AddReply";
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter("p_accountId", user.ID),
+                new OracleParameter("p_postId", message.ID),
+                new OracleParameter("p_content", content),
+                new OracleParameter("o_newId", OracleDbType.Int32, ParameterDirection.ReturnValue)
+            };
+
+            string newId;
+            Database.ExecuteNonQuery(query, out newId, parameters);
+            return string.IsNullOrEmpty(newId) ? 0 : Convert.ToInt32(newId);
+        }
+
         public bool LikeMessage(User user, Message message)
         {
-            var query = "p_post.AddLike";
+            var query = "p_post.ToggleLike";
             var parameters = new List<OracleParameter>
             {
                 new OracleParameter("p_accountId", user.ID),

@@ -77,6 +77,21 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
                 : "Not authorized";
         }
 
+        [WebMethod(true)]
+        public static string AddReply(int postId, string message)
+        {
+            var context = HttpContext.Current;
+            if (context == null || !context.User.Identity.IsAuthenticated)
+            {
+                return "Not authorized";
+            }
+            var user = SiteMaster.CurrentUser();
+            var result = LogicCollection.PostLogic.AddReply(user, postId, message);
+
+            if (result == 0) return "false";
+            return $"<div class=\"reply post well well-sm\"><div class=\"PostHeader\"><span class=\"Username\">{user.Username}</span><span class=\"PostDate\"> {DateTime.Now.ToShortDateString()}</span></div><div class=\"PostContent\"><p>{message}</p></div><div class=\"PostFooter\"><button type=\"button\" class=\"btn btn-sm btn-default reportButton\" value=\"{result}\"><span class=\"glyphicon glyphicon-ban-circle\" aria-hidden=\"true\"></span></button><button type=\"button\" class=\"btn btn-sm btn-default likeButton\" value=\"{result}\"><span class=\"glyphicon glyphicon-thumbs-up\" aria-hidden=\"true\"></span></button></div></div>";
+        }
+
         protected void SearchButton_OnServerClick(object sender, EventArgs e)
         {
             var query = SearchBox.Text;

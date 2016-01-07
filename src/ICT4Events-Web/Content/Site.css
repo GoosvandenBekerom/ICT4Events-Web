@@ -110,3 +110,7 @@ input[type="select"] {
 .reported, .reported:hover {
     color: red;
 }
+
+.reply:nth-child(even) {
+    background-color: white;
+}
