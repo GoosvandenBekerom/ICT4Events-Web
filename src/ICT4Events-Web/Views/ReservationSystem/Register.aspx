@@ -41,7 +41,7 @@
                 
             <!-- gebruikersnaam leader -->
             <div class="form-group">
-              <asp:Label runat="server" CssClass="control-label" AssociatedControlID="leader_Username">Voornaam:</asp:Label>  
+              <asp:Label runat="server" CssClass="control-label" AssociatedControlID="leader_Username">Gebruikersnaam:</asp:Label>  
               <asp:TextBox runat="server" ID="leader_Username" CssClass="form-control input-md" placeholder="ex: Stefano"/>
               <asp:RequiredFieldValidator runat="server" CssClass="text-danger" ControlToValidate="leader_Username" Display="Dynamic" ErrorMessage="Gebruikersnaam is verplicht" ValidationGroup="RegistrationGroup" />
             </div>
@@ -137,10 +137,15 @@
         Einddatum: <br/>
         <asp:Calendar ID="EndDate" runat="server" OnDayRender="EndDate_DayRender" OnSelectionChanged="EndDate_SelectionChanged"></asp:Calendar>
         </div>
-        
+        <br />
         <div class="col-md-6">
-        <asp:DropDownList ID="drpListOfPlaces" runat="server" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>
-         <br />
+          <br />
+            <h5>Plek selecteren: </h5>
+        <asp:DropDownList ID="drpListOfPlaces" runat="server" CssClass="form-control"></asp:DropDownList>
+        </div>
+
+        <div class="col-md-6">
+          <br />
          <div id="informationPlace" class="alert alert-info alert-dismissible" role="alert" runat="server">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>

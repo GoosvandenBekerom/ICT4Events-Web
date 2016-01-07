@@ -108,9 +108,9 @@ namespace SharedModels.Data.OracleContexts
             }
 
                 return new Place(Convert.ToInt32(record[0]), Convert.ToInt32(record[1]),record[2],
-                Convert.ToInt32(record[3]), 0,
+                Convert.ToInt32(record[3]), 150,
                 new Point(Convert.ToInt32(record[5]), Convert.ToInt32(record[6])), Convert.ToBoolean(record[7]),
-                Convert.ToBoolean(record[8]), Convert.ToBoolean(record[9]), 100);
+                Convert.ToBoolean(record[8]), Convert.ToBoolean(record[9]), 7);
         }
     }
 }
