@@ -103,10 +103,19 @@ input[type="select"] {
     margin-bottom: 5px;
 }
 
+.createPostContainer .col-md-10, .createPostContainer .col-md-2 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .liked, .liked:hover {
     color: blue;
 }
 
 .reported, .reported:hover {
     color: red;
+}
+
+ol.postContainer {
+    padding-left: 0;
 }

@@ -27,7 +27,7 @@ namespace SharedModels.Logic
         public List<Message> GetRepliesByPost(Message message) => _context.GetRepliesByPost(message);
 
         public List<Message> SearchPostsByHashtag(string hashtag) => _context.SearchMessages(hashtag);
-        public bool AddPost(Message message) => _context.Insert(message);
+        public Message AddPost(Message message) => _context.InsertReturnMessage(message);
 
         public List<int> GetLikesByPost(Message message) => _context.GetLikesByMessage(message);
         public List<int> GetReportsByPost(Message message) => _context.GetReportsByMessage(message);
@@ -42,6 +42,11 @@ namespace SharedModels.Logic
         {
             var post = _context.GetById(postId);
             return post != null && _context.ReportMessage(user, post);
+        }
+
+        public bool AddFileContribution(FileContribution fileContribution, int postID)
+        {
+            return _context.AddFileContribution(fileContribution, postID);
         }
     }
 }

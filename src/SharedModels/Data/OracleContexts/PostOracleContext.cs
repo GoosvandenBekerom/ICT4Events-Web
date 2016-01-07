@@ -42,6 +42,11 @@ namespace SharedModels.Data.OracleContexts
 
         public bool Insert(Message entity)
         {
+            throw new NotImplementedException();
+        }
+
+        public Message InsertReturnMessage(Message entity)
+        {
             var query = "p_post.AddPost";
             var parameters = new List<OracleParameter>
                                  {
@@ -51,7 +56,9 @@ namespace SharedModels.Data.OracleContexts
                                      new OracleParameter("p_content", entity.Content)
                                  };
 
-            return Database.ExecuteNonQuery(query, parameters);
+            string newID;
+            Database.ExecuteNonQuery(query, out newID, parameters);
+            return GetById(Convert.ToInt32(newID));
         }
 
         public bool Update(Message entity)
@@ -138,6 +145,21 @@ namespace SharedModels.Data.OracleContexts
 
             var res = Database.ExecuteReader(query, parameters);
             return res.Select(GetEntityFromRecord).ToList();
+        }
+
+        public bool AddFileContribution(FileContribution fileContribution, int postID)
+        {
+            var query = "p_post.AddFile";
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter("Return_Value", OracleDbType.Int32, ParameterDirection.ReturnValue),
+                new OracleParameter("p_accountId", fileContribution.UserID),
+                new OracleParameter("p_bijdrageId", postID),
+                new OracleParameter("p_path", fileContribution.Filepath),
+                new OracleParameter("p_size", fileContribution.Filesize)
+            };
+
+            return Database.ExecuteNonQuery(query, parameters);
         }
 
         protected override Message GetEntityFromRecord(List<string> record)
