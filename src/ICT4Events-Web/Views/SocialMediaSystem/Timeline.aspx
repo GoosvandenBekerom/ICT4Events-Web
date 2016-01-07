@@ -18,10 +18,11 @@
     </asp:PlaceHolder>
     <script>
         $(".likeButton").click(function () {
+            var obj = {};
             $.ajax({
                 type: "POST",
-                url: "Timeline.aspx/LikePost",
-                data: "{'postId':" + $(this).attr('value') + "}",
+                url: "<%=VirtualPathUtility.ToAbsolute("~/Views/SocialMediaSystem/Timeline.aspx/LikePost")%>",
+                data: "{'postId':"+$(this).attr('value')+"}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {

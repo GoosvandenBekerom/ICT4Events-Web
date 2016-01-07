@@ -44,12 +44,12 @@ namespace SharedModels.Data.OracleContexts
         {
             var query = "p_post.AddPost";
             var parameters = new List<OracleParameter>
-            {
+                                 {
                 new OracleParameter("Return_Value", OracleDbType.Int32, ParameterDirection.ReturnValue),
-                new OracleParameter("p_accountID", entity.UserID),
-                new OracleParameter("p_title", entity.Title),
-                new OracleParameter("p_content", entity.Content)
-            };
+                                     new OracleParameter("p_accountID", entity.UserID),
+                                     new OracleParameter("p_title", entity.Title),
+                                     new OracleParameter("p_content", entity.Content)
+                                 };
 
             return Database.ExecuteNonQuery(query, parameters);
         }
@@ -66,7 +66,14 @@ namespace SharedModels.Data.OracleContexts
 
         public bool LikeMessage(User user, Message message)
         {
-            throw new NotImplementedException();
+            var query = "p_post.AddLike";
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter("p_accountId", user.ID),
+                new OracleParameter("p_bijdrageId", message.ID)
+            };
+
+            return Database.ExecuteNonQuery(query, parameters);
         }
 
         public bool ReportMessage(User user, Message message)
@@ -89,7 +96,7 @@ namespace SharedModels.Data.OracleContexts
 
         public List<int> GetLikesByMessage(Message message)
         {
-            var query = "p_post.GetReportsByPost";
+            var query = "p_post.GetLikesByPost";
             var parameters = new List<OracleParameter>
             {
                 new OracleParameter("p_postId", message.ID),

@@ -13,7 +13,7 @@ namespace ICT4Events_Web.Views.AccountSystem
         private User _currentUser;
         protected void Page_Load(object sender, EventArgs e)
         {
-            _currentUser = ((SiteMaster) Master)?.CurrentUser();
+            _currentUser = SiteMaster.CurrentUser();
         }
 
         protected void btnSave_Click(object sender, EventArgs e)

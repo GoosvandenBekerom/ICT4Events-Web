@@ -12,7 +12,7 @@ namespace ICT4Events_Web.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var user = ((SiteMaster) Master)?.CurrentUser();
+            var user = SiteMaster.CurrentUser();
             if (user != null)
             {
                 lblNotLoggedIn.Visible = true;

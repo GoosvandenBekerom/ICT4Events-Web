@@ -20,15 +20,17 @@ namespace ICT4Events_Web.Views.SocialMediaSystem.Controls
         {
             Username.InnerText = LogicCollection.UserLogic.GetById(Post.UserID).Username;
 
+            like.Attributes.Add("value", Post.ID.ToString());
+            report.Attributes.Add("value", Post.ID.ToString());
+
             var likes = LogicCollection.PostLogic.GetLikesByPost(Post);
-            likes.Add(45);
 
             if (likes.Any())
             {
                 like.InnerHtml += " " + likes.Count;
             }
 
-            if(likes.Any(x => x == ((SiteMaster)Page.Master).CurrentUser().ID))
+            if(likes.Any(x => x == (SiteMaster.CurrentUser().ID)))
             {
                 like.Attributes.Add("class", like.Attributes["class"] + " liked");
             }
