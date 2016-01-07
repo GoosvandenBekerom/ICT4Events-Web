@@ -22,11 +22,19 @@ namespace ICT4Events_Web.Views.ReservationSystem
             StartDate.TodaysDate = _event.StartDate;
             EndDate.TodaysDate = _event.StartDate;
 
-            drpListOfPlaces.Items.Clear();
-            foreach (var item in LogicCollection.PlaceLogic.GetAllPlaces().Select(place => new ListItem("Pleknummer: " + place.ID + "Cap: " + place.Capacity, place.ID.ToString())))
+            if (!Page.IsPostBack)
             {
-                drpListOfPlaces.Items.Add(item);
+                drpListOfPlaces.Items.Clear();
+                foreach (
+                    var item in
+                        LogicCollection.PlaceLogic.GetAllPlaces()
+                            .Select(place => new ListItem("Pleknummer: " + place.ID, place.ID.ToString())))
+                {
+                    drpListOfPlaces.Items.Add(item);
+                }
             }
+
+            LoadPlace(Convert.ToInt32(drpListOfPlaces.SelectedValue));
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -51,20 +59,31 @@ namespace ICT4Events_Web.Views.ReservationSystem
 
             // variables
             var count = 0;
-            User user1 = null;
-            User user2 = null;
-            User user3 = null;
-            User user4 = null;
-            User user5 = null;
-            
+
+            // Counting field of reservations
+            count = CheckEmptyEmailCount(Email1, count);
+            count = CheckEmptyEmailCount(Email2, count);
+            count = CheckEmptyEmailCount(Email3, count);
+            count = CheckEmptyEmailCount(Email4, count);
+            count = CheckEmptyEmailCount(Email5, count);
+
             // Leader information
             var lFirstname = leader_first_name.Text;
             var lSurname = leader_last_name.Text;
             var lAddress = leader_address.Text;
             var lCity = leader_city.Text;
+            var lUsername = leader_Username.Text;
             var lIban = leader_iban.Text;
             var lEmail = leader_Email.Text;
             var lPass = LogicCollection.UserLogic.GetHashedPassword(leader_Password.Text);
+
+            var placeId = Convert.ToInt32(drpListOfPlaces.SelectedValue);
+            var reservationOnPlace = LogicCollection.ReservationLogic.GetCountReservationOfPlace(placeId);
+
+            if ((count + 1 + reservationOnPlace) > LogicCollection.PlaceLogic.GetPlaceByID(placeId).Capacity)
+            {
+                return; // Too much people on that place
+            }
 
             // Making person of leader
             var person = new Person(0, lFirstname, lSurname, lAddress, lCity, lIban); // local person
@@ -73,7 +92,7 @@ namespace ICT4Events_Web.Views.ReservationSystem
 
             // Register leader
             var lhash = Membership.GeneratePassword(8, 2);
-            var leaderUser = new User(0, null, lEmail, lhash, false, lPass);
+            var leaderUser = new User(0, lUsername, lEmail, lhash, false, lPass);
             //if (!LogicCollection.UserLogic.RegisterUser(leaderUser)) {return;}
             leaderUser = LogicCollection.UserLogic.GetLastAdded();
 
@@ -83,8 +102,9 @@ namespace ICT4Events_Web.Views.ReservationSystem
             reservation = LogicCollection.ReservationLogic.GetLastAdded(); // get reservation out of database
 
             // Making reservation_account
-            var reservationAccount = new ReservationAccount(0, reservation.ID, leaderUser.ID, Convert.ToInt32(drpListOfPlaces.SelectedValue));
-
+            var reservationAccount = new ReservationAccount(0, reservation.ID, leaderUser.ID, placeId);
+            //if (!LogicCollection.ReservationLogic.InsertReservationAccount(reservationAccount)) { return; }
+            
 
             #region checking reservations emailadresses & Reservations of users
             
@@ -123,18 +143,11 @@ namespace ICT4Events_Web.Views.ReservationSystem
                     var userLast = LogicCollection.UserLogic.GetLastAdded();
                     if (register)
                     {
-                        var res = new ReservationAccount(0, reservation.ID, userLast.ID,
-                            Convert.ToInt32(drpListOfPlaces.SelectedValue));
+                        var res = new ReservationAccount(0, reservation.ID, userLast.ID, placeId);
+                        if (!LogicCollection.ReservationLogic.InsertReservationAccount(res)) { return; }
                     }
                 }
             }
-
-            // Counting field of reservations
-            count = CheckEmptyEmailCount(Email1, count);
-            count = CheckEmptyEmailCount(Email2, count);
-            count = CheckEmptyEmailCount(Email3, count);
-            count = CheckEmptyEmailCount(Email4, count);
-            count = CheckEmptyEmailCount(Email5, count);
             #endregion
 
             lblError.Visible = true;
@@ -147,7 +160,8 @@ namespace ICT4Events_Web.Views.ReservationSystem
                 "<br />IBAN: " + lIban +
                 "<br />Email: " + lEmail +
                 "<br />Pass: " + lPass +
-                "<br />Count: " + count +
+                "<br />Meerdere reserveerders: " + count +
+                "<br />PlaceID: " + placeId +
                 "<br />Startdatum: " + StartDate.SelectedDate.ToShortDateString() +
                 "<br />Einddatum: " + EndDate.SelectedDate.ToShortDateString();
         }
@@ -207,5 +221,16 @@ namespace ICT4Events_Web.Views.ReservationSystem
         }
         #endregion
 
+
+        public void LoadPlace(int id)
+        {
+            var place = LogicCollection.PlaceLogic.GetPlaceByID(Convert.ToInt32(id));
+            lblPlaceId.Text = place.ID.ToString();
+            lblCap.Text = LogicCollection.ReservationLogic.GetCountReservationOfPlace(id)+" - "+place.Capacity.ToString();
+            lblPrice.Text = place.Price.ToString("C0");
+            lblHandicap.Text = place.Handicap.ToString();
+            lblWater.Text = place.TapWater.ToString();
+            lblSize.Text = place.Size.ToString();
+        }
     }
 }

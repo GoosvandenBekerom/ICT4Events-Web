@@ -3,7 +3,8 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: Title %></h2>
-    <% var ev = LogicCollection.EventLogic.GetByID(2); %>
+    <% var ev = LogicCollection.EventLogic.GetByID(2); 
+    %>
      
     <div id="feedbackPanel" class="alert alert-info alert-dismissible" role="alert" runat="server" Visible="False">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -37,16 +38,22 @@
               <asp:TextBox runat="server" ID="leader_address" CssClass="form-control input-md" placeholder="ex: Kennedylaan" />
               <asp:RequiredFieldValidator runat="server" CssClass="text-danger" ControlToValidate="leader_address" Display="Dynamic" ErrorMessage="Adres is verplicht" ValidationGroup="RegistrationGroup"/>
             </div>
+                
+            <!-- gebruikersnaam leader -->
+            <div class="form-group">
+              <asp:Label runat="server" CssClass="control-label" AssociatedControlID="leader_Username">Gebruikersnaam:</asp:Label>  
+              <asp:TextBox runat="server" ID="leader_Username" CssClass="form-control input-md" placeholder="ex: Stefano"/>
+              <asp:RequiredFieldValidator runat="server" CssClass="text-danger" ControlToValidate="leader_Username" Display="Dynamic" ErrorMessage="Gebruikersnaam is verplicht" ValidationGroup="RegistrationGroup" />
+            </div>
 
-            <!-- woonplaats leader -->
+            </div>
+            <div class="col-md-6">
+             <!-- woonplaats leader -->
             <div class="form-group">           
               <asp:Label runat="server" CssClass="control-label" AssociatedControlID="leader_city">Woonplaats:</asp:Label>
               <asp:TextBox runat="server" ID="leader_city" CssClass="form-control input-md" placeholder="ex: Eindhoven" />
               <asp:RequiredFieldValidator runat="server" CssClass="text-danger" ControlToValidate="leader_city" Display="Dynamic" ErrorMessage="Woonplaats is verplicht" ValidationGroup="RegistrationGroup"/>
             </div>
-
-            </div>
-            <div class="col-md-6">
 
             <!-- iban leader -->
             <div class="form-group">
@@ -130,17 +137,25 @@
         Einddatum: <br/>
         <asp:Calendar ID="EndDate" runat="server" OnDayRender="EndDate_DayRender" OnSelectionChanged="EndDate_SelectionChanged"></asp:Calendar>
         </div>
-        
+        <br />
         <div class="col-md-6">
+          <br />
+            <h5>Plek selecteren: </h5>
         <asp:DropDownList ID="drpListOfPlaces" runat="server" CssClass="form-control"></asp:DropDownList>
-         <br />
+        </div>
+
+        <div class="col-md-6">
+          <br />
          <div id="informationPlace" class="alert alert-info alert-dismissible" role="alert" runat="server">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <strong>Informatie over plek <% Response.Write(drpListOfPlaces.SelectedValue); %>:</strong>
-            <!-- <p>Capaciteit: <% //LogicCollection.PlaceLogic.GetPlaceByID(Convert.ToInt32(drpListOfPlaces.SelectedValue)); %></p> -->
-
+            <strong>Informatie over plek <asp:Label ID="lblPlaceId" runat="server" Text="Label"></asp:Label>:</strong>
+            <p>Capaciteit: <asp:Label ID="lblCap" runat="server" Text="Label"></asp:Label></p>
+            <p>Prijs: <asp:Label ID="lblPrice" runat="server" Text="Label"></asp:Label></p>
+            <p>Grootte: <asp:Label ID="lblSize" runat="server" Text="Label"></asp:Label></p>
+            <p>Handicap: <asp:Label ID="lblHandicap" runat="server" Text="Label"></asp:Label></p>
+            <p>Water: <asp:Label ID="lblWater" runat="server" Text="Label"></asp:Label></p>
         </div>
         </div>
     </div>

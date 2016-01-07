@@ -33,5 +33,15 @@ namespace SharedModels.Logic
         {
             return _context.GetLastAdded();
         }
+
+        public bool InsertReservationAccount(ReservationAccount reservation)
+        {
+            return _context.InsertReservationAccount(reservation);
+        }
+
+        public int GetCountReservationOfPlace(int id)
+        {
+            return _context.GetCountReservationOfPlace(id);
+        }
     }
 }

@@ -7,7 +7,7 @@
     var succes = Convert.ToInt32(HttpUtility.ParseQueryString(new Uri(currentUrl).Query).Get("succes")); // gets brand id
     if (succes == 1) { feedbackPanelSucces.Visible = true; }
 
-    var currentUser = ((SiteMaster) Master)?.CurrentUser();
+    var currentUser = SiteMaster.CurrentUser();
     if (currentUser != null)
     {
         txtEmailadress.Text = currentUser.Email;
