@@ -137,3 +137,8 @@ ol.postContainer {
 .post {
     position: relative;
 }
+
+.modal-content img {
+    width: 100%;
+    height: 500px !IMPORTANT;
+}

@@ -15,18 +15,18 @@
                {
             %>
             <div class="postMedia right">
-                <a href="<%:File.Filepath%>" class="thumbnail col-md-offset-9 col-md-2" 
-                    data-toggle="modal" data-target=".bs-example-modal-sm">
+                <a href=".modal_<% Response.Write(File.ID);%>" class="thumbnail col-md-offset-9 col-md-2" 
+                    data-toggle="modal" data-backdrop="static" data-target=".modal_<% Response.Write(File.ID);%>">
                     <asp:Image ID="postThumbnail" runat="server" CssClass="img img-thumbnail" />
-
-                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-                        <div class="modal-dialog modal-sm">
-                            <div class="modal-content">
-                                <img src="<%:File.Filepath%>" alt="" />
-                            </div>
-                        </div>
-                    </div>
                 </a>
+            <!-- Modal of image -->
+            <div class="modal fade modal_<% Response.Write(File.ID);%>" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <a href="<% Response.Write(File.Filepath);%>" target="_blank"><img src="<% Response.Write(File.Filepath);%>" alt="" /></a>
+                </div>
+            </div>
+            </div>
             </div>
             <% } %>
 
