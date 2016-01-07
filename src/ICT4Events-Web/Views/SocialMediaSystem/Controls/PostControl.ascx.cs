@@ -27,12 +27,24 @@ namespace ICT4Events_Web.Views.SocialMediaSystem.Controls
 
             if (likes.Any())
             {
-                like.InnerHtml += " " + likes.Count;
+                like.InnerHtml += "<span> " + likes.Count + "</span>";
             }
 
             if(likes.Any(x => x == (SiteMaster.CurrentUser().ID)))
             {
                 like.Attributes.Add("class", like.Attributes["class"] + " liked");
+            }
+
+            var reports = LogicCollection.PostLogic.GetReportsByPost(Post);
+
+            if (reports.Any(x => x == (SiteMaster.CurrentUser().ID)))
+            {
+                report.Attributes.Add("class", like.Attributes["class"] + " reported");
+                report.InnerHtml += "<span>Gerapporteerd</span>";
+            }
+            else
+            {
+                report.InnerHtml += "<span>Rapporteren</span>";
             }
         }
     }

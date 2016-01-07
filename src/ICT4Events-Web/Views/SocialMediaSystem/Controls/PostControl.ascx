@@ -14,8 +14,8 @@
                 <button type="button" id="reply" class="btn btn-sm btn-default" value="<%:Post.ID%>">
                     <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Reageren
                 </button>
-                <button type="button" id="report" class="btn btn-sm btn-default" runat="server">
-                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> Rapporteren
+                <button type="button" id="report" class="btn btn-sm btn-default reportButton" runat="server">
+                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> 
                 </button>
                 <button type="button" id="like" class="btn btn-sm btn-default likeButton" runat="server">
                     <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 

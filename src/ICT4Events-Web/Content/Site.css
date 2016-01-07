@@ -103,6 +103,10 @@ input[type="select"] {
     margin-bottom: 5px;
 }
 
-.liked {
+.liked, .liked:hover {
     color: blue;
+}
+
+.reported, .reported:hover {
+    color: red;
 }

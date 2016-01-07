@@ -37,5 +37,11 @@ namespace SharedModels.Logic
             var post = _context.GetById(postId);
             return post != null && _context.LikeMessage(user, post);
         }
+
+        public bool ReportPost(User user, int postId)
+        {
+            var post = _context.GetById(postId);
+            return post != null && _context.ReportMessage(user, post);
+        }
     }
 }

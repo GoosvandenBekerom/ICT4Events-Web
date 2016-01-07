@@ -36,10 +36,6 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (!Context.User.Identity.IsAuthenticated)
-            {
-                //Response.Redirect("~");
-            }
             foreach (var message in _messages.OrderByDescending(x => x.Date))
             {
                 var control = (PostControl) LoadControl("Controls/PostControl.ascx");
@@ -60,8 +56,24 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
             var user = SiteMaster.CurrentUser();
             var result = LogicCollection.PostLogic.LikePost(user, postId);
 
-            return HttpContext.Current != null
-                ? result.ToString()
+            return HttpContext.Current != null && result
+                ? "succeeded"
+                : "Not authorized";
+        }
+
+        [WebMethod(enableSession: true)]
+        public static string ReportPost(int postId)
+        {
+            var context = HttpContext.Current;
+            if (context == null || !context.User.Identity.IsAuthenticated)
+            {
+                return "Not authorized";
+            }
+            var user = SiteMaster.CurrentUser();
+            var result = LogicCollection.PostLogic.ReportPost(user, postId);
+
+            return HttpContext.Current != null && result
+                ? "succeeded"
                 : "Not authorized";
         }
 

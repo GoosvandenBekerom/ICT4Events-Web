@@ -78,7 +78,14 @@ namespace SharedModels.Data.OracleContexts
 
         public bool ReportMessage(User user, Message message)
         {
-            throw new NotImplementedException();
+            var query = "p_post.AddReport";
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter("p_accountId", user.ID),
+                new OracleParameter("p_bijdrageId", message.ID)
+            };
+
+            return Database.ExecuteNonQuery(query, parameters);
         }
 
         public List<Message> GetRepliesByPost(Message message)

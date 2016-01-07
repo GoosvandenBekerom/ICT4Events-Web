@@ -179,7 +179,7 @@ namespace SharedModels.Data
                         }
                     }
 
-                    command.ExecuteNonQuery();
+                    var t = command.ExecuteNonQuery();
                     result = int.Parse((command.Parameters[0].Value.ToString()));
                 }
             }
