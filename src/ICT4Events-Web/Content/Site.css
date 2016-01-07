@@ -119,3 +119,7 @@ input[type="select"] {
 ol.postContainer {
     padding-left: 0;
 }
+
+.reply:nth-child(even) {
+    background-color: white;
+}

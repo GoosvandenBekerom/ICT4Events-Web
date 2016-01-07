@@ -17,7 +17,7 @@
         
     </asp:PlaceHolder>
     <script>
-        $(".likeButton").click(function () {
+        $("body").on("click", '.likeButton', function () {
             var btn = $(this);
             var likeCount = $(this).find('span').last();
             $.ajax({
@@ -39,7 +39,7 @@
             });
         });
 
-        $(".reportButton").click(function () {
+        $(".reportButton").on("click", function () {
             var btn = $(this);
             $.ajax({
                 type: "POST",
@@ -48,8 +48,25 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
-                    console.log(result);
-                    btn.addClass('reported');
+                    if (result.d === "succeeded")
+                        btn.addClass('reported');
+                }
+            });
+        });
+
+        $('.postReplyButton').on("click", function () {
+            var btn = $(this);
+            var text = btn.siblings('div').find('input').val();
+
+            $.ajax({
+                type: "POST",
+                url: "<%=VirtualPathUtility.ToAbsolute("~/Views/SocialMediaSystem/Timeline.aspx/AddReply")%>",
+                data: "{'postId':"+$(this).attr('value')+", 'message':'"+text+"'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result.d !== "false")
+                        btn.parent().parent().parent().append(result.d);
                 }
             });
         });

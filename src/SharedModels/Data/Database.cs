@@ -213,6 +213,7 @@ namespace SharedModels.Data
             {
                 using (var command = new OracleCommand(query, Connection) {BindByName = true})
                 {
+                    command.CommandType = CommandType.StoredProcedure;
                     if (args != null)
                     {
                         foreach (var arg in args)

@@ -9,6 +9,7 @@ namespace SharedModels.Data.ContextInterfaces
         bool ReportMessage(User user, Message message);
 
         List<Message> GetRepliesByPost(Message message);
+        int AddReply(User user, Message message, string content);
 
         List<int> GetLikesByMessage(Message message);
         List<int> GetReportsByMessage(Message message);
