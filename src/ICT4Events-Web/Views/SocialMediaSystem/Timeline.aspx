@@ -61,7 +61,23 @@
             $.ajax({
                 type: "POST",
                 url: "<%=VirtualPathUtility.ToAbsolute("~/Views/SocialMediaSystem/Timeline.aspx/AddReply")%>",
-                data: "{'postId':"+$(this).attr('value')+", 'message':'"+text+"'}",
+                data: "{'postId':"+btn.attr('value')+", 'message':'"+text+"'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result.d !== "false")
+                        btn.parent().parent().parent().append(result.d);
+                }
+            });
+        });
+
+        $('.replyButton').one("click", function() {
+            var btn = $(this);
+            console.log(btn.val());
+            $.ajax({
+                type: "POST",
+                url: "<%=VirtualPathUtility.ToAbsolute("~/Views/SocialMediaSystem/Timeline.aspx/LoadReplies")%>",
+                data: "{'postId':"+btn.val()+"}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
