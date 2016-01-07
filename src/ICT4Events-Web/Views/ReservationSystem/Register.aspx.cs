@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Security;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using SharedModels.Logic;
@@ -13,28 +14,26 @@ namespace ICT4Events_Web.Views.ReservationSystem
 {
     public partial class Webform : Page
     {
-        private Event _event;
+        public Event curEvent;
+        public int Count;
+        public int PlaceId;
+
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            drpListOfPlaces.DataSource = LogicCollection.PlaceLogic.GetAllPlaces();
+            drpListOfPlaces.DataValueField = "ID";
+            drpListOfPlaces.DataTextField = "Name";
+            drpListOfPlaces.DataBind();
+            drpListOfPlaces.Items.Insert(0, "Selecteer een plek");
+        }
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            _event = LogicCollection.EventLogic.GetByID(2);
+            curEvent = LogicCollection.EventLogic.GetByID(2);
 
-            StartDate.TodaysDate = _event.StartDate;
-            EndDate.TodaysDate = _event.StartDate;
-
-            if (!Page.IsPostBack)
-            {
-                drpListOfPlaces.Items.Clear();
-                foreach (
-                    var item in
-                        LogicCollection.PlaceLogic.GetAllPlaces()
-                            .Select(place => new ListItem("Pleknummer: " + place.ID, place.ID.ToString())))
-                {
-                    drpListOfPlaces.Items.Add(item);
-                }
-            }
-
-            LoadPlace(Convert.ToInt32(drpListOfPlaces.SelectedValue));
+            StartDate.TodaysDate = curEvent.StartDate;
+            EndDate.TodaysDate = curEvent.StartDate;
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -58,14 +57,14 @@ namespace ICT4Events_Web.Views.ReservationSystem
             }
 
             // variables
-            var count = 0;
+            Count = 0;
 
             // Counting field of reservations
-            count = CheckEmptyEmailCount(Email1, count);
-            count = CheckEmptyEmailCount(Email2, count);
-            count = CheckEmptyEmailCount(Email3, count);
-            count = CheckEmptyEmailCount(Email4, count);
-            count = CheckEmptyEmailCount(Email5, count);
+            Count = CheckEmptyEmailCount(Email1, Count);
+            Count = CheckEmptyEmailCount(Email2, Count);
+            Count = CheckEmptyEmailCount(Email3, Count);
+            Count = CheckEmptyEmailCount(Email4, Count);
+            Count = CheckEmptyEmailCount(Email5, Count);
 
             // Leader information
             var lFirstname = leader_first_name.Text;
@@ -77,10 +76,10 @@ namespace ICT4Events_Web.Views.ReservationSystem
             var lEmail = leader_Email.Text;
             var lPass = LogicCollection.UserLogic.GetHashedPassword(leader_Password.Text);
 
-            var placeId = Convert.ToInt32(drpListOfPlaces.SelectedValue);
-            var reservationOnPlace = LogicCollection.ReservationLogic.GetCountReservationOfPlace(placeId);
+            PlaceId = Convert.ToInt32(drpListOfPlaces.SelectedValue);
+            var reservationOnPlace = LogicCollection.ReservationLogic.GetCountReservationOfPlace(PlaceId);
 
-            if ((count + 1 + reservationOnPlace) > LogicCollection.PlaceLogic.GetPlaceByID(placeId).Capacity)
+            if ((Count + 1 + reservationOnPlace) > LogicCollection.PlaceLogic.GetPlaceByID(PlaceId).Capacity)
             {
                 return; // Too much people on that place
             }
@@ -102,7 +101,7 @@ namespace ICT4Events_Web.Views.ReservationSystem
             reservation = LogicCollection.ReservationLogic.GetLastAdded(); // get reservation out of database
 
             // Making reservation_account
-            var reservationAccount = new ReservationAccount(0, reservation.ID, leaderUser.ID, placeId);
+            var reservationAccount = new ReservationAccount(0, reservation.ID, leaderUser.ID, PlaceId);
             //if (!LogicCollection.ReservationLogic.InsertReservationAccount(reservationAccount)) { return; }
             
 
@@ -135,18 +134,14 @@ namespace ICT4Events_Web.Views.ReservationSystem
             foreach (var user in reservationsOfNewUser)
             {
                 // checking if users is not null send email and insert into database
-                if (user != null)
-                {
-                    //send email and insert into database and make reservationAccount
-                    var password = Membership.GeneratePassword(10, 2);
-                    var register = LogicCollection.UserLogic.RegisterUser(user, true, password);
-                    var userLast = LogicCollection.UserLogic.GetLastAdded();
-                    if (register)
-                    {
-                        var res = new ReservationAccount(0, reservation.ID, userLast.ID, placeId);
-                        if (!LogicCollection.ReservationLogic.InsertReservationAccount(res)) { return; }
-                    }
-                }
+                if (user == null) continue;
+                //send email and insert into database and make reservationAccount
+                var password = Membership.GeneratePassword(10, 2);
+                var register = LogicCollection.UserLogic.RegisterUser(user, true, password);
+                var userLast = LogicCollection.UserLogic.GetLastAdded();
+                if (!register) continue;
+                var res = new ReservationAccount(0, reservation.ID, userLast.ID, PlaceId);
+                if (!LogicCollection.ReservationLogic.InsertReservationAccount(res)) { return; }
             }
             #endregion
 
@@ -160,8 +155,8 @@ namespace ICT4Events_Web.Views.ReservationSystem
                 "<br />IBAN: " + lIban +
                 "<br />Email: " + lEmail +
                 "<br />Pass: " + lPass +
-                "<br />Meerdere reserveerders: " + count +
-                "<br />PlaceID: " + placeId +
+                "<br />Meerdere reserveerders: " + Count +
+                "<br />PlaceID: " + PlaceId +
                 "<br />Startdatum: " + StartDate.SelectedDate.ToShortDateString() +
                 "<br />Einddatum: " + EndDate.SelectedDate.ToShortDateString();
         }
@@ -180,7 +175,7 @@ namespace ICT4Events_Web.Views.ReservationSystem
         #region Calenders events
         protected void StartDate_DayRender(object sender, DayRenderEventArgs e)
         {
-            if (e.Day.Date >= _event.StartDate && e.Day.Date <= _event.EndDate)
+            if (e.Day.Date >= curEvent.StartDate && e.Day.Date <= curEvent.EndDate)
             {
                 e.Day.IsSelectable = true;
             }
@@ -193,7 +188,7 @@ namespace ICT4Events_Web.Views.ReservationSystem
 
         protected void EndDate_DayRender(object sender, DayRenderEventArgs e)
         {
-            if (e.Day.Date >= _event.StartDate && e.Day.Date <= _event.EndDate)
+            if (e.Day.Date >= curEvent.StartDate && e.Day.Date <= curEvent.EndDate)
             {
                 e.Day.IsSelectable = true;
             }
@@ -221,16 +216,20 @@ namespace ICT4Events_Web.Views.ReservationSystem
         }
         #endregion
 
-
-        public void LoadPlace(int id)
+        [WebMethod]
+        public static string LoadPlace(int id)
         {
-            var place = LogicCollection.PlaceLogic.GetPlaceByID(Convert.ToInt32(id));
-            lblPlaceId.Text = place.ID.ToString();
-            lblCap.Text = LogicCollection.ReservationLogic.GetCountReservationOfPlace(id)+" - "+place.Capacity.ToString();
-            lblPrice.Text = place.Price.ToString("C0");
-            lblHandicap.Text = place.Handicap.ToString();
-            lblWater.Text = place.TapWater.ToString();
-            lblSize.Text = place.Size.ToString();
+            var place = LogicCollection.PlaceLogic.GetPlaceByID(id);
+
+            if (place == null) return "false";
+            var result = $@"<strong > Informatie over plek {place.Name}:</strong>
+                        <p> Capaciteit: {LogicCollection.ReservationLogic.GetCountReservationOfPlace(id)} / {place.Capacity}</p>
+                        <p> Prijs: {place.Price.ToString("C")}</p>
+                        <p> Grootte: {place.Size}</p>
+                        <p> Handicap: {(place.Handicap ? "Ja" : "Nee")}</p>
+                        <p> Comfortplek: {(place.Comfortable ? "Ja" : "Nee")}</p>
+                        <p> Water: {(place.TapWater ? "Ja" : "Nee")}</p>";
+            return result.Replace("\r\n", "");
         }
     }
 }
