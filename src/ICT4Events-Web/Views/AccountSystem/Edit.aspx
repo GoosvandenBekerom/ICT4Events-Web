@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Gegevens wijzigen" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Edit.aspx.cs" Inherits="ICT4Events_Web.Views.AccountSystem.WebForm1" %>
+﻿<%@ Page Title="Gegevens wijzigen" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Edit.aspx.cs" Inherits="ICT4Events_Web.Views.AccountSystem.Edit" %>
 <%@ Import Namespace="ICT4Events_Web" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 <%

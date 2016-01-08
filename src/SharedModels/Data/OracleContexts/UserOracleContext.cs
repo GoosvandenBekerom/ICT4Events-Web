@@ -77,7 +77,8 @@ namespace SharedModels.Data.OracleContexts
                     new OracleParameter("p_email", user.Email),
                     new OracleParameter("p_pass", user.Password),
                     new OracleParameter("p_activatiehash", user.ActivationHash),
-                    new OracleParameter("p_geactiveerd", Convert.ToInt32(user.Activated))
+                    new OracleParameter("p_geactiveerd", Convert.ToInt32(user.Activated)),
+                    new OracleParameter("p_permission", Convert.ToInt32(user.Admin))
                 };
 
             return Database.ExecuteNonQuery(query, parameters);

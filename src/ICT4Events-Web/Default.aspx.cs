@@ -7,7 +7,6 @@ namespace ICT4Events_Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //((SiteMaster) Master)?.CurrentUser();
         }
     }
 }

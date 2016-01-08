@@ -10,7 +10,7 @@
 namespace ICT4Events_Web.Views.AccountSystem {
     
     
-    public partial class WebForm1 {
+    public partial class Edit {
         
         /// <summary>
         /// feedbackPanel control.

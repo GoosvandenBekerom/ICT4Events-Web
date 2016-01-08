@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ICT4Events_Web.SiteMaster" %>
+<%@ Import Namespace="ICT4Events_Web" %>
 
 <!DOCTYPE html>
 
@@ -67,6 +68,12 @@
                                   <ul class="dropdown-menu">
                                     <li><a href="/Timeline">Tijdlijn</a></li>
                                     <li><a href="/Views/AccountSystem/Edit.aspx">Accountbeheer</a></li>
+                                      <%
+                                          if (CurrentUser().Admin)
+                                          {
+                                              Response.Write("<li><a href='/Views/AccountSystem/Rights.aspx'>Rechten aanpassen</a></li>");
+                                          }
+                                      %>
                                   </ul>
                                 </li>
                                 <li><a runat="server" href="#">Hallo, <%: Context.User.Identity.GetUserName() %> !</a></li>

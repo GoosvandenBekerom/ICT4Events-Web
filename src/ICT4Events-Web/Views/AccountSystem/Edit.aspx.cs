@@ -7,7 +7,7 @@ using SharedModels.Models;
 
 namespace ICT4Events_Web.Views.AccountSystem
 {
-    public partial class WebForm1 : System.Web.UI.Page
+    public partial class Edit : System.Web.UI.Page
     {
         // current user
         private User _currentUser;
