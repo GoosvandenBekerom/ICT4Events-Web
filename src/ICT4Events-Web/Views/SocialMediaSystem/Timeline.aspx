@@ -39,7 +39,7 @@
             });
         });
 
-        $(".reportButton").on("click", function () {
+        $("body").on("click", ".reportButton", function () {
             var btn = $(this);
             $.ajax({
                 type: "POST",
@@ -71,8 +71,17 @@
             });
         });
 
-        $('.replyButton').one("click", function() {
-            var btn = $(this);
+        $('.replyButton, .postContainer').one("click", function () {
+            var btn;
+            if ($(this).hasClass('replyButton')) {
+                btn = $(this);
+            } else {
+                btn = $(this).find('li .post .PostFooter .replyButton');
+            }
+
+            var itemLocation = btn.parent().parent().parent();
+            if (itemLocation.find(".reply").length > 0) return;
+
             console.log(btn.val());
             $.ajax({
                 type: "POST",
@@ -82,7 +91,7 @@
                 dataType: "json",
                 success: function (result) {
                     if (result.d !== "false")
-                        btn.parent().parent().parent().append(result.d);
+                        itemLocation.append(result.d);
                 }
             });
         });
