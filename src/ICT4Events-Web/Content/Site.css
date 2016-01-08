@@ -142,3 +142,11 @@ ol.postContainer {
     width: 100%;
     height: 500px !IMPORTANT;
 }
+
+.PostContent p {
+    word-wrap: break-word;
+}
+
+.postMedia {
+    vertical-align: middle;
+}
