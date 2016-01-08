@@ -14,7 +14,7 @@ namespace ICT4Events_Web.Views.ReservationSystem
 {
     public partial class Webform : Page
     {
-        public Event curEvent;
+        public Event CurEvent;
         public int Count;
         public int PlaceId;
 
@@ -30,10 +30,10 @@ namespace ICT4Events_Web.Views.ReservationSystem
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            curEvent = LogicCollection.EventLogic.GetByID(2);
+            CurEvent = LogicCollection.EventLogic.GetByID(2);
 
-            StartDate.TodaysDate = curEvent.StartDate;
-            EndDate.TodaysDate = curEvent.StartDate;
+            StartDate.TodaysDate = CurEvent.StartDate;
+            EndDate.TodaysDate = CurEvent.StartDate;
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -100,6 +100,17 @@ namespace ICT4Events_Web.Views.ReservationSystem
             //if (!LogicCollection.ReservationLogic.Insert(reservation)){return;} // insert reservation
             reservation = LogicCollection.ReservationLogic.GetLastAdded(); // get reservation out of database
 
+            // sending reservation mail to leader
+            //try
+            //{
+            //    LogicCollection.ReservationLogic.ReservationMail(leaderUser, CurEvent,
+            //        LogicCollection.PlaceLogic.GetPlaceByID(PlaceId), reservation.DateStart, reservation.DateEnd);
+            //}
+            //catch (Exception)
+            //{
+            //    return;
+            //}
+
             // Making reservation_account
             var reservationAccount = new ReservationAccount(0, reservation.ID, leaderUser.ID, PlaceId);
             //if (!LogicCollection.ReservationLogic.InsertReservationAccount(reservationAccount)) { return; }
@@ -135,13 +146,25 @@ namespace ICT4Events_Web.Views.ReservationSystem
             {
                 // checking if users is not null send email and insert into database
                 if (user == null) continue;
+
                 //send email and insert into database and make reservationAccount
                 var password = Membership.GeneratePassword(10, 2);
                 var register = LogicCollection.UserLogic.RegisterUser(user, true, password);
                 var userLast = LogicCollection.UserLogic.GetLastAdded();
                 if (!register) continue;
                 var res = new ReservationAccount(0, reservation.ID, userLast.ID, PlaceId);
-                if (!LogicCollection.ReservationLogic.InsertReservationAccount(res)) { return; }
+                //if (!LogicCollection.ReservationLogic.InsertReservationAccount(res)) { return; }
+
+                // sending reservation mail to newUser
+                //try
+                //{
+                //    LogicCollection.ReservationLogic.ReservationMail(userLast, CurEvent,
+                //        LogicCollection.PlaceLogic.GetPlaceByID(PlaceId), reservation.DateStart, reservation.DateEnd);
+                //}
+                //catch (Exception)
+                //{
+                //    return;
+                //}
             }
             #endregion
 
@@ -175,7 +198,7 @@ namespace ICT4Events_Web.Views.ReservationSystem
         #region Calenders events
         protected void StartDate_DayRender(object sender, DayRenderEventArgs e)
         {
-            if (e.Day.Date >= curEvent.StartDate && e.Day.Date <= curEvent.EndDate)
+            if (e.Day.Date >= CurEvent.StartDate && e.Day.Date <= CurEvent.EndDate)
             {
                 e.Day.IsSelectable = true;
             }
@@ -188,7 +211,7 @@ namespace ICT4Events_Web.Views.ReservationSystem
 
         protected void EndDate_DayRender(object sender, DayRenderEventArgs e)
         {
-            if (e.Day.Date >= curEvent.StartDate && e.Day.Date <= curEvent.EndDate)
+            if (e.Day.Date >= CurEvent.StartDate && e.Day.Date <= CurEvent.EndDate)
             {
                 e.Day.IsSelectable = true;
             }

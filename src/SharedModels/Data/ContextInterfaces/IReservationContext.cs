@@ -1,4 +1,5 @@
-﻿using SharedModels.Models;
+﻿using System;
+using SharedModels.Models;
 
 namespace SharedModels.Data.ContextInterfaces
 {
