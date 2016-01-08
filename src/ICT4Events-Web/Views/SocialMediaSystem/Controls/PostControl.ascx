@@ -20,25 +20,25 @@
                     <asp:Image ID="postThumbnail" runat="server" CssClass="img img-thumbnail" />
                 </a>
             <!-- Modal of image -->
-            <div class="modal fade modal_<% Response.Write(File.ID);%>" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <a href="<% Response.Write(File.Filepath);%>" target="_blank"><img src="<% Response.Write(File.Filepath);%>" alt="" /></a>
+                <div class="modal fade modal_<% Response.Write(File.ID);%>" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <a href="<% Response.Write(File.Filepath);%>" target="_blank"><img src="<% Response.Write(File.Filepath);%>" alt="" /></a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            </div>
             </div>
             <% } %>
 
             <div class="PostFooter">
-                <button type="button" id="reply" class="btn btn-sm btn-default" onclick="$(this).parent().parent().parent().find('.hidden').toggleClass('hidden');" value="<%:Post.ID%>">
+                <button type="button" class="btn btn-sm btn-default replyButton" onclick="$(this).parent().parent().parent().find('.hidden').toggleClass('hidden');" value="<%:Post.ID%>">
                     <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Reageren
                 </button>
-                <button type="button" id="report" class="btn btn-sm btn-default reportButton" runat="server">
+                <button type="button" ID="report" class="btn btn-sm btn-default reportButton" runat="server">
                     <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> 
                 </button>
                 <button type="button" id="like" class="btn btn-sm btn-default likeButton" runat="server">
-                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 
+                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
                 </button>
             </div>
         </div>

@@ -89,7 +89,53 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
             var result = LogicCollection.PostLogic.AddReply(user, postId, message);
 
             if (result == 0) return "false";
-            return $"<div class=\"reply post well well-sm\"><div class=\"PostHeader\"><span class=\"Username\">{user.Username}</span><span class=\"PostDate\"> {DateTime.Now.ToShortDateString()}</span></div><div class=\"PostContent\"><p>{message}</p></div><div class=\"PostFooter\"><button type=\"button\" class=\"btn btn-sm btn-default reportButton\" value=\"{result}\"><span class=\"glyphicon glyphicon-ban-circle\" aria-hidden=\"true\"></span></button><button type=\"button\" class=\"btn btn-sm btn-default likeButton\" value=\"{result}\"><span class=\"glyphicon glyphicon-thumbs-up\" aria-hidden=\"true\"></span></button></div></div>";
+            return DisplayReply(user, new Message(result, user.ID, DateTime.Now, "", message));
+        }
+
+        [WebMethod(true)]
+        public static string LoadReplies(int postId)
+        {
+            var context = HttpContext.Current;
+            if (context == null || !context.User.Identity.IsAuthenticated)
+            {
+                return "false";
+            }
+
+            var replies = LogicCollection.PostLogic.GetRepliesByPost(new Message(postId, 0, DateTime.Today, "", ""));
+            if (!replies.Any()) return "false";
+            var result = "";
+            foreach (var reply in replies)
+            {
+                var user = LogicCollection.UserLogic.GetById(reply.UserID);
+                result += DisplayReply(user, reply);
+            }
+
+            return result;
+        }
+
+        public static string DisplayReply(User user, Message message)
+        {
+            var likes = LogicCollection.PostLogic.GetLikesByPost(message);
+
+            return
+                $@"<div class=""reply post well well-sm"">
+                        <div class=""PostHeader"">
+                            <span class=""Username"">{user.Username}</span>
+                            <span class=""PostDate""> {message.Date.ToShortDateString()}</span>
+                        </div>
+                        <div class=""PostContent"">
+                            <p>{message.Content}</p>
+                        </div>
+                        <div class=""PostFooter"">
+                            <button type=""button"" class=""btn btn-sm btn-default reportButton"" value=""{message.ID}"">
+                                <span class=""glyphicon glyphicon-ban-circle"" aria-hidden=""true""></span>
+                            </button>
+                            <button type=""button"" class=""btn btn-sm btn-default likeButton {(likes.Any() && likes.Contains(user.ID) ? "liked" : "")}"" value=""{message.ID}"">
+                                <span class=""glyphicon glyphicon-thumbs-up"" aria-hidden=""true""></span>
+                                <span>{(likes.Any() ? likes.Count.ToString() : "")}</span>
+                            </button>
+                        </div>
+                    </div>";
         }
 
         protected void SearchButton_OnServerClick(object sender, EventArgs e)

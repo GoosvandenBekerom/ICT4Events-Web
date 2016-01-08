@@ -30,6 +30,10 @@ namespace ICT4Events_Web.Views.SocialMediaSystem.Controls
             {
                 like.InnerHtml += "<span> " + likes.Count + "</span>";
             }
+            else
+            {
+                like.InnerHtml += "<span></span>";
+            }
 
             if(likes.Any(x => x == (SiteMaster.CurrentUser().ID)))
             {
