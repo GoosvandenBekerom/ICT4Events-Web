@@ -29,11 +29,19 @@
                 success: function (result) {
                     console.log(result);
                     if (result.d === "succeeded") {
-                        btn.addClass('liked');
-                        var count = parseInt(likeCount.text(), 10) + 1;
-                        if (isNaN(count)) { count = 1; }
-
-                        likeCount.text(count);
+                        if (btn.hasClass('liked')) {
+                            btn.removeClass('liked');
+                            var count1 = parseInt(likeCount.text(), 10) - 1;
+                            if (isNaN(count1)) { count1 = 1; }
+                            likeCount.text(count1 === 0 ? '' : count1);
+                        }
+                        else
+                        {
+                            btn.addClass('liked');
+                            var count2 = parseInt(likeCount.text(), 10) + 1;
+                            if (isNaN(count2)) { count2 = 1; }
+                            likeCount.text(count2);
+                        }
                     }
                 }
             });
