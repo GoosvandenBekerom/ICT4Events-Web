@@ -100,6 +100,11 @@ namespace ICT4Events_Web.Views.ReservationSystem
             //if (!LogicCollection.ReservationLogic.Insert(reservation)){return;} // insert reservation
             reservation = LogicCollection.ReservationLogic.GetLastAdded(); // get reservation out of database
 
+            // Reservation Wristband leader
+            var resvationWristband = new ReservationWristband(0, reservation.ID, leaderUser.ID);
+            //if (!LogicCollection.ReservationWristbandLogic.Insert(resvationWristband)){return;} // insert reservation
+            resvationWristband = LogicCollection.ReservationWristbandLogic.GetLastAdded();
+
             // sending reservation mail to leader
             //try
             //{
@@ -112,7 +117,7 @@ namespace ICT4Events_Web.Views.ReservationSystem
             //}
 
             // Making reservation_account
-            var reservationAccount = new ReservationAccount(0, reservation.ID, leaderUser.ID, PlaceId);
+            var reservationAccount = new ReservationAccount(0, reservation.ID, PlaceId);
             //if (!LogicCollection.ReservationLogic.InsertReservationAccount(reservationAccount)) { return; }
             
 
@@ -151,9 +156,13 @@ namespace ICT4Events_Web.Views.ReservationSystem
                 var password = Membership.GeneratePassword(10, 2);
                 var register = LogicCollection.UserLogic.RegisterUser(user, true, password);
                 var userLast = LogicCollection.UserLogic.GetLastAdded();
+
                 if (!register) continue;
-                var res = new ReservationAccount(0, reservation.ID, userLast.ID, PlaceId);
+                var res = new ReservationAccount(0, reservation.ID, PlaceId);
                 //if (!LogicCollection.ReservationLogic.InsertReservationAccount(res)) { return; }
+
+                var resvationWristGuest = new ReservationWristband(0, reservation.ID, userLast.ID);
+                //if (!LogicCollection.ReservationWristbandLogic.Insert(resvationWristGuest)){return;} // insert reservationWristband
 
                 // sending reservation mail to newUser
                 //try

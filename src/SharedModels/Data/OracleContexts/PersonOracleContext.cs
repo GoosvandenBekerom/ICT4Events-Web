@@ -99,8 +99,6 @@ namespace SharedModels.Data.OracleContexts
 
         protected override Person GetEntityFromRecord(List<string> record)
         {
-            // BUG: Foutief ingevulde veld bij postcode?
-            // Raar dat er een postcode staat bij woonplaats
             // 1	Jan		Pietersen	Rachelsmolen	1	5611MA	NL91ABNA0417164300
             return new Person(Convert.ToInt32(record[0]), $"{record[1]} {record[3]}", "temp?", $"{record[4]} {record[5]}", record[6], record[7]);
         }

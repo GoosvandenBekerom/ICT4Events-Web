@@ -1,4 +1,5 @@
-﻿/* Move down content because we have a fixed navbar that is 50px tall */
+﻿@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700);
+/* Move down content because we have a fixed navbar that is 50px tall */
 body {
     padding-top: 50px;
     padding-bottom: 20px;
@@ -142,3 +143,43 @@ ol.postContainer {
     width: 100%;
     height: 500px !IMPORTANT;
 }
+
+h3 {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+}
+
+
+.board{
+width: 90%;
+height: auto;
+background: #fff;
+}
+
+.board > div.board-inner{
+    background: #fafafa;
+    background-size: 30%;
+}
+
+p.narrow{
+    width: 60%;
+    margin: 10px auto;
+}
+
+@media( max-width : 585px ) {
+
+    .board {
+        width: 90%;
+        height: auto !important;
+    }
+}
+
+.art-title{color:#231f20;}
+.artist-data{width:100%; padding-bottom: 25px;}
+.artst-prfle span.artst-sub{font-size:15px; color:#000; float:left; width:100%; font-weight:normal; padding:5px 0;}
+.artst-prfle span.artst-sub span.byname{font-weight:700; color:gray;}
+.counter-tab{float: left; width: 100%;}
+.counter-tab div{float: left; width: 10%; color: #000; font-size: 12px;}
+span.play-icon{position: absolute; left: 31%; top: 32%; display: none;}

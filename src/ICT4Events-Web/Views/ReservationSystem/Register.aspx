@@ -232,33 +232,6 @@
 
 </script>
 
-<style>
-@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700);
-.board{
-width: 90%;
-height: auto;
-background: #fff;
-}
-
-.board > div.board-inner{
-    background: #fafafa;
-    background-size: 30%;
-}
-
-p.narrow{
-    width: 60%;
-    margin: 10px auto;
-}
-
-@media( max-width : 585px ){
-    
-    .board {
-width: 90%;
-height:auto !important;
-}
-}
-</style>
-
 </asp:Content>
 
 

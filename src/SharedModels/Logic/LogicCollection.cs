@@ -28,5 +28,8 @@ namespace SharedModels.Logic
 
         private static PostLogic _postLogic;
         public static PostLogic PostLogic => _postLogic ?? (_postLogic = new PostLogic());
+
+        private static ReservationWristbandLogic _reservationWristbandLogic;
+        public static ReservationWristbandLogic ReservationWristbandLogic => _reservationWristbandLogic ?? (_reservationWristbandLogic = new ReservationWristbandLogic(new ReservationWristbandOracleContext()));
     }
 }

@@ -9,9 +9,8 @@
 
 namespace ICT4Events_Web
 {
-
-
-    public partial class _Default
+    public partial class Default
     {
+
     }
 }

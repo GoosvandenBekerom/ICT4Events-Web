@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using SharedModels.Data.ContextInterfaces;
-using SharedModels.Data.OracleContexts;
 using SharedModels.Models;
 
 namespace SharedModels.Logic
