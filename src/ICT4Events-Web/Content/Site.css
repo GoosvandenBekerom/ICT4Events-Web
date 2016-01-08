@@ -183,3 +183,11 @@ p.narrow{
 .counter-tab{float: left; width: 100%;}
 .counter-tab div{float: left; width: 10%; color: #000; font-size: 12px;}
 span.play-icon{position: absolute; left: 31%; top: 32%; display: none;}
+
+.PostContent p {
+    word-wrap: break-word;
+}
+
+.postMedia {
+    vertical-align: middle;
+}

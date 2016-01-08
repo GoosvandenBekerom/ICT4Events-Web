@@ -55,6 +55,11 @@ namespace SharedModels.Data
             {
                 using (var command = new OracleCommand(query, Connection) {BindByName = true})
                 {
+                    if (command.Connection.State != ConnectionState.Open)
+                    {
+                        try { command.Connection.Open(); } catch(OracleException e) { Logger.Write(e.Message); }
+                    }
+
                     command.CommandType = CommandType.StoredProcedure;
 
                     if (args != null)
@@ -122,6 +127,11 @@ namespace SharedModels.Data
             {
                 using (var command = new OracleCommand(query, Connection) {BindByName = true})
                 {
+                    if (command.Connection.State != ConnectionState.Open)
+                    {
+                        try { command.Connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
+                    }
+
                     if (args != null)
                     {
                         foreach (var arg in args)
@@ -170,6 +180,10 @@ namespace SharedModels.Data
             {
                 using (var command = new OracleCommand(query, Connection) { BindByName = true })
                 {
+                    if (command.Connection.State != ConnectionState.Open)
+                    {
+                        try { command.Connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
+                    }
                     command.CommandType = CommandType.StoredProcedure;
                     if (args != null)
                     {
@@ -213,6 +227,10 @@ namespace SharedModels.Data
             {
                 using (var command = new OracleCommand(query, Connection) {BindByName = true})
                 {
+                    if (command.Connection.State != ConnectionState.Open)
+                    {
+                        try { command.Connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
+                    }
                     command.CommandType = CommandType.StoredProcedure;
                     if (args != null)
                     {
@@ -261,6 +279,10 @@ namespace SharedModels.Data
             {
                 using (var command = new OracleCommand(query, Connection) {BindByName = true})
                 {
+                    if (command.Connection.State != ConnectionState.Open)
+                    {
+                        try { command.Connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
+                    }
                     if (args != null)
                     {
                         foreach (var arg in args)
@@ -287,8 +309,15 @@ namespace SharedModels.Data
 
         private static void Close()
         {
-            _connection.Close();
-            _connection.Dispose();
+            try
+            {
+                _connection.Close();
+                _connection.Dispose();
+            }
+            catch (Exception e)
+            {
+                Logger.Write(e.Message);
+            }
         }
     }
 }

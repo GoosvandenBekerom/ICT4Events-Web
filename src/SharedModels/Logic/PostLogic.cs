@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 using SharedModels.Data.ContextInterfaces;
 using SharedModels.Data.OracleContexts;
 using SharedModels.Models;
@@ -58,6 +61,15 @@ namespace SharedModels.Logic
         public FileContribution GetFile(int postId)
         {
             return _context.GetFile(postId);
+        }
+
+        public static bool IsImage(string path)
+        {
+            //-------------------------------------------
+            //  Check the image extension
+            //-------------------------------------------
+            return Path.GetExtension(path)?.ToLower() == ".jpg" || Path.GetExtension(path)?.ToLower() == ".png" ||
+                   Path.GetExtension(path)?.ToLower() == ".gif" || Path.GetExtension(path)?.ToLower() == ".jpeg";
         }
     }
 }

@@ -7,29 +7,44 @@
                 <span class="PostDate"><%:Post.Date.ToShortDateString()%></span>
                 <p><strong><%:Post.Title%></strong></p>
             </div>
+            
             <div class="PostContent">
-                <p><%:Post.Content%></p>
-            </div>
-
-            <% if (File != null)
-               {
+                <p <% Response.Write(File != null ? "class=\"col-sm-10\"" : "");%>><%:Post.Content%></p>
+            <% 
+                if (File != null && File.IsImage)
+                {
             %>
-            <div class="postMedia right">
-                <a href=".modal_<% Response.Write(File.ID);%>" class="thumbnail col-md-offset-9 col-md-2" 
-                    data-toggle="modal" data-backdrop="static" data-target=".modal_<% Response.Write(File.ID);%>">
+            <div class="postMedia col-sm-2">
+                <a class="thumbnail" 
+                    data-toggle="modal" data-target=".modal_<%:File.ID%>">
                     <asp:Image ID="postThumbnail" runat="server" CssClass="img img-thumbnail" />
                 </a>
-            <!-- Modal of image -->
-                <div class="modal fade modal_<% Response.Write(File.ID);%>" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <!-- Modal of image -->
+                <div class="modal fade modal_<%:File.ID%>" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
                     <div class="modal-dialog modal-sm">
                         <div class="modal-content">
-                            <a href="<% Response.Write(File.Filepath);%>" target="_blank"><img src="<% Response.Write(File.Filepath);%>" alt="" /></a>
+                            <a href="<%:Page.ResolveClientUrl(File.Filepath)%>" target="_blank"><img src="<% Response.Write(File.Filepath); %>" alt="" /></a>
                         </div>
                     </div>
                 </div>
             </div>
-            <% } %>
+            <% 
+                }
+                else if (File != null)
+                {
+            %>
+            <div class="postMedia col-sm-2">
+                <a class="btn btn-primary" href="<%:File.Filepath%>">
+                    Download Bestand
+                    <span class="glyphicon glyphicon-download"></span>
+                </a>
+            </div>
+            <%
+               }
 
+            %>
+            </div>
+            <div class="clear-fix clearfix"></div>
             <div class="PostFooter">
                 <button type="button" class="btn btn-sm btn-default replyButton" onclick="$(this).parent().parent().parent().find('.hidden').toggleClass('hidden');" value="<%:Post.ID%>">
                     <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Reageren
