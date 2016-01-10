@@ -191,3 +191,19 @@ span.play-icon{position: absolute; left: 31%; top: 32%; display: none;}
 .postMedia {
     vertical-align: middle;
 }
+
+.postContainer p {
+    margin: 0;
+}
+
+.postDeleteButton {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.postContainer hr {
+    margin: 5px 0;
+    height: 1px;
+    background-color: #ebebeb;
+}

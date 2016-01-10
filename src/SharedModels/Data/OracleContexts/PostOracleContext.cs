@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ namespace SharedModels.Data.OracleContexts
                     new OracleParameter("p_postID", id)
                 };
 
-            return GetEntityFromRecord(Database.ExecuteReader(query, parameters).First());
+            return GetEntityFromRecord(Database.ExecuteReader(query, parameters)?.FirstOrDefault());
         }
 
         public bool Insert(Message entity)
@@ -68,7 +69,13 @@ namespace SharedModels.Data.OracleContexts
 
         public bool Delete(Message entity)
         {
-            throw new NotImplementedException();
+            var query = "p_post.RemovePost";
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter("p_postId", entity.ID)
+            };
+
+            return Database.ExecuteNonQuery(query, parameters);
         }
 
         public int AddReply(User user, Message message, string content)
@@ -121,7 +128,7 @@ namespace SharedModels.Data.OracleContexts
                 };
 
             var res = Database.ExecuteReader(query, parameters);
-            return res.Select(GetEntityFromRecord).ToList();
+            return res?.Select(GetEntityFromRecord).ToList();
         }
 
         public List<int> GetLikesByMessage(Message message)
@@ -134,7 +141,7 @@ namespace SharedModels.Data.OracleContexts
             };
 
             var res = Database.ExecuteReader(query, parameters);
-            return res.Select(x => Convert.ToInt32(x[0])).ToList();
+            return res?.Select(x => Convert.ToInt32(x[0])).ToList();
         }
 
         public List<int> GetReportsByMessage(Message message)
@@ -147,7 +154,7 @@ namespace SharedModels.Data.OracleContexts
             };
 
             var res = Database.ExecuteReader(query, parameters);
-            return res.Select(x => Convert.ToInt32(x[0])).ToList();
+            return res?.Select(x => Convert.ToInt32(x[0])).ToList();
         }
 
         public List<Message> SearchMessages(string hashtag)
@@ -160,7 +167,7 @@ namespace SharedModels.Data.OracleContexts
                 };
 
             var res = Database.ExecuteReader(query, parameters);
-            return res.Select(GetEntityFromRecord).ToList();
+            return res?.Select(GetEntityFromRecord).ToList();
         }
 
         public bool AddFileContribution(FileContribution fileContribution, int postID)
@@ -188,12 +195,15 @@ namespace SharedModels.Data.OracleContexts
                 };
 
             var res = Database.ExecuteReader(query, parameters);
-            return res.Select(GetFileContributionFromRecord).FirstOrDefault();
+            return res?.Select(GetFileContributionFromRecord).FirstOrDefault();
         }
 
         protected override Message GetEntityFromRecord(List<string> record)
         {
-            return new Message(Convert.ToInt32(record[0]), Convert.ToInt32(record[1]), DateTime.Parse(record[2]), record[5], record[6]);
+            return record == null
+                ? null
+                : new Message(Convert.ToInt32(record[0]), Convert.ToInt32(record[1]), DateTime.Parse(record[2]),
+                    record[5], record[6]);
         }
 
         private FileContribution GetFileContributionFromRecord(List<string> record)

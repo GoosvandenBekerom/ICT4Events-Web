@@ -23,7 +23,7 @@
             $.ajax({
                 type: "POST",
                 url: "<%=VirtualPathUtility.ToAbsolute("~/Views/SocialMediaSystem/Timeline.aspx/LikePost")%>",
-                data: "{'postId':"+$(this).attr('value')+"}",
+                data: "{'postId':"+btn.attr('value')+"}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
@@ -52,7 +52,7 @@
             $.ajax({
                 type: "POST",
                 url: "<%=VirtualPathUtility.ToAbsolute("~/Views/SocialMediaSystem/Timeline.aspx/ReportPost")%>",
-                data: "{'postId':"+$(this).attr('value')+"}",
+                data: "{'postId':"+btn.attr('value')+"}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
@@ -61,6 +61,25 @@
                 }
             });
         });
+
+        $("body").on("click", ".postDeleteButton", function() {
+            var btn = $(this);
+
+            $.ajax({
+                type: "POST",
+                url: "<%=VirtualPathUtility.ToAbsolute("~/Views/SocialMediaSystem/Timeline.aspx/DeletePost")%>",
+                data: "{'postId':"+btn.attr('value')+"}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result.d === "true") {
+                        var target = btn.closest('.postContainer');
+                        target.hide(500, function () { target.remove(); });
+                        console.log('Removed post ' + btn.val());
+                    }
+                }
+            });
+        })
 
         $('.postReplyButton').on("click", function () {
             var btn = $(this);

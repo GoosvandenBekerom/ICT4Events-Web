@@ -27,10 +27,12 @@ namespace SharedModels.Logic
         }
 
         public List<Message> GetAllMainPosts() => _context.GetAll();
+        public Message GetPostById(int id) => _context.GetById(id);
         public List<Message> GetRepliesByPost(Message message) => _context.GetRepliesByPost(message);
 
         public List<Message> SearchPostsByHashtag(string hashtag) => _context.SearchMessages(hashtag);
         public Message AddPost(Message message) => _context.InsertReturnMessage(message);
+        public bool DeletePost(Message post) => _context.Delete(post);
 
         public List<int> GetLikesByPost(Message message) => _context.GetLikesByMessage(message);
         public List<int> GetReportsByPost(Message message) => _context.GetReportsByMessage(message);

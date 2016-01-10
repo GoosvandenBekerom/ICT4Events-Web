@@ -102,7 +102,7 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
             }
 
             var replies = LogicCollection.PostLogic.GetRepliesByPost(new Message(postId, 0, DateTime.Today, "", ""));
-            if (!replies.Any()) return "false";
+            if ((replies == null || !replies.Any())) return "false";
             var result = "";
             foreach (var reply in replies)
             {
@@ -113,9 +113,34 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
             return result;
         }
 
+        [WebMethod(true)]
+        public static string DeletePost(int postId)
+        {
+            var context = HttpContext.Current;
+            if (context == null || !context.User.Identity.IsAuthenticated)
+            {
+                return "false";
+            }
+
+            var user = SiteMaster.CurrentUser();
+            var post = LogicCollection.PostLogic.GetPostById(postId);
+
+            if (user != null && post != null && (post.UserID == user.ID || user.Admin))
+            {
+                return LogicCollection.PostLogic.DeletePost(post)
+                    ? "true"
+                    : "false";
+            }
+
+            return "false";
+        }
+
         public static string DisplayReply(User user, Message message)
         {
             var likes = LogicCollection.PostLogic.GetLikesByPost(message);
+            var reports = LogicCollection.PostLogic.GetReportsByPost(message);
+
+            if (likes == null || reports == null){return "false";}
 
             return
                 $@"<div class=""reply post well well-sm"">
@@ -127,7 +152,7 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
                             <p>{message.Content}</p>
                         </div>
                         <div class=""PostFooter"">
-                            <button type=""button"" class=""btn btn-sm btn-default reportButton"" value=""{message.ID}"">
+                            <button type=""button"" class=""btn btn-sm btn-default reportButton {(reports.Any() && reports.Contains(user.ID) ? "reported" : "")}"" value=""{message.ID}"">
                                 <span class=""glyphicon glyphicon-ban-circle"" aria-hidden=""true""></span>
                             </button>
                             <button type=""button"" class=""btn btn-sm btn-default likeButton {(likes.Any() && likes.Contains(user.ID) ? "liked" : "")}"" value=""{message.ID}"">

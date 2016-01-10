@@ -55,46 +55,51 @@ namespace SharedModels.Data
             {
                 using (var command = new OracleCommand(query, Connection) {BindByName = true})
                 {
-                    if (command.Connection.State != ConnectionState.Open)
+                    using (var connection = command.Connection)
                     {
-                        try { command.Connection.Open(); } catch(OracleException e) { Logger.Write(e.Message); }
-                    }
-
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    if (args != null)
-                    {
-                        foreach (var arg in args)
+                        if (command.Connection.State != ConnectionState.Open)
                         {
-                            command.Parameters.Add(arg);
+                            try { connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
                         }
-                    }
 
-                    var queryResult = command.ExecuteReader();
-                    while (queryResult.Read())
-                    {
-                        var record = new string[queryResult.FieldCount];
-                        for (var i = 0; i < queryResult.FieldCount; i++)
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        if (args != null)
                         {
-                            var val = queryResult.GetValue(i);
-                            if (DBNull.Value.Equals(val))
+                            foreach (var arg in args)
                             {
-                                var type = queryResult.GetFieldType(i);
-                                if (type == typeof(string) || type == typeof(DateTime))
+                                command.Parameters.Add(arg);
+                            }
+                        }
+
+                        var queryResult = command.ExecuteReader();
+                        if (!queryResult.HasRows) { return result; }
+
+                        while (queryResult.Read())
+                        {
+                            var record = new string[queryResult.FieldCount];
+                            for (var i = 0; i < queryResult.FieldCount; i++)
+                            {
+                                var val = queryResult.GetValue(i);
+                                if (DBNull.Value.Equals(val))
                                 {
-                                    record[i] = string.Empty;
+                                    var type = queryResult.GetFieldType(i);
+                                    if (type == typeof(string) || type == typeof(DateTime))
+                                    {
+                                        record[i] = string.Empty;
+                                    }
+                                    else
+                                    {
+                                        record[i] = "0"; // Used for defaulting integers in the domain models
+                                    }
                                 }
                                 else
                                 {
-                                    record[i] = "0"; // Used for defaulting integers in the domain models
+                                    record[i] = val.ToString();
                                 }
                             }
-                            else
-                            {
-                                record[i] = val.ToString();
-                            }
+                            result.Add(record.ToList());
                         }
-                        result.Add(record.ToList());
                     }
                 }
             }
@@ -127,30 +132,33 @@ namespace SharedModels.Data
             {
                 using (var command = new OracleCommand(query, Connection) {BindByName = true})
                 {
-                    if (command.Connection.State != ConnectionState.Open)
+                    using (var connection = command.Connection)
                     {
-                        try { command.Connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
-                    }
-
-                    if (args != null)
-                    {
-                        foreach (var arg in args)
+                        if (connection.State != ConnectionState.Open)
                         {
-                            command.Parameters.Add(arg);
-                        }
-                    }
-
-                    var queryResult = command.ExecuteReader();
-
-                    while (queryResult.Read())
-                    {
-                        var record = new Dictionary<string, string>();
-                        for (var i = 0; i < queryResult.FieldCount; i++)
-                        {
-                            record[queryResult.GetName(i)] = queryResult.GetValue(i).ToString();
+                            try { connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
                         }
 
-                        result.Add(record);
+                        if (args != null)
+                        {
+                            foreach (var arg in args)
+                            {
+                                command.Parameters.Add(arg);
+                            }
+                        }
+
+                        var queryResult = command.ExecuteReader();
+
+                        while (queryResult.Read())
+                        {
+                            var record = new Dictionary<string, string>();
+                            for (var i = 0; i < queryResult.FieldCount; i++)
+                            {
+                                record[queryResult.GetName(i)] = queryResult.GetValue(i).ToString();
+                            }
+
+                            result.Add(record);
+                        }
                     }
                 }
             }
@@ -180,25 +188,31 @@ namespace SharedModels.Data
             {
                 using (var command = new OracleCommand(query, Connection) { BindByName = true })
                 {
-                    if (command.Connection.State != ConnectionState.Open)
+                    using (var connection = command.Connection)
                     {
-                        try { command.Connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
-                    }
-                    command.CommandType = CommandType.StoredProcedure;
-                    if (args != null)
-                    {
-                        foreach (var arg in args)
+                        if (connection.State != ConnectionState.Open)
                         {
-                            command.Parameters.Add(arg);
+                            try { connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
                         }
-                    }
 
-                    var t = command.ExecuteNonQuery();
-                    result = int.Parse((command.Parameters[0].Value.ToString()));
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        if (args != null)
+                        {
+                            foreach (var arg in args)
+                            {
+                                command.Parameters.Add(arg);
+                            }
+                        }
+
+                        command.ExecuteNonQuery();
+                        result = int.Parse((command.Parameters[0].Value.ToString()));
+                    }
                 }
             }
             catch (OracleException e)
             {
+                Logger.Write(e.Message);
                 return false;
             }
             finally
@@ -227,28 +241,31 @@ namespace SharedModels.Data
             {
                 using (var command = new OracleCommand(query, Connection) {BindByName = true})
                 {
-                    if (command.Connection.State != ConnectionState.Open)
+                    using (var connection = command.Connection)
                     {
-                        try { command.Connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
-                    }
-                    command.CommandType = CommandType.StoredProcedure;
-                    if (args != null)
-                    {
-                        foreach (var arg in args)
+                        if (connection.State != ConnectionState.Open)
                         {
-                            if (arg.Direction == ParameterDirection.ReturnValue)
-                            {
-                                returnParameter = arg;
-                            }
-                            command.Parameters.Add(arg);
+                            try { connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
                         }
-                    }
+                        command.CommandType = CommandType.StoredProcedure;
+                        if (args != null)
+                        {
+                            foreach (var arg in args)
+                            {
+                                if (arg.Direction == ParameterDirection.ReturnValue)
+                                {
+                                    returnParameter = arg;
+                                }
+                                command.Parameters.Add(arg);
+                            }
+                        }
 
-                    result = command.ExecuteNonQuery();
+                        result = command.ExecuteNonQuery();
 
-                    if (returnParameter != null)
-                    {
-                        returnValue = (returnParameter.Value.ToString());
+                        if (returnParameter != null)
+                        {
+                            returnValue = (returnParameter.Value.ToString());
+                        }
                     }
                 }
             }
@@ -279,19 +296,22 @@ namespace SharedModels.Data
             {
                 using (var command = new OracleCommand(query, Connection) {BindByName = true})
                 {
-                    if (command.Connection.State != ConnectionState.Open)
+                    using (var connection = command.Connection)
                     {
-                        try { command.Connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
-                    }
-                    if (args != null)
-                    {
-                        foreach (var arg in args)
+                        if (connection.State != ConnectionState.Open)
                         {
-                            command.Parameters.Add(arg);
+                            try { connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
                         }
-                    }
+                        if (args != null)
+                        {
+                            foreach (var arg in args)
+                            {
+                                command.Parameters.Add(arg);
+                            }
+                        }
 
-                    result = command.ExecuteScalar();
+                        result = command.ExecuteScalar();
+                    }
                 }
             }
             catch (OracleException e)
@@ -314,7 +334,7 @@ namespace SharedModels.Data
                 _connection.Close();
                 _connection.Dispose();
             }
-            catch (Exception e)
+            catch (OracleException e)
             {
                 Logger.Write(e.Message);
             }

@@ -6,8 +6,9 @@
                 <span ID="Username" class="Username" runat="server"></span>
                 <span class="PostDate"><%:Post.Date.ToShortDateString()%></span>
                 <p><strong><%:Post.Title%></strong></p>
+                <button type="button" ID="delete" class="close postDeleteButton" data-toggle="tooltip" title="Bericht verwijderen" aria-label="Close" runat="server" Visible="False"><span aria-hidden="true">&times;</span></button>
             </div>
-            
+            <hr/>
             <div class="PostContent">
                 <p <% Response.Write(File != null ? "class=\"col-sm-10\"" : "");%>><%:Post.Content%></p>
             <% 
@@ -45,6 +46,7 @@
             %>
             </div>
             <div class="clear-fix clearfix"></div>
+            <hr/>
             <div class="PostFooter">
                 <button type="button" class="btn btn-sm btn-default replyButton" onclick="$(this).parent().parent().parent().find('.hidden').toggleClass('hidden');" value="<%:Post.ID%>">
                     <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> Reageren
