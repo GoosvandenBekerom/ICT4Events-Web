@@ -158,6 +158,17 @@
                         <br />
                         <h5>Plek selecteren: </h5>
                         <asp:DropDownList ID="drpListOfPlaces" runat="server" CssClass="form-control"></asp:DropDownList>
+                        <br />
+                        <!-- Map modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Map bekijken</button>
+
+                        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                          <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                              <img src="http://i64.tinypic.com/281vio0.jpg"/>
+                            </div>
+                          </div>
+                        </div>
                     </div>
 
                     <div class="col-md-6">
