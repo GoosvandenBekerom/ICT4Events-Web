@@ -57,7 +57,7 @@ namespace SharedModels.Data
                 {
                     using (var connection = command.Connection)
                     {
-                        if (command.Connection.State != ConnectionState.Open)
+                        if (connection.State != ConnectionState.Open)
                         {
                             try { connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
                         }
