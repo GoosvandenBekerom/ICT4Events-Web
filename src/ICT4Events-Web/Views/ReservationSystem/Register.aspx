@@ -165,7 +165,7 @@
                         <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
                           <div class="modal-dialog modal-sm">
                             <div class="modal-content">
-                              <img src="/Files/fullmap.jpg"/>
+                              <img src="/Files/ict4events.png"/>
                             </div>
                           </div>
                         </div>
