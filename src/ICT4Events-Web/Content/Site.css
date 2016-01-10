@@ -19,15 +19,6 @@ body {
     white-space: normal;
 }
 
-/* Set widths on the form inputs since otherwise they're 100% wide 
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="tel"],
-input[type="select"] {
-   max-width: 280px;
-}
-*/
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .jumbotron {
@@ -76,11 +67,6 @@ input[type="select"] {
    
    padding: 10px;
 }
-
-.replyForm .form-control {
-   
-}
-
 .replyForm input[type="text"] {
    display: inline;
 }

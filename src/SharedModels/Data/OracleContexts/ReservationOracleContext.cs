@@ -93,18 +93,15 @@ namespace SharedModels.Data.OracleContexts
             return Convert.ToInt32(Database.ExecuteReader(query, parameters).FirstOrDefault());
         }
 
-        public bool Update(Reservation user)
+        public bool Update(Reservation reservation)
         {
-            var query = "p_account.updateAccount";
+            var query = "P_RESERVERING.updateReservering";
 
             var parameters = new List<OracleParameter>
                 {
                     new OracleParameter("Return_Value", OracleDbType.Int32, ParameterDirection.ReturnValue),
-                    //new OracleParameter("p_accId", user.ID),
-                    //new OracleParameter("p_gebruikersnaam", user.Username),
-                    //new OracleParameter("p_email", user.Email),
-                    //new OracleParameter("p_activatiehash", user.ActivationHash),
-                    //new OracleParameter("p_geactiveerd", Convert.ToInt32(user.Activated))
+                    new OracleParameter("p_id", reservation.ID),
+                    new OracleParameter("p_paid", Convert.ToInt32(reservation.Paid))
                 };
 
             return Database.ExecuteNonQuery(query, parameters);

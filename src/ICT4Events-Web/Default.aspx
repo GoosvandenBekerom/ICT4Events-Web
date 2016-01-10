@@ -4,7 +4,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     
- <asp:LoginView runat="server" ViewStateMode="Disabled">
+ <asp:LoginView runat="server" ID="lgnView">
    <AnonymousTemplate>
     <div class="jumbotron">
         <h1>ASP.NET</h1>
@@ -31,7 +31,7 @@
             <p>
                 <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
             </p>
-        </div>
+        </div>                                
         <div class="col-md-4">
             <h2>Web Hosting</h2>
             <p>
@@ -45,23 +45,14 @@
        </AnonymousTemplate>
        <LoggedInTemplate>
             <h3> Jouw huidige reserveringen: </h3>   
-       <%
-           if (SiteMaster.CurrentUser() == null) return;
-           var current = SiteMaster.CurrentUser();
-           var currentReservationsWristbands = LogicCollection.ReservationWristbandLogic.GetReservationByUserIdAll(current.ID);
-
-           if (currentReservationsWristbands.Count > 0)
+           <div id="feedbackPanelPaid" runat="server" class="alert alert-success" Visible="False">Je hebt succesvol betaald.</div>
+          <%
+           if (CurrentReservationsWristbands.Count > 0)
            {
-               foreach (var reservationWristband in currentReservationsWristbands)
+               foreach (var reservationWristband in CurrentReservationsWristbands)
                {
                    var reservation = LogicCollection.ReservationLogic.GetByID(reservationWristband.ReservationId);
                    var person = LogicCollection.PersonLogic.GetByID(reservation.PersonId);
-                   //Response.Write("ReservationID: " + reservationWristband.ReservationId + "<br/>"
-                   //               + "StartDate: " + reservation.DateStart.ToShortDateString() + "<br/>"
-                   //               + "EndDate: " + reservation.DateEnd.ToShortDateString() + "<br/>"
-                   //               + "Geplaatst door: " + person.Name + "<br/>"
-                   //               + "Betaald: " + (reservation.Paid ? "Ja" : "Nee")
-                   //               );
 
                    %>
                  <div class="col-md-12 well">
@@ -75,8 +66,16 @@
                             <div class="counter-tab">
                             	<div class="counter_comnt"><i class="glyphicon glyphicon-log-in"></i> <%: reservation.DateStart.ToShortDateString() %></div>
                             	<div class="counter_ply"><i class="glyphicon glyphicon-log-out"></i> <%: reservation.DateEnd.ToShortDateString() %></div>
-                            	<div class="counter_like"><i class="glyphicon glyphicon-euro"></i> <%: (reservation.Paid ? "Ja" : "Nee") %></div>
+                            	<div class="counter_like"><i class="glyphicon glyphicon-euro"></i> <%: (reservation.Paid ? "Betaald" : "Niet-betaald") %></div>
                             </div>
+                                <% if (!reservation.Paid)
+                                   {
+                                %>
+                                <asp:HiddenField ID="hdf_reservation" runat="server" />
+                                <asp:Button ID="btnPay" runat="server" CssClass="btn btn-info" Text="Nu betalen" OnClick="btnPay_Click" />
+                                <%
+                                   } 
+                                %>
                         </div>
                     </div>
                      <div class="clear-fix clearfix"></div>
@@ -92,7 +91,6 @@
        <%
            }
        %>
-       
        </LoggedInTemplate>
  </asp:LoginView>
 </asp:Content>

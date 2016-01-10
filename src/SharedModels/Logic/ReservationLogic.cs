@@ -51,6 +51,11 @@ namespace SharedModels.Logic
             return SendConfirmationEmail(user, ev, location, start, end);
         }
 
+        public bool UpdateReservation(Reservation res)
+        {
+            return _context.Update(res);
+        }
+
         private static bool SendConfirmationEmail(User user, Event ev, Place location, DateTime start, DateTime end)
         {
             var fromAddress = new MailAddress(Properties.Settings.Default.Email, "ICT4Events");
