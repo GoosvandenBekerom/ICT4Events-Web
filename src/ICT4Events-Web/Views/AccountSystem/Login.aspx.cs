@@ -30,6 +30,7 @@ namespace ICT4Events_Web.Account
 
             if (!LogicCollection.UserLogic.IsValidEmail(email))
             {
+                errorLabel.Visible = true;
                 errorLabel.Text = "Uw heeft een ongeldig emailadres ingevuld.";
                 return;
             }
@@ -37,12 +38,13 @@ namespace ICT4Events_Web.Account
             var currentUser = LogicCollection.UserLogic.AuthenticateUser(email, password);
             if (currentUser == null)
             {
+                errorLabel.Visible = true;
                 errorLabel.Text = "Uw inloggegevens komen niet overeen met een bestaand account.";
                 return;
             }
 
             //contains user object in JSON format
-             var ticket = new FormsAuthenticationTicket(1, currentUser.Email, DateTime.Now,
+             var ticket = new FormsAuthenticationTicket(1, currentUser.Username, DateTime.Now,
              DateTime.Now.AddMinutes(30), RememberMe.Checked, JsonConvert.SerializeObject(currentUser));
 
             // cookie containing copy of ticket

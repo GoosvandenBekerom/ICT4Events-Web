@@ -13,6 +13,15 @@ namespace ICT4Events_Web.Views.ReservationSystem {
     public partial class Webform {
         
         /// <summary>
+        /// lblLoggedIn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblLoggedIn;
+        
+        /// <summary>
         /// feedbackPanel control.
         /// </summary>
         /// <remarks>
@@ -29,6 +38,33 @@ namespace ICT4Events_Web.Views.ReservationSystem {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblError;
+        
+        /// <summary>
+        /// feedbackPanelSucces control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl feedbackPanelSucces;
+        
+        /// <summary>
+        /// lblSucces control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSucces;
+        
+        /// <summary>
+        /// fromRegister control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl fromRegister;
         
         /// <summary>
         /// leader_first_name control.

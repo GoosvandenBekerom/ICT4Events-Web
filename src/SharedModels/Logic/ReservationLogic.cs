@@ -64,12 +64,12 @@ namespace SharedModels.Logic
 
             var message = new MailMessage(fromAddress, toAddress)
             {
-                Subject = "Confirmation of your new user account for ICT4Events",
+                Subject = "Confirmation of your new reservation for "+ ev.Name,
                 Body =
                     "Hello " + user.Username + ",\r\n\r\n" +
                     $"Your have been registered to participate in event {ev.Name}!\r\n" +
                     $"The location you entered is {location.Name}.\r\n" +
-                    $"We will be expecting to see you on {start.Date} until {end.Date}.\r\n" +
+                    $"We will be expecting to see you on {start.Date.ToShortDateString()} until {end.Date.ToShortDateString()}.\r\n" +
                     $"Your user ID is: {user.ID}. Make sure to remember this for your check-in!" +
                     "\r\n\r\nHave a nice day!"
             };

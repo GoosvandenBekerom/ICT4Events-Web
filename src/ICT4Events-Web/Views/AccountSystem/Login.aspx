@@ -3,7 +3,7 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <h2><%: Title %></h2>
     <br />
-    <asp:Label ID="lblNotLoggedIn" CssClass="alert alert-success" runat="server" Text="" Visible="False"></asp:Label>
+    <asp:Label ID="lblNotLoggedIn" CssClass="alert alert-success clearfix" runat="server" Text="" Visible="False"></asp:Label>
     <div class="row">
         <div class="col-md-8">
             <section id="loginForm" runat="server">

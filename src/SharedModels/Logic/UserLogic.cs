@@ -78,12 +78,13 @@ namespace SharedModels.Logic
         /// <returns>a new user object with correct user id</returns>
         public bool RegisterUser(User user, bool generated = false, string password = "")
         {
-            user.Password = LogicCollection.UserLogic.GetHashedPassword(password);
+            var unhash = user.Password ?? password;
+            user.Password = LogicCollection.UserLogic.GetHashedPassword(user.Password ?? password);
             var registeredUser = _context.Insert(user);
 
             try
             {
-                SendConfirmationEmail(user.Email, user.Username, generated, password);
+                SendConfirmationEmail(user.Email, user.Username, generated, unhash);
             }
             catch (MailWasNotSentException e)
             {

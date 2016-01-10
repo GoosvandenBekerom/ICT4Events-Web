@@ -34,15 +34,21 @@ namespace ICT4Events_Web.Views.ReservationSystem
 
             StartDate.TodaysDate = CurEvent.StartDate;
             EndDate.TodaysDate = CurEvent.StartDate;
+
+            var user = SiteMaster.CurrentUser();
+            if (user != null)
+            {
+                lblLoggedIn.Visible = true;
+                lblLoggedIn.Text = "Je bent al ingelogd.";
+                fromRegister.Visible = false;
+            }
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            feedbackPanel.Visible = true;
-
             if (!IsValid)
             {
-                lblError.Visible = true;
+                feedbackPanel.Visible = true;
                 lblError.Text = "Invalide registratie!";
                 lblError.CssClass = "text-danger";
                 return;
@@ -51,8 +57,15 @@ namespace ICT4Events_Web.Views.ReservationSystem
             if (StartDate.SelectedDate == DateTime.Parse("1-1-0001") ||
                 EndDate.SelectedDate == DateTime.Parse("1-1-0001"))
             {
-                lblError.Visible = true;
+                feedbackPanel.Visible = true;
                 lblError.Text = "Invalide datas.";
+                return;
+            }
+
+            if (drpListOfPlaces.SelectedValue == "Selecteer een plek")
+            {
+                feedbackPanel.Visible = true;
+                lblError.Text = "Selecteer eerst een plek om een reservering te plaatsen.";
                 return;
             }
 
@@ -74,51 +87,53 @@ namespace ICT4Events_Web.Views.ReservationSystem
             var lUsername = leader_Username.Text;
             var lIban = leader_iban.Text;
             var lEmail = leader_Email.Text;
-            var lPass = LogicCollection.UserLogic.GetHashedPassword(leader_Password.Text);
+            var lPass = leader_Password.Text;
 
             PlaceId = Convert.ToInt32(drpListOfPlaces.SelectedValue);
             var reservationOnPlace = LogicCollection.ReservationLogic.GetCountReservationOfPlace(PlaceId);
 
             if ((Count + 1 + reservationOnPlace) > LogicCollection.PlaceLogic.GetPlaceByID(PlaceId).Capacity)
             {
+                feedbackPanel.Visible = true;
+                lblError.Text = "Teveel mensen willen op de plek ingeschreven worden.";
                 return; // Too much people on that place
             }
 
             // Making person of leader
             var person = new Person(0, lFirstname, lSurname, lAddress, lCity, lIban); // local person
-            //if (!LogicCollection.PersonLogic.Insert(person)) {return;} // insert person
+            if (!LogicCollection.PersonLogic.Insert(person)) {return;} // insert person
             person = LogicCollection.PersonLogic.GetLastAdded(); // get person out of database
 
             // Register leader
             var lhash = Membership.GeneratePassword(8, 2);
             var leaderUser = new User(0, lUsername, lEmail, lhash, false, lPass);
-            //if (!LogicCollection.UserLogic.RegisterUser(leaderUser)) {return;}
+            if (!LogicCollection.UserLogic.RegisterUser(leaderUser)) {return;}
             leaderUser = LogicCollection.UserLogic.GetLastAdded();
 
             // Making reservation
             var reservation = new Reservation(0, person.ID, StartDate.SelectedDate, EndDate.SelectedDate, false); // local reservation
-            //if (!LogicCollection.ReservationLogic.Insert(reservation)){return;} // insert reservation
+            if (!LogicCollection.ReservationLogic.Insert(reservation)){return;} // insert reservation
             reservation = LogicCollection.ReservationLogic.GetLastAdded(); // get reservation out of database
 
             // Reservation Wristband leader
             var resvationWristband = new ReservationWristband(0, reservation.ID, leaderUser.ID);
-            //if (!LogicCollection.ReservationWristbandLogic.Insert(resvationWristband)){return;} // insert reservation
+            if (!LogicCollection.ReservationWristbandLogic.Insert(resvationWristband)){return;} // insert reservation
             resvationWristband = LogicCollection.ReservationWristbandLogic.GetLastAdded();
 
             // sending reservation mail to leader
-            //try
-            //{
-            //    LogicCollection.ReservationLogic.ReservationMail(leaderUser, CurEvent,
-            //        LogicCollection.PlaceLogic.GetPlaceByID(PlaceId), reservation.DateStart, reservation.DateEnd);
-            //}
-            //catch (Exception)
-            //{
-            //    return;
-            //}
+            try
+            {
+                LogicCollection.ReservationLogic.ReservationMail(leaderUser, CurEvent,
+                LogicCollection.PlaceLogic.GetPlaceByID(PlaceId), reservation.DateStart, reservation.DateEnd);
+            }
+            catch (Exception)
+            {
+                return;
+            }
 
             // Making reservation_account
             var reservationAccount = new ReservationAccount(0, reservation.ID, PlaceId);
-            //if (!LogicCollection.ReservationLogic.InsertReservationAccount(reservationAccount)) { return; }
+            if (!LogicCollection.ReservationLogic.InsertReservationAccount(reservationAccount)) { return; }
             
 
             #region checking reservations emailadresses & Reservations of users
@@ -133,9 +148,9 @@ namespace ICT4Events_Web.Views.ReservationSystem
             // Checking Emailadres if not empty 
             foreach (var email in listOfEmailReservation.Where(email => CheckEmptyEmailStatus(email)))
             {
-                if (!LogicCollection.UserLogic.IsValidEmail(email.Text))
+                if (!LogicCollection.UserLogic.IsValidEmail(email.Text) || email == leader_Email)
                 {
-                    lblError.Visible = true;
+                    feedbackPanel.Visible = true;
                     lblError.Text = "Invalide emailadressen.";
                     return;
                 }
@@ -153,44 +168,49 @@ namespace ICT4Events_Web.Views.ReservationSystem
                 if (user == null) continue;
 
                 //send email and insert into database and make reservationAccount
-                var password = Membership.GeneratePassword(10, 2);
+                var password = Membership.GeneratePassword(10, 0);
                 var register = LogicCollection.UserLogic.RegisterUser(user, true, password);
                 var userLast = LogicCollection.UserLogic.GetLastAdded();
 
                 if (!register) continue;
-                var res = new ReservationAccount(0, reservation.ID, PlaceId);
+                //var res = new ReservationAccount(0, reservation.ID, PlaceId);
                 //if (!LogicCollection.ReservationLogic.InsertReservationAccount(res)) { return; }
 
                 var resvationWristGuest = new ReservationWristband(0, reservation.ID, userLast.ID);
-                //if (!LogicCollection.ReservationWristbandLogic.Insert(resvationWristGuest)){return;} // insert reservationWristband
+                if (!LogicCollection.ReservationWristbandLogic.Insert(resvationWristGuest)) { return; } // insert reservationWristband
 
-                // sending reservation mail to newUser
-                //try
-                //{
-                //    LogicCollection.ReservationLogic.ReservationMail(userLast, CurEvent,
-                //        LogicCollection.PlaceLogic.GetPlaceByID(PlaceId), reservation.DateStart, reservation.DateEnd);
-                //}
-                //catch (Exception)
-                //{
-                //    return;
-                //}
+                //sending reservation mail to newUser
+                try
+                {
+                    LogicCollection.ReservationLogic.ReservationMail(userLast, CurEvent,
+                        LogicCollection.PlaceLogic.GetPlaceByID(PlaceId), reservation.DateStart, reservation.DateEnd);
+                }
+                catch (Exception)
+                {
+                    return;
+                }
             }
             #endregion
 
-            lblError.Visible = true;
-            lblError.Text =
-                (IsValid ? "Valide gegevens!" : "Invalide gegevens") +
+            // Feedbackpanels
+            feedbackPanel.Visible = false;
+            feedbackPanelSucces.Visible = true;
+            fromRegister.Visible = false;
+
+            lblSucces.Visible = true;
+            lblSucces.Text =
+                (IsValid ? "Succesvol geregisteerd! Login om je reservering te betalen." : "Invalide gegevens") +
                 "<br />Voornaam: " + lFirstname +
                 "<br />Achternaam: " + lSurname +
                 "<br />Adres: " + lAddress +
                 "<br />Woonplaats: " + lCity +
                 "<br />IBAN: " + lIban +
                 "<br />Email: " + lEmail +
-                "<br />Pass: " + lPass +
                 "<br />Meerdere reserveerders: " + Count +
                 "<br />PlaceID: " + PlaceId +
                 "<br />Startdatum: " + StartDate.SelectedDate.ToShortDateString() +
-                "<br />Einddatum: " + EndDate.SelectedDate.ToShortDateString();
+                "<br />Einddatum: " + EndDate.SelectedDate.ToShortDateString() +
+                "<br /><a href='/Views/AccountSystem/Login.aspx'>Nu inloggen</a>";
         }
 
         private static int CheckEmptyEmailCount(ITextControl txtbox, int count)
@@ -255,7 +275,7 @@ namespace ICT4Events_Web.Views.ReservationSystem
 
             if (place == null) return "false";
             var result = $@"<strong > Informatie over plek {place.Name}:</strong>
-                        <p> Capaciteit: {LogicCollection.ReservationLogic.GetCountReservationOfPlace(id)} / {place.Capacity}</p>
+                        <p> Capaciteit: {place.Capacity}</p>
                         <p> Prijs: {place.Price.ToString("C")}</p>
                         <p> Grootte: {place.Size}</p>
                         <p> Handicap: {(place.Handicap ? "Ja" : "Nee")}</p>

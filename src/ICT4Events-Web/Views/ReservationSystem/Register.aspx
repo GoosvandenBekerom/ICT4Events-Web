@@ -2,21 +2,23 @@
 <%@ Import Namespace="SharedModels.Logic" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <div id="feedbackPanel" class="alert alert-info alert-dismissible" role="alert" runat="server" Visible="False">
+    <br />
+    <asp:Label ID="lblLoggedIn" CssClass="alert alert-success" runat="server" Text="" Visible="False"></asp:Label>
+    <div id="feedbackPanel" class="alert alert-warning" role="alert" runat="server" Visible="False">
+        <asp:Label ID="lblError" runat="server" Text="Label"></asp:Label>
+    </div>
+    <div id="feedbackPanelSucces" class="alert alert-info alert-dismissible" role="alert" runat="server" Visible="False">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
         <strong>Status registratie:</strong>
         <br/>
-        <asp:Label ID="lblError" runat="server" Text="Label"></asp:Label>
+        <asp:Label ID="lblSucces" runat="server" Text="Label"></asp:Label>
     </div>
-    <div class="container">
+    <div class="container" id="fromRegister" runat="server">
         <div class="row">
             <div class="board">
                 <div class="tab-content">
-
-                    <!-- first tab -->
-
                     <h3 class="head clear-fix">Registratie voor <% Response.Write(CurEvent.Name); %></h3>
 
                     <div class="col-md-6">
@@ -61,7 +63,7 @@
                             <asp:Label runat="server" CssClass="control-label" AssociatedControlID="leader_iban">Rekeningnummer:</asp:Label>
                             <asp:TextBox runat="server" ID="leader_iban" CssClass="form-control input-md" placeholder="ex: NL99 BANK 2183 2384 12" />
                             <asp:RequiredFieldValidator runat="server" CssClass="text-danger" ControlToValidate="leader_iban" Display="Dynamic" ErrorMessage="IBAN is verplicht" ValidationGroup="RegistrationGroup" />
-                            <!-- <asp:CustomValidator ID="test" runat="server" ControlToValidate="leader_iban" ClientValidationFunction="validateIban" CssClass="text-danger" Display="Dynamic" ErrorMessage="IBAN is niet geldig" ValidateEmptyText="False" ValidationGroup="RegistrationGroup"/>-->
+                            <asp:CustomValidator ID="test" runat="server" ControlToValidate="leader_iban" ClientValidationFunction="validateIban" CssClass="text-danger" Display="Dynamic" ErrorMessage="IBAN is niet geldig" ValidateEmptyText="False" ValidationGroup="RegistrationGroup"/>
                         </div>
 
                         <!-- Emailadres leader -->
@@ -70,7 +72,8 @@
                             <asp:TextBox runat="server" ID="leader_Email" CssClass="form-control input-md" placeholder="ex: johndoe@gmail.com" />
                             <asp:RequiredFieldValidator runat="server" CssClass="text-danger" ControlToValidate="leader_Email" Display="Dynamic" ErrorMessage="Emailadres is verplicht" ValidationGroup="RegistrationGroup" />
                         </div>
-
+                        
+                        <!-- Password leader -->
                         <div class="form-group">
                             <asp:Label runat="server" CssClass="control-label" AssociatedControlID="leader_Password">Wachtwoord</asp:Label>
                             <asp:TextBox runat="server" ID="leader_Password" TextMode="Password" CssClass="form-control" />
@@ -190,15 +193,14 @@
 <script src="../../Scripts/iban.js"></script>
 <script>
     function validateInput() {
-        var firstname = $("#MainContent_first_name").val().length > 0;
-        var lastname = $("#MainContent_first_name").val().length > 0;
+        var firstname = $("#MainContent_leader_first_name").val().length > 0;
+        var lastname = $("#MainContent_leader_first_name").val().length > 0;
         var ibanValid = validateIban();
-
         return firstname && lastname && ibanValid;
     }
 
     function validateIban(sender, args) {
-        var valid = IBAN.isValid($("#MainContent_iban").val());
+        var valid = IBAN.isValid($("#MainContent_leader_iban").val());
         args.IsValid = valid;
         return valid;
     }
