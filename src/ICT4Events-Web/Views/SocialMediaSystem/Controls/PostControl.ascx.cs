@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.UI;
 using SharedModels.Models;
 
@@ -63,6 +61,14 @@ namespace ICT4Events_Web.Views.SocialMediaSystem.Controls
 
             File = Post.File;
             postThumbnail.ImageUrl = File.Filepath;
+
+            var regex = new Regex(@"#(?<content>[^/\s]+)", RegexOptions.IgnoreCase);
+            var list = regex.Matches(Post.Content).Cast<Match>().Select(m => m.Value).ToList();
+
+            foreach (var match in list)
+            {
+                Post.Content = Post.Content.Replace(match, @"<a href='/Timeline?q="+ match.Replace("#", "") +"'>"+ match +"</a>");
+            }
         }
     }
 }
