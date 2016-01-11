@@ -38,9 +38,9 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
         {
             foreach (var message in _messages.OrderByDescending(x => x.Date))
             {
+                if (LogicCollection.PostLogic.GetReportsByPost(message).Count >= 5) continue; // invisble post after 5 reports
                 var control = (PostControl) LoadControl("Controls/PostControl.ascx");
                 control.Post = message;
-
                 Posts.Controls.Add(control);
             }
         }
