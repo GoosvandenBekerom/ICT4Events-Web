@@ -14,7 +14,7 @@ namespace ICT4Events_Web
             //settings.AutoRedirectMode = RedirectMode.Permanent;
             routes.EnableFriendlyUrls(settings);
 
-            routes.MapPageRoute("Timeline", "Timeline", "~/Views/SocialMediaSystem/Timeline.aspx");
+            routes.MapPageRoute("Timeline", "Timeline/{*Catalog}", "~/Views/SocialMediaSystem/Timeline.aspx");
         }
     }
 }

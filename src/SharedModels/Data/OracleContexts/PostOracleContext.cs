@@ -46,6 +46,19 @@ namespace SharedModels.Data.OracleContexts
             throw new NotImplementedException();
         }
 
+        public List<Message> GetMediaPostsByUser(User user)
+        {
+            var query = "p_post.GetMediaPostsByUser";
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue),
+                new OracleParameter("p_accountId", user.ID)
+            };
+
+            var res = Database.ExecuteReader(query, parameters);
+            return res.Select(GetEntityFromRecord).ToList();
+        }
+
         public Message InsertReturnMessage(Message entity)
         {
             var query = "p_post.AddPost";
