@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="ICT4Events_Web.Default" %>
 <%@ Import Namespace="ICT4Events_Web" %>
 <%@ Import Namespace="SharedModels.Logic" %>
+<%@ Import Namespace="SharedModels.Models" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     
@@ -8,7 +9,22 @@
    <AnonymousTemplate>
         <h2>Welkom bij ICT4Events!</h2>
         <h3>Huidige evenementen:</h3>
-            <% //TODO: LOAD EVENT %>
+                             <div class="col-md-12 well">
+                	<div class="artist-data pull-left">
+                        <div class="artst-prfle">
+                        	<div class="art-title">
+	                            <% var currentEvent = LogicCollection.EventLogic.GetByID(2); %>
+                            	<h3> <%: currentEvent.Name %></h3>
+                            </div>
+                            <div class="counter-tab">
+                            	<div class="counter_comnt"><i class="glyphicon glyphicon-log-in"></i> <%: currentEvent.StartDate.ToShortDateString() %></div>
+                            	<div class="counter_ply"><i class="glyphicon glyphicon-log-out"></i> <%: currentEvent.EndDate.ToShortDateString() %></div>
+                            	<div class="counter_like"><i class="glyphicon glyphicon-user"></i> <%: currentEvent.Capacity %></div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="clear-fix clearfix"></div>
+                </div> 
         <p>
             <a class="btn btn-info" href="Views/ReservationSystem/Register.aspx">Registreer vandaag nog</a>
         </p>
