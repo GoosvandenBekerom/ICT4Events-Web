@@ -3,7 +3,7 @@
 <%@ Register Src="~/Views/SocialMediaSystem/Controls/CreatePost.ascx" TagPrefix="uc1" TagName="CreatePost" %>
 
 <asp:Content ID="TimelineContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h1>Tijdlijn</h1>
+    <h1><%:Title%></h1>
     <div class="row" id="SearchContainer">
         <div class="form-group" style="display: flex">
             <asp:TextBox runat="server" CssClass="form-control col-md-9" id="SearchBox" placeholder="Zoeken op hashtag"></asp:TextBox>
@@ -68,18 +68,18 @@
             $.ajax({
                 type: "POST",
                 url: "<%=VirtualPathUtility.ToAbsolute("~/Views/SocialMediaSystem/Timeline.aspx/DeletePost")%>",
-                data: "{'postId':"+btn.attr('value')+"}",
+                data: "{'postId':" + btn.attr('value') + "}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function (result) {
+                success: function(result) {
                     if (result.d === "true") {
                         var target = btn.closest('.postContainer');
-                        target.hide(500, function () { target.remove(); });
+                        target.hide(500, function() { target.remove(); });
                         console.log('Removed post ' + btn.val());
                     }
                 }
             });
-        })
+        });
 
         $('.postReplyButton').on("click", function () {
             var btn = $(this);

@@ -31,6 +31,7 @@ namespace SharedModels.Logic
         public List<Message> GetRepliesByPost(Message message) => _context.GetRepliesByPost(message);
 
         public List<Message> SearchPostsByHashtag(string hashtag) => _context.SearchMessages(hashtag);
+        public List<Message> GetMediaPostsByUser(User user) => _context.GetMediaPostsByUser(user);
         public Message AddPost(Message message) => _context.InsertReturnMessage(message);
         public bool DeletePost(Message post) => _context.Delete(post);
 

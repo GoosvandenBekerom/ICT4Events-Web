@@ -61,7 +61,9 @@
         </div>
         <div class="replyForm hidden">
             <div class="form-group">
-                <div class="col-md-9 col-xs-8"><asp:TextBox id="postReply" CssClass="form-control postReply" runat="server" placeholder="Reageren"></asp:TextBox></div>
+                <div class="col-md-9 col-xs-8">
+                    <asp:TextBox id="postReply" CssClass="form-control postReply" runat="server" placeholder="Reageren"></asp:TextBox>
+                </div>
                 <button type="button" class="btn btn-primary postReplyButton" value="<%:Post.ID%>">
                     <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Reageer
                 </button>

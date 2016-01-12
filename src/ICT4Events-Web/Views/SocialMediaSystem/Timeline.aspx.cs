@@ -22,16 +22,29 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
 
         protected void Page_Init(object sender, EventArgs e)
         {
-            var searchQuery = Request.QueryString["q"];
-
-            if (searchQuery == null)
+            if ((RouteData.Values["Catalog"]?.ToString() ?? string.Empty) == "Catalog")
             {
-                _messages = LogicCollection.PostLogic.GetAllMainPosts();
+                var user = (SiteMaster.CurrentUser());
+                if (user == null) return;
+                _messages = LogicCollection.PostLogic.GetMediaPostsByUser(user);
+                SearchBox.Visible = false;
+                SearchButton.Visible = false;
+                CreatePost.Visible = false;
+                Title = "Catalogus";
             }
             else
             {
-                _messages = LogicCollection.PostLogic.SearchPostsByHashtag(searchQuery);
-                SearchBox.Text = searchQuery;
+                var searchQuery = Request.QueryString["q"];
+
+                if (searchQuery == null)
+                {
+                    _messages = LogicCollection.PostLogic.GetAllMainPosts();
+                }
+                else
+                {
+                    _messages = LogicCollection.PostLogic.SearchPostsByHashtag(searchQuery);
+                    SearchBox.Text = searchQuery;
+                }
             }
         }
         protected void Page_Load(object sender, EventArgs e)
