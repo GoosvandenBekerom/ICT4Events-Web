@@ -7,8 +7,8 @@
     <div class="row">
         <div class="col-md-8">
             <section id="loginForm" runat="server">
+              <asp:Label ID="errorLabel" Runat="server" CssClass="alert alert-danger show" role="alert" Visible="false"></asp:Label>
                 <div class="form-horizontal">
-                    <asp:Label ID="errorLabel" Runat="server" CssClass="alert alert-danger form-control" role="alert" Visible="false"></asp:Label><br/>
                     <div class="form-group">
                         <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Emailadres</asp:Label>
                         <div class="col-md-10">

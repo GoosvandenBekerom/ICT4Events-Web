@@ -10,7 +10,7 @@
             </div>
             <hr/>
             <div class="PostContent">
-                <p <% Response.Write(File != null ? "class=\"col-sm-10\"" : "");%>><%:Post.Content%></p>
+                <p <% Response.Write(File != null ? "class=\"col-sm-10\"" : "");%>><% Response.Write(Post.Content);%></p>
             <% 
                 if (File != null && File.IsImage)
                 {
