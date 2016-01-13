@@ -16,6 +16,7 @@ namespace ICT4Events_Web.Views.SocialMediaSystem.Controls
         protected void Page_Load(object sender, EventArgs e)
         {
             PreRender += OnPreRender;
+            postReplyValidator.ValidationGroup = "postReplyValidator" + Post.ID;
         }
 
         private void OnPreRender(object sender, EventArgs eventArgs)

@@ -5,7 +5,7 @@
 <asp:Content ID="TimelineContent" ContentPlaceHolderID="MainContent" runat="server">
     <h1><%:Title%></h1>
     <span id="warning" class="warning alert alert-warning show" runat="server" Visible="False">Er zijn geen resultaten gevonden.</span>
-    <div class="row" id="SearchContainer">
+    <div id="SearchContainer">
         <div class="form-group" style="display: flex">
             <asp:TextBox runat="server" CssClass="form-control col-md-9" id="SearchBox" placeholder="Zoeken op hashtag"></asp:TextBox>
             <button type="submit" runat="server" OnServerClick="SearchButton_OnServerClick" ID="SearchButton" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
@@ -86,6 +86,12 @@
             var btn = $(this);
             var text = btn.siblings('div').find('input').val();
 
+            if (Page_ClientValidate('postReplyValidator' + btn.attr('value'))) {
+                btn.button('loading');
+            } else {
+                return false;
+            }
+
             $.ajax({
                 type: "POST",
                 url: "<%=VirtualPathUtility.ToAbsolute("~/Views/SocialMediaSystem/Timeline.aspx/AddReply")%>",
@@ -93,8 +99,10 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
-                    if (result.d !== "false")
+                    if (result.d !== "false") {
                         btn.parent().parent().parent().append(result.d);
+                        btn.button('reset');
+                    }
                 }
             });
         });
@@ -109,6 +117,7 @@
 
             var itemLocation = btn.parent().parent().parent();
             if (itemLocation.find(".reply").length > 0) return;
+            itemLocation.append("<div class='reply'>Bezig met reacties laden...</div>");
 
             console.log(btn.val());
             $.ajax({
@@ -118,8 +127,10 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
-                    if (result.d !== "false")
+                    itemLocation.find('.reply').empty();
+                    if (result.d !== "false") {
                         itemLocation.append(result.d);
+                    }
                 }
             });
         });

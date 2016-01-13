@@ -29,6 +29,16 @@ body {
     }
 }
 
+#MainContent_SearchBox {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#MainContent_SearchButton {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
 .postContainer li {
    border: 1px solid #e3e3e3;
    border-radius: 3px;

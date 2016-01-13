@@ -64,10 +64,11 @@
                 <div class="col-md-9 col-xs-8">
                     <asp:TextBox id="postReply" CssClass="form-control postReply" runat="server" placeholder="Reageren"></asp:TextBox>
                 </div>
-                <button type="button" class="btn btn-primary postReplyButton" value="<%:Post.ID%>">
+                <button type="button" class="btn btn-primary postReplyButton" value="<%:Post.ID%>" data-loading-text="Plaatsen...">
                     <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Reageer
                 </button>
             </div>
+            <asp:RequiredFieldValidator ID="postReplyValidator" runat="server" ErrorMessage="Bericht is verplicht" Display="Dynamic" ControlToValidate="postReply"></asp:RequiredFieldValidator>
         </div>
     </li>
 </ol>

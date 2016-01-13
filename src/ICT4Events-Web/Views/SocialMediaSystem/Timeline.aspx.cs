@@ -96,6 +96,12 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
         [WebMethod(true)]
         public static string AddReply(int postId, string message)
         {
+
+            if(string.IsNullOrWhiteSpace(message))
+            {
+                return "false";
+            }
+
             var context = HttpContext.Current;
             if (context == null || !context.User.Identity.IsAuthenticated)
             {
