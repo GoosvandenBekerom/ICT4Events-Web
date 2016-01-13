@@ -4,6 +4,7 @@
 
 <asp:Content ID="TimelineContent" ContentPlaceHolderID="MainContent" runat="server">
     <h1><%:Title%></h1>
+    <span id="warning" class="warning alert alert-warning show" runat="server" Visible="False">Er zijn geen resultaten gevonden.</span>
     <div class="row" id="SearchContainer">
         <div class="form-group" style="display: flex">
             <asp:TextBox runat="server" CssClass="form-control col-md-9" id="SearchBox" placeholder="Zoeken op hashtag"></asp:TextBox>
