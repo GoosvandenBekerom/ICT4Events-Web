@@ -27,6 +27,7 @@ namespace ICT4Events_Web.Views.SocialMediaSystem.Controls
             like.Attributes.Add("value", Post.ID.ToString());
             report.Attributes.Add("value", Post.ID.ToString());
 
+            // Only the owners of the main posts an admins are allowed to remove posts
             var user = SiteMaster.CurrentUser();
             delete.Visible = (Post.UserID == user.ID || user.Admin);
 
@@ -38,6 +39,7 @@ namespace ICT4Events_Web.Views.SocialMediaSystem.Controls
                 report.Visible = false;
             }
 
+            // Adds the amount of likes to the posts, if any
             if (likes.Any())
             {
                 like.InnerHtml += "<span> " + likes.Count + "</span>";
@@ -52,8 +54,8 @@ namespace ICT4Events_Web.Views.SocialMediaSystem.Controls
                 like.Attributes.Add("class", like.Attributes["class"] + " liked");
             }
 
+            // Changes the button depending on whether or not the current user has reported it
             var reports = LogicCollection.PostLogic.GetReportsByPost(Post);
-
             if (reports.Any(x => x == user.ID))
             {
                 report.Attributes.Add("class", like.Attributes["class"] + " reported");
@@ -63,19 +65,21 @@ namespace ICT4Events_Web.Views.SocialMediaSystem.Controls
             {
                 report.InnerHtml += "<span>Rapporteren</span>";
             }
-            
+
+            // Regular expression that extracts every hashtag
+            var regex = new Regex(@"#(?<content>[^/\s]+)", RegexOptions.IgnoreCase);
+            var list = regex.Matches(Post.Content).Cast<Match>().Select(m => m.Value).ToList();
+
+            // Wrapping every hashtag with a hyperlink tag to search for it
+            foreach (var match in list)
+            {
+                Post.Content = Post.Content.Replace(match, $@"<a href='/Timeline?q={match.Replace("#", "")}'>{match}</a>");
+            }
+
             if (Post.File == null) return;
 
             File = Post.File;
             postThumbnail.ImageUrl = File.Filepath;
-
-            var regex = new Regex(@"#(?<content>[^/\s]+)", RegexOptions.IgnoreCase);
-            var list = regex.Matches(Post.Content).Cast<Match>().Select(m => m.Value).ToList();
-
-            foreach (var match in list)
-            {
-                Post.Content = Post.Content.Replace(match, @"<a href='/Timeline?q="+ match.Replace("#", "") +"'>"+ match +"</a>");
-            }
         }
     }
 }
