@@ -31,6 +31,7 @@ namespace ICT4Events_Web.Views.SocialMediaSystem.Controls
 
             var likes = LogicCollection.PostLogic.GetLikesByPost(Post);
 
+            if (IsPostBack) return;
             if (likes.Any())
             {
                 like.InnerHtml += "<span> " + likes.Count + "</span>";

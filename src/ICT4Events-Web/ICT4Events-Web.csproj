@@ -212,6 +212,7 @@
     <Content Include="Views\ReservationSystem\Register.aspx" />
     <Content Include="Views\SocialMediaSystem\Controls\CreatePost.ascx" />
     <Content Include="Views\SocialMediaSystem\Controls\PostControl.ascx" />
+    <Content Include="Views\SocialMediaSystem\Reports.aspx" />
     <Content Include="Views\SocialMediaSystem\Timeline.aspx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -327,6 +328,13 @@
     </Compile>
     <Compile Include="Views\SocialMediaSystem\Controls\PostControl.ascx.designer.cs">
       <DependentUpon>PostControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SocialMediaSystem\Reports.aspx.cs">
+      <DependentUpon>Reports.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\SocialMediaSystem\Reports.aspx.designer.cs">
+      <DependentUpon>Reports.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\SocialMediaSystem\Timeline.aspx.cs">
       <DependentUpon>Timeline.aspx</DependentUpon>

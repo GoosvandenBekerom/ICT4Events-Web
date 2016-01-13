@@ -59,6 +59,19 @@ namespace SharedModels.Data.OracleContexts
             return res.Select(GetEntityFromRecord).ToList();
         }
 
+        public List<Message> GetAllReportedPosts()
+        {
+            var query = "p_post.GetAllReportedPosts";
+
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter("Return_Value", OracleDbType.RefCursor, ParameterDirection.ReturnValue)
+            };
+
+            var res = Database.ExecuteReader(query, parameters);
+            return res.Select(GetEntityFromRecord).ToList();
+        }
+
         public Message InsertReturnMessage(Message entity)
         {
             var query = "p_post.AddPost";
