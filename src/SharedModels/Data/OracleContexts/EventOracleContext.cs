@@ -33,7 +33,7 @@ namespace SharedModels.Data.OracleContexts
                     new OracleParameter("eventId", Convert.ToInt32(id))
                 };
 
-            return GetEntityFromRecord(Database.ExecuteReader(query, parameters).First());
+            return GetEntityFromRecord(Database.ExecuteReader(query, parameters).FirstOrDefault());
         }
 
         public bool Insert(Event ev)
@@ -49,8 +49,6 @@ namespace SharedModels.Data.OracleContexts
                 new OracleParameter("capacity", ev.Capacity),
                 new OracleParameter("lastID", OracleDbType.Decimal) {Direction = ParameterDirection.ReturnValue}
             };
-
-
 
             return Database.ExecuteNonQuery(query, parameters);
         }

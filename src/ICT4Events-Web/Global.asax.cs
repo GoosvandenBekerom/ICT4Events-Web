@@ -23,7 +23,7 @@ namespace ICT4Events_Web
             if (exc.InnerException == null) return;
 
             new Exception(exc.InnerException.Message);
-            Server.Transfer("ErrorPage.aspx?handler=Application_Error%20-%20Global.asax",
+            Response.Redirect("~/ErrorPage.aspx?handler=Application_Error%20-%20Global.asax",
                 true);
         }
     }
