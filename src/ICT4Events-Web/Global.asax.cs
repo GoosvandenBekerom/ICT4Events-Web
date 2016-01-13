@@ -13,5 +13,18 @@ namespace ICT4Events_Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        void Application_Error(object sender, EventArgs e)
+        {
+            // Get last error from the server
+            var exc = Server.GetLastError();
+
+            if (!(exc is HttpUnhandledException)) return;
+            if (exc.InnerException == null) return;
+
+            new Exception(exc.InnerException.Message);
+            Server.Transfer("ErrorPage.aspx?handler=Application_Error%20-%20Global.asax",
+                true);
+        }
     }
 }
