@@ -35,7 +35,7 @@
                 dataType: "json",
                 success: function (result) {
                     if (result.d !== "Not authorized") {
-                        $("#lbReportedPosts option[value='"+messageId+"']").remove();
+                        $("#MainContent_lbReportedPosts option[value='"+messageId+"']").remove();
                         btn.addClass("disabled");
                     }
                     e.preventDefault();
