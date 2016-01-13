@@ -16,7 +16,7 @@
     </asp:PlaceHolder>
 
     <div class="form-group">
-        <button id="removeReportsButton" class="btn btn-primary">Verwijder Reports</button>
+        <button type="button" id="removeReportsButton" class="btn btn-primary">Verwijder Reports</button>
     </div>
     
     <script type="text/javascript">
@@ -38,7 +38,6 @@
                         $("#MainContent_lbReportedPosts option[value='"+messageId+"']").remove();
                         btn.addClass("disabled");
                     }
-                    e.preventDefault();
                 }
             });
         });

@@ -6,6 +6,7 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ICT4Events_Web.Views.SocialMediaSystem.Controls;
+using Microsoft.Ajax.Utilities;
 using SharedModels.Logic;
 using SharedModels.Models;
 
@@ -13,7 +14,6 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
 {
     public partial class Reports : System.Web.UI.Page
     {
-        private List<Message> _messages = new List<Message>();
         //private Message _selectedMessage;
         protected int _messageId;
 
@@ -23,30 +23,43 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
             {
                 Response.Redirect("~", true);
             }
-
-            _messages = LogicCollection.PostLogic.GetAllReportedPosts();
-
-            //setting the data source for the listbox
-            lbReportedPosts.DataSource = _messages;
-            lbReportedPosts.DataValueField = "ID";
-            lbReportedPosts.DataTextField = "Content";
-            lbReportedPosts.DataBind();
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+        }
+
+        protected void Page_PreRender(object sender, EventArgs e)
+        {
+            var messages = LogicCollection.PostLogic.GetAllReportedPosts();
+
+            // Setting the data source for the listbox
+            lbReportedPosts.DataSource = messages;
+            lbReportedPosts.DataValueField = "ID";
+            lbReportedPosts.DataTextField = "Content";
+            lbReportedPosts.DataBind();
+
+            if (string.IsNullOrWhiteSpace(lbReportedPosts.SelectedValue)) return;
+
+            int id;
+
+            if (int.TryParse(lbReportedPosts.SelectedValue, out id))
+            {
+                lbReportedPosts.SelectedValue = id.ToString();
+            }
         }
 
         protected void lbReportedPosts_OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            //get selected post id
+            if (string.IsNullOrWhiteSpace(lbReportedPosts.SelectedValue)) return;
+            
+            // Get selected post id
             _messageId = Convert.ToInt32(lbReportedPosts.SelectedValue);
 
-            //clear previous selected post
+            // Clear previous selected post
             phPost.Controls.Clear();
 
-            //add selected post as postControl
+            // Add selected post as postControl
             var control = (PostControl)LoadControl("Controls/PostControl.ascx");
             var message = LogicCollection.PostLogic.GetPostById(_messageId);
             control.Post = message;
@@ -61,9 +74,9 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
             {
                 return "Not authorized";
             }
-            var user = SiteMaster.CurrentUser();
+
             var result = LogicCollection.PostLogic.RemoveReports(postId);
-            
+
             return HttpContext.Current != null && result
                 ? "succeeded"
                 : "Not authorized";
