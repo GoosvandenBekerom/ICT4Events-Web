@@ -72,6 +72,7 @@
                                           if (CurrentUser().Admin)
                                           {
                                               Response.Write("<li><a href='/Views/AccountSystem/Rights.aspx'>Rechten aanpassen</a></li>");
+                                              Response.Write("<li><a href='/Views/SocialMediaSystem/Reports.aspx'>Rapporten Beheren</a></li>");
                                           }
                                       %>
                                   </ul>

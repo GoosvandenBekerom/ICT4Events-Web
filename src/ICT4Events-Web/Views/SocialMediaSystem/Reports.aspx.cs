@@ -19,8 +19,14 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
 
         protected void Page_Init(object sender, EventArgs e)
         {
+            if (Context.User.Identity.IsAuthenticated && !SiteMaster.CurrentUser().Admin)
+            {
+                Response.Redirect("~", true);
+            }
+
             _messages = LogicCollection.PostLogic.GetAllReportedPosts();
 
+            //setting the data source for the listbox
             lbReportedPosts.DataSource = _messages;
             lbReportedPosts.DataValueField = "ID";
             lbReportedPosts.DataTextField = "Content";
@@ -46,7 +52,7 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
             control.Post = message;
             phPost.Controls.Add(control);
         }
-        
+
         [WebMethod(true)]
         public static string RemoveReports(int postId)
         {
@@ -57,7 +63,7 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
             }
             var user = SiteMaster.CurrentUser();
             var result = LogicCollection.PostLogic.RemoveReports(postId);
-
+            
             return HttpContext.Current != null && result
                 ? "succeeded"
                 : "Not authorized";

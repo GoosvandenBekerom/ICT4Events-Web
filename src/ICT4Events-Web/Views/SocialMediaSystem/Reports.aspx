@@ -1,7 +1,5 @@
 ﻿<%@ Page Title="Reports Admin Section" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Reports.aspx.cs" Inherits="ICT4Events_Web.Views.SocialMediaSystem.Reports" %>
 
-<%@ Register Src="~/Views/SocialMediaSystem/Controls/PostControl.ascx" TagPrefix="uc1" TagName="PostControl" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1><%:Page.Title%></h1>
     
@@ -22,7 +20,8 @@
     </div>
     
     <script type="text/javascript">
-        if (<%:_messageId%> === 0) {
+        var messageId = <%:_messageId%>;
+        if (messageId === 0) {
             $('#removeReportsButton').addClass("disabled");
         }
         $('#removeReportsButton').on("click", function () {
@@ -31,11 +30,12 @@
             $.ajax({
                 type: "POST",
                 url: "<%=VirtualPathUtility.ToAbsolute("~/Views/SocialMediaSystem/Reports.aspx/RemoveReports")%>",
-                data: "{'postId': <%:_messageId%> }",
+                data: "{'postId':"+messageId+"}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
                     if (result.d !== "Not authorized") {
+                        $("#lbReportedPosts option[value='"+messageId+"']").remove();
                         btn.addClass("disabled");
                     }
                     e.preventDefault();
