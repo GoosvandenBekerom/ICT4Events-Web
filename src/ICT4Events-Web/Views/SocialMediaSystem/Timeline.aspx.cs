@@ -31,6 +31,8 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
                 SearchButton.Visible = false;
                 CreatePost.Visible = false;
                 Title = "Catalogus";
+
+                warning.Visible = _messages.Count < 1;
             }
             else
             {
