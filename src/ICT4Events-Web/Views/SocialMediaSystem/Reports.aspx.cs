@@ -47,7 +47,7 @@ namespace ICT4Events_Web.Views.SocialMediaSystem
             phPost.Controls.Add(control);
         }
         
-        [WebMethod(enableSession: true)]
+        [WebMethod(true)]
         public static string RemoveReports(int postId)
         {
             var context = HttpContext.Current;
