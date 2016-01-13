@@ -10,36 +10,6 @@ namespace SharedModels.Data
     public class Database
     {
         private static readonly string _connectionString = Properties.Settings.Default.ConnectionString; // Oracle DB on InfraLab
-        private static OracleConnection _connection;
-
-        /// <summary>
-        /// Returns an active Oracle Database connection
-        /// </summary>
-        public static OracleConnection Connection
-        {
-            get
-            {
-                if (_connection == null || _connection.State != ConnectionState.Open)
-                {
-                    Connect();
-                }
-
-                return _connection;
-            }
-        }
-
-        private static void Connect()
-        {
-            _connection = new OracleConnection { ConnectionString = _connectionString };
-            try
-            {
-                _connection.Open();
-            }
-            catch (OracleException e)
-            {
-                Logger.Write(e.Message);
-            }
-        }
 
         /// <summary>
         /// Executes the given query using the ExecuteReader method
@@ -50,18 +20,20 @@ namespace SharedModels.Data
         public static List<List<string>> ExecuteReader(string query, List<OracleParameter> args = null)
         {
             var result = new List<List<string>>();
+            var con = new OracleConnection(_connectionString);
 
             try
             {
-                using (var command = new OracleCommand(query, Connection) {BindByName = true})
+                using (var command = new OracleCommand(query, con) {BindByName = true})
                 {
                     using (var connection = command.Connection)
                     {
                         if (connection.State != ConnectionState.Open)
                         {
-                            try { connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
+                            try { connection.Open(); } catch (Exception e) { Logger.Write(e.Message); }
                         }
 
+                        command.Connection = connection;
                         command.CommandType = CommandType.StoredProcedure;
 
                         if (args != null)
@@ -110,7 +82,7 @@ namespace SharedModels.Data
             }
             finally
             {
-                Close();
+                Close(con);
             }
 
             return result;
@@ -127,10 +99,11 @@ namespace SharedModels.Data
         public static List<Dictionary<string, string>> ExecuteReaderDict(string query, List<OracleParameter> args = null)
         {
             var result = new List<Dictionary<string, string>>();
+            var con = new OracleConnection(_connectionString);
 
             try
             {
-                using (var command = new OracleCommand(query, Connection) {BindByName = true})
+                using (var command = new OracleCommand(query, con) {BindByName = true})
                 {
                     using (var connection = command.Connection)
                     {
@@ -169,7 +142,7 @@ namespace SharedModels.Data
             }
             finally
             {
-                Close();
+                Close(con);
             }
 
             return result;
@@ -184,17 +157,20 @@ namespace SharedModels.Data
         public static bool ExecuteNonQuery(string query, List<OracleParameter> args = null)
         {
             var result = -1;
+            var con = new OracleConnection(_connectionString);
+
             try
             {
-                using (var command = new OracleCommand(query, Connection) { BindByName = true })
+                using (var command = new OracleCommand(query, con) { BindByName = true })
                 {
                     using (var connection = command.Connection)
                     {
                         if (connection.State != ConnectionState.Open)
                         {
-                            try { connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
+                            try { connection.Open(); } catch (Exception e) { Logger.Write(e.Message); }
                         }
 
+                        command.Connection = connection;
                         command.CommandType = CommandType.StoredProcedure;
 
                         if (args != null)
@@ -217,7 +193,7 @@ namespace SharedModels.Data
             }
             finally
             {
-                Close();
+                Close(con);
             }
 
             return result >= 0;
@@ -237,17 +213,22 @@ namespace SharedModels.Data
             OracleParameter returnParameter = null;
             returnValue = string.Empty;
 
+            var con = new OracleConnection(_connectionString);
+
             try
             {
-                using (var command = new OracleCommand(query, Connection) {BindByName = true})
+                using (var command = new OracleCommand(query, con) { BindByName = true })
                 {
                     using (var connection = command.Connection)
                     {
                         if (connection.State != ConnectionState.Open)
                         {
-                            try { connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
+                            try { connection.Open(); } catch (Exception e) { Logger.Write(e.Message); }
                         }
+
+                        command.Connection = connection;
                         command.CommandType = CommandType.StoredProcedure;
+
                         if (args != null)
                         {
                             foreach (var arg in args)
@@ -276,7 +257,7 @@ namespace SharedModels.Data
             }
             finally
             {
-                Close();
+                Close(con);
             }
 
             return result >= 0;
@@ -291,17 +272,21 @@ namespace SharedModels.Data
         public static object ExecuteScalar(string query, List<OracleParameter> args = null)
         {
             object result;
+            var con = new OracleConnection(_connectionString);
 
             try
             {
-                using (var command = new OracleCommand(query, Connection) {BindByName = true})
+                using (var command = new OracleCommand(query, con) { BindByName = true })
                 {
                     using (var connection = command.Connection)
                     {
                         if (connection.State != ConnectionState.Open)
                         {
-                            try { connection.Open(); } catch (OracleException e) { Logger.Write(e.Message); }
+                            try { connection.Open(); } catch (Exception e) { Logger.Write(e.Message); }
                         }
+
+                        command.Connection = connection;
+
                         if (args != null)
                         {
                             foreach (var arg in args)
@@ -321,20 +306,20 @@ namespace SharedModels.Data
             }
             finally
             {
-                Close();
+                Close(con);
             }
 
             return result;
         }
 
-        private static void Close()
+        private static void Close(OracleConnection connection)
         {
             try
             {
-                _connection.Close();
-                _connection.Dispose();
+                connection.Close();
+                connection.Dispose();
             }
-            catch (OracleException e)
+            catch (Exception e)
             {
                 Logger.Write(e.Message);
             }
