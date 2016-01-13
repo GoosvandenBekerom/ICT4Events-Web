@@ -22,18 +22,23 @@
     </div>
     
     <script type="text/javascript">
+        if (<%:_messageId%> === 0) {
+            $('#removeReportsButton').addClass("disabled");
+        }
         $('#removeReportsButton').on("click", function () {
             var btn = $(this);
 
             $.ajax({
                 type: "POST",
                 url: "<%=VirtualPathUtility.ToAbsolute("~/Views/SocialMediaSystem/Reports.aspx/RemoveReports")%>",
-                data: "{'postId':"+<%:_messageId%>,
+                data: "{'postId': <%:_messageId%> }",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
-                    if (result.d !== "Not authorized")
+                    if (result.d !== "Not authorized") {
                         btn.addClass("disabled");
+                    }
+                    e.preventDefault();
                 }
             });
         });
