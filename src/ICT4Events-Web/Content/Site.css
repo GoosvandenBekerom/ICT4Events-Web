@@ -192,3 +192,7 @@ span.play-icon{position: absolute; left: 31%; top: 32%; display: none;}
     height: 1px;
     background-color: #ebebeb;
 }
+
+#lbReportedPosts {
+    margin-bottom: 15px;
+}

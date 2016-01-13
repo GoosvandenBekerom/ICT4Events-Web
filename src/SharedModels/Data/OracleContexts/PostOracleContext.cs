@@ -72,6 +72,17 @@ namespace SharedModels.Data.OracleContexts
             return res.Select(GetEntityFromRecord).ToList();
         }
 
+        public bool RemoveReports(int postId)
+        {
+            var query = "p_post.RemoveReports";
+            var parameters = new List<OracleParameter>
+            {
+                new OracleParameter("p_postId", postId)
+            };
+
+            return Database.ExecuteNonQuery(query, parameters);
+        }
+
         public Message InsertReturnMessage(Message entity)
         {
             var query = "p_post.AddPost";

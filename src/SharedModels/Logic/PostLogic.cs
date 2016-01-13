@@ -33,6 +33,8 @@ namespace SharedModels.Logic
         public List<Message> SearchPostsByHashtag(string hashtag) => _context.SearchMessages(hashtag);
         public List<Message> GetMediaPostsByUser(User user) => _context.GetMediaPostsByUser(user);
         public List<Message> GetAllReportedPosts() => _context.GetAllReportedPosts();
+        public bool RemoveReports(int messageId) => _context.RemoveReports(messageId);
+
         public Message AddPost(Message message) => _context.InsertReturnMessage(message);
         public bool DeletePost(Message post) => _context.Delete(post);
 
