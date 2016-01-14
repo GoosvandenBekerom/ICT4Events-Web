@@ -41,5 +41,24 @@
                 }
             });
         });
+
+        $("body").on("click", ".postDeleteButton", function() {
+            var btn = $(this);
+
+            $.ajax({
+                type: "POST",
+                url: "<%=VirtualPathUtility.ToAbsolute("~/Views/SocialMediaSystem/Timeline.aspx/DeletePost")%>",
+                data: "{'postId':" + btn.attr('value') + "}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(result) {
+                    if (result.d === "true") {
+                        var target = btn.closest('.postContainer');
+                        target.hide(500, function() { target.remove(); window.location.href = window.location.href;});
+                        console.log('Removed post ' + btn.val());
+                    }
+                }
+            });
+        });
     </script>
 </asp:Content>

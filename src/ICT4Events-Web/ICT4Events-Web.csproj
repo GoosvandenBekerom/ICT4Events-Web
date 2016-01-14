@@ -175,6 +175,7 @@
     <Content Include="Account\Web.config" />
     <Content Include="Views\AccountSystem\Edit.aspx" />
     <Content Include="Views\AccountSystem\Rights.aspx" />
+    <None Include="Properties\PublishProfiles\VM.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -215,7 +216,9 @@
     <Content Include="Views\SocialMediaSystem\Controls\PostControl.ascx" />
     <Content Include="Views\SocialMediaSystem\Reports.aspx" />
     <Content Include="Views\SocialMediaSystem\Timeline.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Bundle.config" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
