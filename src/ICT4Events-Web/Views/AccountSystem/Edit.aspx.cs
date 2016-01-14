@@ -66,7 +66,7 @@ namespace ICT4Events_Web.Views.AccountSystem
             }
 
             // Cookie change
-            var cookie = FormsAuthentication.GetAuthCookie(_currentUser.Email, true); //TODO: username
+            var cookie = FormsAuthentication.GetAuthCookie(_currentUser.Username, true); //TODO: username
             var ticket = FormsAuthentication.Decrypt(cookie.Value);
 
             var newTicket = new FormsAuthenticationTicket(ticket.Version, ticket.Name, ticket.IssueDate,
